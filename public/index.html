@@ -24,11 +24,62 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <link rel="stylesheet" href="styles.css">
     <title>React App</title>
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+
+    <header>
+    
+      <h1>Filmthusiast</h1>
+
+      <form action="#" method="get">
+          <input type="text" name="search" placeholder="Search...">
+          <input type="submit" value="Search">
+          <button onclick="openLoginModal()">Login</button>
+          <button class="registration-button">Register</button>
+          <button class="settings-button">Settings</button>
+      </form>
+  </header>
+  
+    
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeLoginModal()">&times;</span>
+      <h2>Login</h2>
+      <form action="#" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+<br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="submit" value="Login">
+      </form>
+  </div>
+
+  <script>
+   
+    function openLoginModal() {
+        document.getElementById('loginModal').style.display = 'block';
+    }
+
+  
+    function closeLoginModal() {
+        document.getElementById('loginModal').style.display = 'none';
+    }
+
+
+    window.onclick = function(event) {
+        var modal = document.getElementById('loginModal');
+        if (event.target == modal) {
+            closeLoginModal();
+        }
+    }
+</script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
