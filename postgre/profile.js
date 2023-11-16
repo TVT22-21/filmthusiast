@@ -8,13 +8,7 @@ const database = {
     UPDATE_PROFILE_DESC: 'UPDATE profile SET description = $1 WHERE person_idperson = $2',
     GET_PROFILE: 'SELECT * FROM profile'
 }
-/*
-addProfile('Jakkken profiili', 'Jakke','Jiii', 'Hei tämfefef', 6);
-updateProfiletitle('Tämä on päivitetty otsikko', 8);
-updateFirstname('Teppo', 8);
-updateLastname('Virtanen', 8);
-updateDescription('joo näihä seon tosijjaa', 8);
-getProfile();*/
+
 
 async function addProfile(profiletitle, firstname, lastname, description, person_idperson){
     await pgPool.query(database.INSERT_PROFILE, [profiletitle, firstname, lastname, description, person_idperson])
