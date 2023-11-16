@@ -1,24 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import { LoginContext } from "./Components/Context";
+import { Login } from './Components/Auth';
 
 function App() {
+  const [login, setLogin] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <LoginContext.Provider value={(login,setLogin)}>
+      <h4>Arvo on {login.toString()}</h4>
+      <Login/>
+      </LoginContext.Provider>
   );
 }
 
