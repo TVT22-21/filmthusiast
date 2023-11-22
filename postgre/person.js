@@ -1,9 +1,9 @@
 const pgPool = require('./connection');
 
 const database = {
-    INSERT_PERSON: 'INSERT INTO person (username, password, email, createdate) VALUES ($1, $2, $3, $4)',
-    GET_PERSON: 'SELECT username,password,email,createdate FROM customer',
-    GET_PW: 'SELECT pw FROM customer WHERE username=$1'
+    INSERT_PERSON: 'INSERT INTO Person (username, password, email, createdate) VALUES ($1, $2, $3, $4)',
+    GET_PERSON: 'SELECT username,password,email,createdate FROM Person',
+    GET_PW: 'SELECT pw FROM Person WHERE username=$1'
 };
 
 addPerson('matti', 'matti1234', 'mattimei3@mattila.fi', new Date());
