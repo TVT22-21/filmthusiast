@@ -10,12 +10,6 @@ const database = {
     CHECK_EMAIL: 'SELECT * FROM person WHERE email = $1'
 };
 
-//addPerson('mmi', 'matti324', 'mattei34@mattila.fi', new Date());
-//deletePerson(12);
-//getPerson(9);
-//newPassword('matti3456', 9);
-//newEmail('mattila@matti.fi', 9);
-
 async function addPerson(username, password, email, createdate){
     await pgPool.query(database.INSERT_PERSON, [username, password, email, createdate])
 }
