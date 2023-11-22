@@ -17,4 +17,21 @@ pgPool.connect((err)=>{
     }
 });
 
+pgPool.connect()
+  .then(() => console.log('Connected to the database'))
+  .catch(err => console.error('Error connecting to the database', err));
+
+async function runQuery() {
+    try {
+      const result = await client.query('SELECT * FROM person');
+      console.log('Query result:', result.rows);
+    } catch (err) {
+      console.error('Error running query', err);
+    } finally {
+      await client.end();
+    }
+  }
+
+runQuery();
+
 module.exports = pgPool;
