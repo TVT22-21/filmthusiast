@@ -47,7 +47,7 @@ router.put('/updateFirstname', async (req, res) => {
   }
 });
 
-router.post('/updateLastname', async (req, res) => {
+router.put('/updateLastname', async (req, res) => {
   try {
     if (!req.body || !req.body.firstname || !req.body.person_idperson) {
       return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
@@ -61,7 +61,7 @@ router.post('/updateLastname', async (req, res) => {
   }
 });
 
-router.post('/updateTitle', async (req, res) => {
+router.put('/updateTitle', async (req, res) => {
   try {
     if (!req.body || !req.body.profiletitle || !req.body.person_idperson) {
       return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
@@ -75,7 +75,7 @@ router.post('/updateTitle', async (req, res) => {
   }
 });
 
-router.post('/updateDescription', async (req, res) => {
+router.put('/updateDescription', async (req, res) => {
   try {
     if (!req.body || !req.body.description || !req.body.person_idperson) {
       return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
@@ -89,9 +89,15 @@ router.post('/updateDescription', async (req, res) => {
   }
 });
 
-router.get('/getProfile', async (req, res) => {
-  try {
-    res.json(await getProfile());
+router.get('/getProfile/:person_idperson', async (req, res) => {
+
+  try {  
+    if (!req.body) {
+      return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
+    } 
+    const person_idperson = req.params.person_idperson;
+    const profileData = await getProfile(person_idperson);
+    res.json(profileData);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
