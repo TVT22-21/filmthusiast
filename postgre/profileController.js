@@ -7,7 +7,7 @@ const database = {
     UPDATE_PROFILE_FNAME: 'UPDATE profile SET firstname = $1 WHERE person_idperson = $2',
     UPDATE_PROFILE_LNAME: 'UPDATE profile SET lastname = $1 WHERE person_idperson = $2',
     UPDATE_PROFILE_DESC: 'UPDATE profile SET description = $1 WHERE person_idperson = $2',
-    GET_PROFILE: 'SELECT * FROM profile'
+    GET_PROFILE: 'SELECT * FROM profile WHERE person_idperson = $1'
 }
 
 
@@ -35,10 +35,9 @@ async function updateDescription(description, person_idperson){
     await pgPool.query(database.UPDATE_PROFILE_DESC, [description, person_idperson])
 }
 
-async function getProfile(){
-    const result = await pgPool.query(database.GET_PROFILE);
-    const rows = result.rows;
-    return rows;
+async function getProfile(person_idperson){
+    const result = await pgPool.query(database.GET_PROFILE, [person_idperson]);
+    return result.rows;
 }
 
 module.exports = {updateProfiletitle, updateFirstname, updateLastname, 

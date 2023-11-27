@@ -13,7 +13,6 @@ app.use(express.static('public'));
 
 const PORT = process.env.PORT;
 
-
 app.use('/profile', profileRoute);
 app.use('/person', personRoute);
 
