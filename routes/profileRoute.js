@@ -1,6 +1,6 @@
 const express = require('express');
 const {updateProfiletitle, updateFirstname, updateLastname, updateDescription, 
-getProfile, deleteProfile, createProfile} = require('../postgre/profile');
+getProfile, deleteProfile, createProfile} = require('../postgre/profileController');
 const router = express.Router();
 
 

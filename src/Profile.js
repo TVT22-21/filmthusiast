@@ -26,10 +26,10 @@ function Main(){
 
   return(
     <main>
-      <Information />
-      
+      <Information />  
+      <Content /> 
     </main>
-);
+  );
 }
 
 function Information(){
@@ -59,7 +59,7 @@ function Information(){
       ))}
 
     {profile.map((profinf) => (
-        <div key={profinf.idprofile}> 
+        <div class="info-container" key={profinf.idprofile}> 
           <h1>{profinf.profiletitle}</h1>
           <p>{profinf.description}</p>
         </div>
@@ -68,7 +68,37 @@ function Information(){
   )  
 }
 
+function Content(){
 
+  const [contentType, setContentType] = useState('ratings');
+
+  function handleToggle(type) {
+    setContentType(type);
+  }
+
+  return (
+    <div>
+      <div>
+        <button class="content-btn" onClick={() => handleToggle('ratings')}>Movie Ratings</button>
+        <button class="content-btn" onClick={() => handleToggle('watchlist')}>Watch List</button>
+      </div>
+
+      <div>
+        {contentType === 'ratings' && (
+          <div>
+            <h2>Movie Ratings</h2>
+          </div>
+        )}
+
+        {contentType === 'watchlist' && (
+          <div>
+            <h2>Watch List</h2>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default Profile;
 

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import Profile from './Profile';
-import Header from './Header';
 import reportWebVitals from './reportWebVitals';
 
 
@@ -11,7 +10,6 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-
     <Profile />
   </React.StrictMode>
 );
