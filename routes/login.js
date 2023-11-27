@@ -15,7 +15,6 @@ router.get('/', async (req,res) => {
 });
 
 
-const { checkPerson } = require("../postgre/person");
 
 router.post('/login',upload.none(), async (req,res)=> {
     const username = req.body.username;
