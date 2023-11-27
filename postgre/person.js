@@ -14,6 +14,7 @@ async function addPerson(username, password, email, createdate){
     await pgPool.query(database.INSERT_PERSON, [username, password, email, createdate])
 }
 
+
 async function deletePerson(username, password){
     await pgPool.query(database.DELETE_PERSON, [username, password])
 }
@@ -23,6 +24,7 @@ async function getPerson(username){
     const rows = result.rows;
     return rows;
 }
+
 
 async function updatePassword(password, username){
     await pgPool.query(database.UPDATE_PASSWORD, [password, username])
@@ -42,4 +44,16 @@ async function checkEmail(email){
     return result.rows.length > 0;
 }
 
-module.exports = {addPerson, deletePerson, getPerson, updatePassword, updateEmail, checkUsername, checkEmail};
+async function checkPerson(username){
+    const result = await pgPool.query(database.GET_PW, [username]);
+
+    if(result.rows.length > 0){
+        return result.rows[0].password;
+    }else{
+        return null;
+    }
+
+}
+
+module.exports = {addPerson, deletePerson, getPerson, updatePassword, updateEmail, checkUsername, checkEmail, checkPerson};
+
