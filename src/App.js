@@ -1,7 +1,5 @@
 import './App.css';
 import { useState } from 'react';
-import { LoginContext } from "./Components/Context";
-import { Login } from './Components/Auth';
 
 function App() {
   const [login, setLogin] = useState(false);
