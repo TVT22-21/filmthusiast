@@ -1,10 +1,11 @@
-
+import RegisterForm from './components/register';
 import './App.css';
 
 function App() {
-    <div>
-        <h1>moikkamoi</h1>
-    </div>
+
+return(
+<RegisterForm/>
+)
 }
 
 export default App;

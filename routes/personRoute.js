@@ -13,18 +13,20 @@ router.post('/register', upload.none(), async (req, res) => {
         return res.status(400).json({ error: 'Käyttäjänimi, salasana ja email tarvitaan.' });
     }else{
         try{
-            if(await checkEmail(email)){
-                return res.status(400).json({ error: 'Email on jo käytössä.' });
-            }      
             if(await checkUsername(username)){
                 return res.status(400).json({ error: 'Käyttäjätunnus on varattu.' });
             }
+            
+            if(await checkEmail(email)){
+                return res.status(400).json({ error: 'Email on jo käytössä.' });
+            }      
+
             const hashPw = await bcrypt.hash(password, 10);
             const createdate = new Date();
             await addPerson(username, hashPw, email, createdate);
-            res.json({ message: 'Käyttäjän luonti onnistui' });
+            res.json({ success: true, message: 'Käyttäjän luonti onnistui' });
         } catch (error){
-            res.json({error: error.message}).status(505);
+            res.status(500).json({success: false, error: error.message });
         }
     }
 });
