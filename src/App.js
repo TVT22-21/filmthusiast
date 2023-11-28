@@ -1,6 +1,5 @@
-
 import './App.css';
-import { useState } from 'react';
+import RegisterForm from './components/register';
 
 function App() {
 
