@@ -29,3 +29,18 @@ main{
     border-color: black;
     background-color: antiquewhite;
 }
+
+.movie-card-container{
+    display: flex;
+}
+
+.movie-info-card {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    background-color: #bda8a8;
+    border: 1px solid #000000;
+    margin: 10px;
+    padding: 10px;
+  }
+  
