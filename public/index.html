@@ -26,69 +26,38 @@
     -->
     <link rel="stylesheet" href="styles.css">
     <title>React App</title>
+    <title>JavaScript Animated Background</title>
 
-  </head>
-  <body>
+    <script>
+      
+      function lines(){
+        let sizeW = Math.random() * 12;
+        let duration = Math.random() * 3;
+        let e = document.createElement('div');
+        e.setAttribute('class','circle');
+        document.body.appendChild(e)
+        e.style.width = 2+sizeW+'px';
+        e.style.left = Math.random() * + innerWidth + 'px';
+        e.style.animationDuration = 2 + duration+'s';
+
+        setTimeout(function(){
+        document.body.removeChild(e)
+      },5000);
+      }
+
+   
+      setInterval(function(){
+        lines();
+      },200);
+      
+    </script>
+      </head>
+      <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-
-    <header>
-    
-      <h1>Filmthusiast</h1>
-
-      <form action="#" method="get">
-          <input type="text" name="search" placeholder="Search...">
-          <input type="submit" value="Search">
-          <button onclick="openLoginModal()">Login</button>
-          <button class="registration-button">Register</button>
-          <button class="settings-button">Settings</button>
-      </form>
-  </header>
+    <div class="animation-container"></div>
+    <div id="root"></div>
   
-    
-  <div id="loginModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeLoginModal()">&times;</span>
-      <h2>Login</h2>
-      <form action="#" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-<br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-
-        <input type="submit" value="Login">
-      </form>
-  </div>
-
-  <script>
-   
-    function openLoginModal() {
-        document.getElementById('loginModal').style.display = 'block';
-    }
-
   
-    function closeLoginModal() {
-        document.getElementById('loginModal').style.display = 'none';
-    }
-
-
-    window.onclick = function(event) {
-        var modal = document.getElementById('loginModal');
-        if (event.target == modal) {
-            closeLoginModal();
-        }
-    }
-</script>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>
