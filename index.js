@@ -4,7 +4,7 @@ const express = require('express');
 
 const profileRoute = require('./routes/profileRoute');
 const personRoute = require('./routes/personRoute');
-const personRoute = require('./routes/login');
+const loginRoute = require('./routes/login');
 const app = express();
 const cors = require('cors');
 
@@ -19,7 +19,7 @@ app.use('/profile', profileRoute);
 
 app.use('/person', personRoute);
 
-
+app.use('/login', loginRoute);
 
 app.listen(PORT, function () {
   console.log("Server running on port " + PORT);
