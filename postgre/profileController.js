@@ -7,7 +7,10 @@ const database = {
     UPDATE_PROFILE_FNAME: 'UPDATE profile SET firstname = $1 WHERE person_idperson = $2',
     UPDATE_PROFILE_LNAME: 'UPDATE profile SET lastname = $1 WHERE person_idperson = $2',
     UPDATE_PROFILE_DESC: 'UPDATE profile SET description = $1 WHERE person_idperson = $2',
-    GET_PROFILE: 'SELECT * FROM profile WHERE person_idperson = $1'
+    ADD_TO_PROFILE_WATCHLIST: 'UPDATE profile SET watchlist = array_append(watchlist, $1) WHERE person_idperson = $2',
+    DELETE_FROM_PROFILE_WATCHLIST: 'UPDATE profile SET watchlist = array_remove(watchlist, $1) WHERE person_idperson = $2',
+    GET_PROFILE: 'SELECT * FROM profile WHERE person_idperson = $1',
+    GET_WATCHLIST: 'SELECT watchlist FROM profile WHERE person_idperson = $1'
 }
 
 
@@ -35,10 +38,23 @@ async function updateDescription(description, person_idperson){
     await pgPool.query(database.UPDATE_PROFILE_DESC, [description, person_idperson])
 }
 
+async function addToWatchlist(movie_id, person_idperson){
+    await pgPool.query(database.ADD_TO_PROFILE_WATCHLIST, [movie_id, person_idperson])
+}
+
+async function deleteFromWatchlist(movie_id, person_idperson){
+    await pgPool.query(database.DELETE_FROM_PROFILE_WATCHLIST, [movie_id, person_idperson])
+}
+
+async function getWatchlist(person_idperson){
+    const result = await pgPool.query(database.GET_WATCHLIST, [person_idperson]);
+    return result.rows;
+}
+
 async function getProfile(person_idperson){
     const result = await pgPool.query(database.GET_PROFILE, [person_idperson]);
     return result.rows;
 }
 
 module.exports = {updateProfiletitle, updateFirstname, updateLastname, 
-updateDescription, getProfile, deleteProfile, createProfile};
+updateDescription, addToWatchlist, deleteFromWatchlist, getWatchlist,getProfile, deleteProfile, createProfile};
