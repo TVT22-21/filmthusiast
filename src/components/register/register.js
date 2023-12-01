@@ -24,6 +24,9 @@ export default function RegisterForm() {
               }
             })
             .catch(error => {
+
+              console.log('Registration error:', error.response.data);
+              setVirhe(error.response.data.error || 'Rekisteröinti epäonnistui');
               if (error.response) {
                 console.log('Registration error:', error.response.data);
                 setVirhe(error.response.data.error || 'Rekisteröinti epäonnistui');
@@ -34,6 +37,7 @@ export default function RegisterForm() {
                 console.error('Error message:', error.message);
                 setVirhe('Rekisteröinti epäonnistui');
               }
+
             });
         } else {
           setVirhe('Salasanat eivät täsmää');
