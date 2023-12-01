@@ -30,7 +30,11 @@ main{
     background-color: antiquewhite;
 }
 
-.movie-card-container{
+.ratings-container{
+    display: flex;
+}
+
+.watchlist-container{
     display: flex;
 }
 

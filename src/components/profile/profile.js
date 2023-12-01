@@ -2,6 +2,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './profile.css';
+import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, PersonCardByPerson } from '../search/searchMovie';
+
 
 function Profile() {
   return (
@@ -14,9 +16,9 @@ function Profile() {
 function Body(){
 
   return(
-    <body>
+    <div>
       <Main />
-    </body>
+    </div>
   );
 }
 
@@ -72,12 +74,15 @@ function Information(){
 function Content(){
 
   const [contentType, setContentType] = useState('ratings');
+  const [watchlist, setWatchlist] = useState([]);
 
   function handleToggle(type) {
     setContentType(type);
   }
-
-  const [watchlist, setWatchlist] = useState([]);
+  const SearchResultByTitle = SearchByTitle( 'lord of the rings' );
+  const SearchResultById = SearchById( 'tt2294629' );
+  const SearchResultByPerson = SearchByPerson( 'keanu reeves' );
+  console.log(SearchResultById);
 
   useEffect(() => {
     async function fetchData() {
@@ -116,12 +121,10 @@ function Content(){
         {contentType === 'ratings' && (
           <div>
             <h2>Movie Ratings</h2>
-            <div className="movie-card-container">
-              <MovieInfoCard />
-              <MovieInfoCard />
-              <MovieInfoCard />
-              <MovieInfoCard />
-              <MovieInfoCard />
+            <div className="ratings-container">
+              <MovieCardById movieData={SearchResultById} />
+              <MovieCardByTitle movieData={SearchResultByTitle} />
+              <PersonCardByPerson movieData={SearchResultByPerson} />         
             </div> 
           </div>
         )}
@@ -130,11 +133,7 @@ function Content(){
           <div>
             <h2>Watch List</h2>
             <div class="watchlist-container">
-            {watchlist.map((list) => (
-              <div key={list.idList}> 
-                <p>{list.watchlist + ','}</p>
-              </div>
-            ))}
+              
             </div>
           </div>
         )}
@@ -152,24 +151,6 @@ function Content(){
     </div>
   );
 }
-
-
-function MovieInfoCard(){
-  return (
-    <div className="movie-info-card">
-      <img src='/assets/movieposter.jpg' alt='movieposter should be here :('/>
-
-      <div className="movie-details">
-        <h2>Breaking bad</h2>
-        <p><strong>Release Date:</strong> 23.5.2008</p>
-
-        <div className="ratings">
-          <p><strong>Personal Rating:</strong> 6/10</p>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export default Profile;
 
