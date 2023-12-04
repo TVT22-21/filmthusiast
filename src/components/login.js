@@ -30,6 +30,7 @@ export default function LoginForm() {
         <input type="username" onChange={e => setUsername(e.target.value)} placeholder='Käyttäjätunnus'/><br/>
         <input type="password" onChange={e => setPassword(e.target.value)} placeholder='Salasana'/><br/>
         <button onClick={login}>Kirjaudu sisään</button>
+        <div className="text">{error}</div>
       </div>
     }
     </div>
