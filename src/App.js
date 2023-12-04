@@ -1,9 +1,15 @@
+import { Profiler } from 'react';
 import './App.css';
-import Profile from './components/profile/profile';
+import SearchBar from './components/search/searchPage';
 
+
+
+
+
+function App(){
 return(
     <div>
-        <Profile />
+        <SearchBar />
     </div>
 )
 }
