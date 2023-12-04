@@ -40,7 +40,7 @@ function SearchById( movieId ){
 
 
 function SearchByTitle(movieTitle) {
-  const [searchMovie, setSearch] = useState([]);
+  const [searchResult, setResult] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -57,18 +57,19 @@ function SearchByTitle(movieTitle) {
         const url = 'https://api.themoviedb.org/3/search/movie';
         const searchRes = await axios.get(url, options);
 
-        setSearch(searchRes.data.results);
+        setResult(searchRes.data.results);
         console.log('Response data:', searchRes.data.results);
       } catch (error) {
-        setSearch('loading');
+        setResult('loading');
         console.error(error);
       }
     }
     fetchData();
   }, [movieTitle]);
 
-  return searchMovie;
+  return searchResult;
 }
+
 
 function SearchByPerson( person ){
   
