@@ -1,0 +1,23 @@
+
+
+
+.search-container{
+    display: flex; 
+    flex-direction: column;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.search-bar-container{
+    width: 100%;
+}
+
+.search-bar{
+    width: 400px;
+}
+
+.search-results{
+    display: flex;
+    flex-wrap: wrap;
+}
+
