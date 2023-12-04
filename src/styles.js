@@ -10,6 +10,10 @@ const styles = {
     backgroundColor: '#111',
     padding: '10px',
     textAlign: 'center',
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
   },
   inputText: {
     padding: '8px',
@@ -27,6 +31,10 @@ const styles = {
     color: 'white',
     border: 'none',
     cursor: 'pointer',
+<<<<<<< Updated upstream
+=======
+    borderRadius: '5px',
+>>>>>>> Stashed changes
   },
   modal: {
     display: 'none',
@@ -65,6 +73,7 @@ const styles = {
   },
   registrationButton: {
     zIndex: 2,
+<<<<<<< Updated upstream
     padding: '2px',
     backgroundColor: '#6E6D70',
     color: 'rgb(0, 0, 0)',
@@ -78,6 +87,23 @@ const styles = {
     color: 'rgb(0, 0, 0)',
     cursor: 'pointer',
     margin: 'auto',
+=======
+    padding: '1px',
+    backgroundColor: '#fefefe',
+    color: 'rgb(0, 0, 0)',
+    cursor: 'pointer',
+    margin: 'auto',
+    borderRadius: '5px',
+  },
+  settingsButton: {
+    zIndex: 2,
+    padding: '1px',
+    backgroundColor: '#fefefe',
+    color: 'rgb(0, 0, 0)',
+    cursor: 'pointer',
+    margin: 'auto',
+    borderRadius: '5px',
+>>>>>>> Stashed changes
     
   },
   formContainer: {
