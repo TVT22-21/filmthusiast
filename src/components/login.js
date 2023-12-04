@@ -26,11 +26,10 @@ export default function LoginForm() {
     <div>
       {jwtToken.value.length !== 0 ? <h2>Kirjauduttu sisään</h2> :
       <div>
-        <h2>Login</h2>
-        <input onChange={e => setUsername(e.target.value)}/><br/>
-        <input type="password" onChange={e => setPassword(e.target.value)}/><br/>
+        <h2>Kirjaudu sisään</h2>
+        <input type="username" onChange={e => setUsername(e.target.value)} placeholder='Käyttäjätunnus'/><br/>
+        <input type="password" onChange={e => setPassword(e.target.value)} placeholder='Salasana'/><br/>
         <button onClick={login}>Kirjaudu sisään</button>
-        {error && {error}}
       </div>
     }
     </div>
