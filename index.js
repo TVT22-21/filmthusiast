@@ -21,6 +21,9 @@ app.use('/rating', ratingRoute);
 app.use('/person', personRoute);
 
 
+const PORT = process.env.PORT  ;
+
+
 
 app.listen(PORT, function () {
   console.log("Server running on port " + PORT);
