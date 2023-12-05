@@ -1,40 +1,45 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState } from 'react';
+import axios from 'axios';
 
+const NewRating = (idmovie, rating, ratingtext, username) => {
+  let virhe = '';
 
-function NewRating(){
-  const [data, setData] = useState([]);
-  const [idmovie, setIdmovie] = useState('');
-  const [rating, setRating] = useState('');
-  const [ratingtext, setRatingtext] = useState('');
-  const [username, setUname] = useState('');
-  const [virhe, setVirhe] = useState('');
-    axios.post('http://localhost:3001/rating/addrating', { idmovie, rating, ratingtext, username })
-    .then(resp => {
-        console.log('Rating response:', resp.data);
-        if (resp.data.message) {
-          setVirhe(resp.data.message);
-        } else {
-          setVirhe('Arvostelu onnistui!');
-        }
-      })
-      .catch(error => {
-        if (error.response) {
-          console.log('Rating error:', error.response.data);
-          setVirhe(error.response.data.error || 'Arvostelu epäonnistui');
-        } else if (error.request) {
-          console.log('Network error:', error.request);
-          setVirhe('Verkkovirhe, yritä uudelleen myöhemmin');
-        } else {
-          console.error('Error message:', error.message);
-          setVirhe('Arvostelu epäonnistui');
-        }
-      });
-    };
+  const data = new URLSearchParams();
+  data.append('idmovie', idmovie);
+  data.append('rating', rating);
+  data.append('ratingtext', ratingtext);
+  data.append('username', username);
+
+  return axios
+    .post('http://localhost:3001/rating/addrating', data)
+    .then((resp) => {
+      console.log('Rating response:', resp.data);
+      if (resp.data.message) {
+        virhe = resp.data.message;
+      } else {
+        virhe = 'Arvostelu onnistui!';
+      }
+      return virhe;
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.log('Rating error:', error.response.data);
+        virhe = error.response.data.error || 'Arvostelu epäonnistui';
+      } else if (error.request) {
+        console.log('Network error:', error.request);
+        virhe = 'Verkkovirhe, yritä uudelleen myöhemmin';
+      } else {
+        console.error('Error message:', error.message);
+        virhe = 'Arvostelu epäonnistui';
+      }
+      return virhe;
+    });
+};
+
 
     function GetRatingid(idmovie){
       const [data, setData] = useState([]);
-      const [idmovie, setIdmovie] = useState('');
+      const [idmovieparam, setIdmovieparam] = useState('');
       axios.get(`http://localhost:3001/rating/getrating/idmovie?idmovie=${idmovie}`)
         .then(resp => {
             console.log('Response:', resp.data);
@@ -46,7 +51,7 @@ function NewRating(){
     };
 
     function GetRating(username){
-      const [username, setUname] = useState('');
+      const [usernameparam, setUnameparam] = useState('');
       const [data, setData] = useState([]);
         axios.get(`http://localhost:3001/rating/getrating?username=${username}`)
         .then(resp => {
@@ -59,7 +64,7 @@ function NewRating(){
     };
 
     function GetRatingrating(rating){
-      const [rating, setRating] = useState('');
+      const [ratingparam, setRatingparam] = useState('');
       const [data, setData] = useState([]);
         axios.get(`http://localhost:3001/rating/getrating/rating?rating=${rating}`)
         .then(resp => {
@@ -70,3 +75,6 @@ function NewRating(){
         .catch(error => console.log(error.message))
 
     };
+
+
+    export {NewRating};

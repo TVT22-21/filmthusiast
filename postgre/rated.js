@@ -13,13 +13,14 @@ const database = {
       WHERE p.username = $5;
     `,
   GET_RATING: `
-    SELECT r.idrated, r.rating, r.ratingtext, r.ratingdate, p.username
+    SELECT r.idrated, r.idmovie, r.rating, r.ratingtext, r.ratingdate, p.username
     FROM rated r
     JOIN person p ON r.person_idperson = p.idperson
     WHERE p.username = $1;
   `,
   GET_RATINGID: `
     SELECT
+      r.idmovie,
       r.idrated,
       r.rating,
       r.ratingtext,

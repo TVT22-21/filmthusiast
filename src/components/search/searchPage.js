@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { MovieCardById, MovieCardByTitle, PersonCardByPerson } from './searchMovie';
 import { SearchById, SearchByTitle, SearchByPerson } from './searchMovie';
 import './searchPage.css';
+import { NewRating } from '../rated/rated';
 
 
 function SearchPage(){
@@ -23,6 +24,10 @@ function SearchBar(){
 
   function handleSearch(){
     setSearchTerm(searchWord);
+  }
+
+  const handleArvostele = (id) => {
+    console.log(`Arvostele button clicked for ID: ${id}`);
   }
   
   const SearchResultByTitle = SearchByTitle( searchTerm );
@@ -54,6 +59,7 @@ function SearchBar(){
               <p><strong>Language: </strong>{searchdata.original_language}</p>
               <p><strong>Media type: </strong>{searchdata.media_type}</p>
               <p><strong>Genre Ids: </strong>{searchdata.genre_ids+ ','}</p>
+              <button onClick={()=>handleArvostele(searchdata.id)}>Arvostele</button>
             </div>
         ))
         ) : (
@@ -70,6 +76,7 @@ function SearchBar(){
               <p><strong>Language: </strong>{searchdata.original_language}</p>
               <p><strong>Media type: </strong>{searchdata.media_type}</p>
               <p><strong>Genre Ids: </strong>{searchdata.genre_ids+ ','}</p>
+              <button>Arvostele</button>
             </div>
         ))
         ) : (
@@ -85,6 +92,7 @@ function SearchBar(){
               <p><strong>Known for: </strong>{searchdata.known_for_department}</p>
               <p><strong>Media type: </strong>{searchdata.media_type}</p>
               <p><strong>Genre Ids: </strong>{searchdata.genre_ids+ ','}</p>
+              <button>Arvostele</button>
         </div>
       ))
       ) : (
