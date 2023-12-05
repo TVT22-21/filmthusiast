@@ -16,11 +16,10 @@ function getSessionToken(){
 effect(()=>{
     sessionStorage.setItem('token', jwtToken.value);
 
-    if(jwtToken.value.length !== 0){
-        axios.get('/person/login', {headers: {Authorization: "Bearer" + jwtToken.value}})
+    if(jwtToken.value.length > 0){
+        const config = {headers: {Authorization: 'Bearer' + jwtToken.value}}
+        axios.get('/login/private', config)
             .then(resp => userInfo.value = resp.data)
-            .catch(error => console.log(error.message))
-    }else{
-        userInfo.value = null;
+            .catch(err => console.log(err.response.data))
     }
-})
+});

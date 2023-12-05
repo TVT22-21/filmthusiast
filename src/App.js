@@ -2,7 +2,7 @@ import ReactDOM from "react-dom/client"
 import './App.css';
 import { useState } from 'react';
 import RegisterForm from './components/register'
-import LoginForm from './components/login/login'
+import Login from './components/login/login'
 import { BrowserRouter, Switch, Route, Routes } from "react-router-dom";
 function App() {
 
@@ -12,7 +12,7 @@ return(
       <Routes>
         <Route path="/" element={<div>Home Page</div>} />
         <Route path="/register" element={<RegisterForm />} />
-        <Route path="/login" element={<LoginForm />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
 </div>

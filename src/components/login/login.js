@@ -1,25 +1,44 @@
 import { useState } from "react";
 import axios from "axios";
-import {jwtToken} from '../signals';
+import {jwtToken, userInfo} from '../signals';
 import {useNavigate} from "react-router-dom";
 import './login.css';
 
-export default function LoginForm() {
+export default function Login(){
+  return(
+    <div>
+      <UserInfo/>
+      { jwtToken.value.length === 0 ? <LoginForm/> :
+        <button onClick={() => jwtToken.value = ''}>Kirjaudu ulos</button>}
+    </div>
+  )
+}
+
+function UserInfo(){
+  return(
+    <div>
+      {jwtToken.value ? <h1>{userInfo.value?.private}</h1> : <h1>Olet vierailijana</h1>}
+    </div>
+  )
+}
+
+function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
     //return username.length > 0 && password.length > 0;
 
     function login() {
-      setError("");
-      axios.post("http://localhost:3001/postgre/person", { username, password })
+      axios.post("http://localhost:3001/login/login", { username, password })
         .then((resp) => {
+          console.log(resp.data);
           jwtToken.value = resp.data.jwtToken;
-          navigate("/");
+          //navigate("/");
+          setError("");
         })
         .catch((error) => {
-          console.error(error); 
+          console.log(error.response.data); 
           setError("Kirjautuminen epäonnistui. Tarkista salasana.");
         });
     }

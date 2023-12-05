@@ -4,7 +4,7 @@ const upload = multer({dest: 'upload/'});
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const {addPerson, getPerson, checkPerson} = require('../postgre/person')
+const {getPerson, checkPerson} = require('../postgre/person')
 
 router.get('/', async (req,res) => {
     try {
