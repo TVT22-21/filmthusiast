@@ -1,6 +1,6 @@
 const express = require('express');
 const {updateProfiletitle, updateFirstname, updateLastname, updateDescription, 
-getProfile, deleteProfile, createProfile} = require('../postgre/profileController');
+getProfile, getWatchlist, addToWatchlist, deleteFromWatchlist, deleteProfile, createProfile} = require('../postgre/profileController');
 const router = express.Router();
 
 
@@ -86,6 +86,50 @@ router.put('/updateDescription', async (req, res) => {
   } catch (error) {
     console.error('Error updating description:', error);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.put('/addToWatchlist', async (req, res) => {
+  try {
+    if (!req.body) {
+      return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
+    }
+    const { movie_id, person_idperson } = req.body;
+    console.log(req.body);
+    await addToWatchlist(movie_id, person_idperson);
+    res.json({ message: 'Watchlist updated successfully.' });
+  } catch (error) {
+    console.error('Error updating watchlist:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.delete('/deleteFromWatchlist', async (req, res) => {
+  try {
+    if (!req.body) {
+      return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
+    }
+    const { movie_id, person_idperson } = req.body;
+    console.log(req.body);
+    await deleteFromWatchlist(movie_id, person_idperson);
+    res.json({ message: 'Movie deleted from watchlist successfully.' });
+  } catch (error) {
+    console.error('Error updating watchlist:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/getWatchlist/:person_idperson', async (req, res) => {
+
+  try {  
+    if (!req.body) {
+      return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
+    } 
+    const person_idperson = req.params.person_idperson;
+    const profileData = await getWatchlist(person_idperson);
+    res.json(profileData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
