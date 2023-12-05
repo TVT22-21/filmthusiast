@@ -3,12 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { MovieCardById, MovieCardByTitle, PersonCardByPerson } from './searchMovie';
 import { SearchById, SearchByTitle, SearchByPerson } from './searchMovie';
 import './searchPage.css';
+import axios from 'axios';
 
 
 function SearchPage(){
 
   return(
-    <SearchBar />
+    <div>
+      <SearchBar />
+    </div>
   );
 }
 
@@ -94,6 +97,39 @@ function SearchBar(){
 
     </div>
   );
+}
+
+
+function FindId(id){
+
+  const [ImdbId, setImdbId] = useState('');
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const options = {
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NGNmYzA4ZGVhMTAwZTM5OWQ4N2I4NTNlNzViMWZmNCIsInN1YiI6IjY1NjViYzVmYzJiOWRmMDEzYWUzZDU2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rrVdXNYoMFrO2zTlNB55yGjWUPfw3SmiJ4QnKhIbhX0',
+          },
+          params: {
+            query: id,
+          },
+        };
+        const url = 'https://api.themoviedb.org/3/movie/597/external_ids';
+        const searchRes = await axios.get(url, options);
+
+        setImdbId(searchRes.data.imdb_id);
+        console.log(ImdbId);
+
+      } catch (error) {
+        setImdbId('loading');
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+  
+  return ImdbId;
 }
 
 export default SearchPage;

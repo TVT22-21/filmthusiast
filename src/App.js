@@ -6,7 +6,7 @@ import SearchPage from './components/search/searchPage';
 function App(){
 return(
     <div>
-        <Profile />
+        <SearchPage />
     </div>
 )
 }
