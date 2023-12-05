@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-
+/*
 function NewRating(){
   const [data, setData] = useState([]);
   const [idmovie, setIdmovie] = useState('');
@@ -34,7 +34,7 @@ function NewRating(){
 
     function GetRatingid(idmovie){
       const [data, setData] = useState([]);
-      const [idmovie, setIdmovie] = useState('');
+      const [idmovie, setMovieId] = useState('');
       axios.get(`http://localhost:3001/rating/getrating/idmovie?idmovie=${idmovie}`)
         .then(resp => {
             console.log('Response:', resp.data);
@@ -43,21 +43,21 @@ function NewRating(){
         })
         .catch(error => console.log(error.message))
 
-    };
+    };*/
 
-    function GetRating(username){
-      const [username, setUname] = useState('');
+    function GetRating(usernameParam){
+      //const [username, setUname] = useState('');
       const [data, setData] = useState([]);
-        axios.get(`http://localhost:3001/rating/getrating?username=${username}`)
+      //setUname(usernameParam);
+        axios.get(`http://localhost:3001/rating/getrating?username=${usernameParam}`)
         .then(resp => {
-            console.log('Response:', resp.data);
+            //console.log('Response:', resp.data);
             setData(resp.data);
             return data;
         })
         .catch(error => console.log(error.message))
-
     };
-
+/*
     function GetRatingrating(rating){
       const [rating, setRating] = useState('');
       const [data, setData] = useState([]);
@@ -69,4 +69,6 @@ function NewRating(){
         })
         .catch(error => console.log(error.message))
 
-    };
+    };*/
+
+export { GetRating };
