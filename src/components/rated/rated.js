@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 const NewRating = (idmovie, rating, ratingtext, username) => {
-  let virhe = '';
+  const [virhetext, setVirhetext] = useState('');
 
   const data = new URLSearchParams();
   data.append('idmovie', idmovie);
@@ -15,24 +15,24 @@ const NewRating = (idmovie, rating, ratingtext, username) => {
     .then((resp) => {
       console.log('Rating response:', resp.data);
       if (resp.data.message) {
-        virhe = resp.data.message;
+        virhetext = resp.data.message;
       } else {
-        virhe = 'Arvostelu onnistui!';
+        virhetext = 'Arvostelu onnistui!';
       }
-      return virhe;
+      return virhetext;
     })
     .catch((error) => {
       if (error.response) {
         console.log('Rating error:', error.response.data);
-        virhe = error.response.data.error || 'Arvostelu epäonnistui';
+        virhetext = error.response.data.error || 'Arvostelu epäonnistui';
       } else if (error.request) {
         console.log('Network error:', error.request);
-        virhe = 'Verkkovirhe, yritä uudelleen myöhemmin';
+        virhetext = 'Verkkovirhe, yritä uudelleen myöhemmin';
       } else {
         console.error('Error message:', error.message);
-        virhe = 'Arvostelu epäonnistui';
+        virhetext = 'Arvostelu epäonnistui';
       }
-      return virhe;
+      return virhetext;
     });
 };
 
