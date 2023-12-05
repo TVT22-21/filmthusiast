@@ -1,11 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
 
-function newRating(){
-    const [idmovie, setIdmovie] = useState('');
-    const [rating, setRating] = useState('');
-    const [ratingtext, setRatingtext] = useState('');
-    const [username, setUname] = useState('');
+
+function NewRating(){
+  const [data, setData] = useState([]);
+  const [idmovie, setIdmovie] = useState('');
+  const [rating, setRating] = useState('');
+  const [ratingtext, setRatingtext] = useState('');
+  const [username, setUname] = useState('');
+  const [virhe, setVirhe] = useState('');
     axios.post('http://localhost:3001/rating/addrating', { idmovie, rating, ratingtext, username })
     .then(resp => {
         console.log('Rating response:', resp.data);
@@ -27,34 +30,43 @@ function newRating(){
           setVirhe('Arvostelu epäonnistui');
         }
       });
-    }
+    };
 
-    function getRatingid(){
-        const[idmovie, setIdmovie] = useState('');
-        axios.get('http://localhost:3001/rating/getrating/idmovie', {idmovie})
+    function GetRatingid(idmovie){
+      const [data, setData] = useState([]);
+      const [idmovie, setIdmovie] = useState('');
+      axios.get(`http://localhost:3001/rating/getrating/idmovie?idmovie=${idmovie}`)
         .then(resp => {
             console.log('Response:', resp.data);
+            setData(resp.data);
+            return data;
         })
         .catch(error => console.log(error.message))
 
-    }
+    };
 
-    function getRating(){
-        const[username, setUname] = useState('');
-        axios.get('http://localhost:3001/rating/getrating', {username})
+    function GetRating(username){
+      const [username, setUname] = useState('');
+      const [data, setData] = useState([]);
+        axios.get(`http://localhost:3001/rating/getrating?username=${username}`)
         .then(resp => {
             console.log('Response:', resp.data);
+            setData(resp.data);
+            return data;
         })
         .catch(error => console.log(error.message))
 
-    }
+    };
 
-    function getRatingrating(){
-        const[rating, setRating] = useState('');
-        axios.get('http://localhost:3001/rating/getrating/rating', {rating})
+    function GetRatingrating(rating){
+      const [rating, setRating] = useState('');
+      const [data, setData] = useState([]);
+        axios.get(`http://localhost:3001/rating/getrating/rating?rating=${rating}`)
         .then(resp => {
             console.log('Response:', resp.data);
+            setData(resp.data);
+            return data;
         })
         .catch(error => console.log(error.message))
 
-    }
+    };

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import RegisterForm from './components/register/register';
 import './App.css';
@@ -91,6 +92,8 @@ function App() {
       {showRegisterForm && <RegisterForm onClose={closeRegisterModal} />}
     </div>
   );
+
+
 }
 
 export default App;
