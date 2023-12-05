@@ -1,17 +1,13 @@
-import { Profiler } from 'react';
 import './App.css';
-import SearchBar from './components/search/searchPage';
-
-
-
-
-
-function App(){
+import Profile from './components/profile/profile';
+import Rating from './components/rated/rated';
+function App() {
 return(
     <div>
-        <SearchBar />
+       
     </div>
 )
 }
 
 export default App;
+

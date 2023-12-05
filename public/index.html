@@ -26,20 +26,39 @@
     -->
     <link rel="stylesheet" href="styles.css">
     <title>React App</title>
+    <title>JavaScript Animated Background</title>
 
-  </head>
-  <body>
+    <script>
+      
+      function lines(){
+        let sizeW = Math.random() * 12;
+        let duration = Math.random() * 3;
+        let e = document.createElement('div');
+        e.setAttribute('class','circle');
+        document.body.appendChild(e)
+        e.style.width = 2+sizeW+'px';
+        e.style.left = Math.random() * + innerWidth + 'px';
+        e.style.animationDuration = 2 + duration+'s';
+
+        setTimeout(function(){
+        document.body.removeChild(e)
+      },5000);
+      }
+
+   
+      setInterval(function(){
+        lines();
+      },200);
+      
+    </script>
+      </head>
+      <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <div class="animation-container"></div>
+    <div id="root"></div>
+
   </body>
 </html>
