@@ -2,14 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 
 
-export default function Rating() {
+function NewRating(){
   const [data, setData] = useState([]);
   const [idmovie, setIdmovie] = useState('');
   const [rating, setRating] = useState('');
   const [ratingtext, setRatingtext] = useState('');
   const [username, setUname] = useState('');
   const [virhe, setVirhe] = useState('');
-function NewRating(){
     axios.post('http://localhost:3001/rating/addrating', { idmovie, rating, ratingtext, username })
     .then(resp => {
         console.log('Rating response:', resp.data);
@@ -33,89 +32,40 @@ function NewRating(){
       });
     };
 
-    function GetRatingid(){
+    function GetRatingid(idmovie){
+      const [data, setData] = useState([]);
+      const [idmovie, setIdmovie] = useState('');
       axios.get(`http://localhost:3001/rating/getrating/idmovie?idmovie=${idmovie}`)
         .then(resp => {
             console.log('Response:', resp.data);
             setData(resp.data);
+            return data;
         })
         .catch(error => console.log(error.message))
 
     };
 
-    function GetRating(){
+    function GetRating(username){
+      const [username, setUname] = useState('');
+      const [data, setData] = useState([]);
         axios.get(`http://localhost:3001/rating/getrating?username=${username}`)
         .then(resp => {
             console.log('Response:', resp.data);
             setData(resp.data);
+            return data;
         })
         .catch(error => console.log(error.message))
     };
 
-    function GetRatingrating(){
+    function GetRatingrating(rating){
+      const [rating, setRating] = useState('');
+      const [data, setData] = useState([]);
         axios.get(`http://localhost:3001/rating/getrating/rating?rating=${rating}`)
         .then(resp => {
             console.log('Response:', resp.data);
             setData(resp.data);
+            return data;
         })
         .catch(error => console.log(error.message))
 
     };
-
-    return (
-      <div>
-        <label>
-          Movie ID:
-          <input
-            type="text"
-            value={idmovie}
-            onChange={(e) => setIdmovie(e.target.value)}
-          />
-        </label>
-        <button type="button" onClick={GetRatingid}>
-          Test getRatingid
-        </button>
-
-        <label>
-          RATING:
-          <input
-            type="text"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-          />
-        </label>
-        <button type="button" onClick={GetRatingrating}>
-          Test Ratingvalue
-        </button>
-
-        <label>
-          USERNAME:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUname(e.target.value)}
-          />
-        </label>
-        <button type="button" onClick={GetRating}>
-          Test Ratingvalue
-        </button>
-        {data.length > 0 && (
-          <div>
-            <p>Response:</p>
-            <ul>
-              {data.map((item, index) => (
-                <li key={index}>
-                  <strong>Rating:</strong> {item.rating}, 
-                  <strong> Text:</strong> {item.ratingtext}, 
-                  <strong> Date:</strong> {item.ratingdate}, 
-                  <strong> Username:</strong> {item.username}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    );
-  }
-
- 
