@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import {jwtToken, userInfo} from '../signals';
+import {jwtToken, userInfo} from '../register/signals';
 import {useNavigate} from "react-router-dom";
 import './login.css';
 
