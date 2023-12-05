@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-
+import './searchPage.css';
 
 function SearchById( movieId ){
   
@@ -113,15 +113,14 @@ function MovieCardById({movieData}){
     <div>
       {Array.isArray(movieData) ? (
         movieData.map((searchdata) => (
-          <div key={searchdata.id}>
+          <div className='movie-card' key={searchdata.id}>
             {searchdata.poster_path && (
               <img src={`https://images.tmdb.org/t/p/w200${searchdata.poster_path}`} alt={`Poster for ${searchdata.title}`} />
             )}
+            <p><strong>Rating: </strong>7.5</p>
             <p><strong>{searchdata.original_title}</strong></p>
             <p><strong>Release Date: </strong>{searchdata.release_date}</p>
-            <p><strong>Language: </strong>{searchdata.original_language}</p>
             <p><strong>Media type: </strong>{searchdata.media_type}</p>
-            <p><strong>Genre Ids: </strong>{searchdata.genre_ids+ ','}</p>
           </div>
       ))
       ) : (
@@ -136,15 +135,14 @@ function MovieCardByTitle({movieData}){
     <div>
       {Array.isArray(movieData) ? (
         movieData.map((searchdata) => (
-          <div key={searchdata.id}>
+          <div className='movie-card' key={searchdata.id}>
             {searchdata.poster_path && (
               <img src={`https://images.tmdb.org/t/p/w200${searchdata.poster_path}`} alt={`Poster for ${searchdata.title}`} />
             )}
+            <p><strong>Rating: </strong>7.5</p>
             <p><strong>{searchdata.original_title}</strong></p>
             <p><strong>Release Date: </strong>{searchdata.release_date}</p>
-            <p><strong>Language: </strong>{searchdata.original_language}</p>
-            <p><strong>Media type: </strong>{searchdata.media_type}</p>
-            <p><strong>Genre Ids: </strong>{searchdata.genre_ids+ ','}</p>
+            
           </div>
       ))
       ) : (
@@ -161,14 +159,13 @@ function PersonCardByPerson({movieData}){
     <div>
       {Array.isArray(movieData) ? (
       movieData.map((searchdata) => (
-        <div key={searchdata.id}>
+        <div className='movie-card' key={searchdata.id}>
           {searchdata.poster_path && (
             <img src={`https://images.tmdb.org/t/p/w200${searchdata.profile_path}`} alt={`Poster for ${searchdata.title}`} />
           )}
           <p><strong>Name: </strong>{searchdata.name}</p>
           <p><strong>Known for: </strong>{searchdata.known_for_department}</p>
-          <p><strong>Media type: </strong>{searchdata.media_type}</p>
-          <p><strong>Genre Ids: </strong>{searchdata.genre_ids+ ','}</p>
+          
         </div>
       ))
       ) : (

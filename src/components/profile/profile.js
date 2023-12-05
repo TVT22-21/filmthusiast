@@ -74,13 +74,31 @@ function Information(){
 function Content(){
 
   const [contentType, setContentType] = useState('ratings');
+  cosnt [idList, setIdList] = useState('');
   const [watchlist, setWatchlist] = useState([]);
 
   function handleToggle(type) {
     setContentType(type);
+    if(type == 'ratings'){
+      useEffect(() => {
+        async function fetchData() {
+          try {
+            const getWatchlistRes = await axios.get('http://localhost:3001/profile/getRatings/23')
+            setWatchlist(getWatchlistRes.data);
+            console.log('Response data:', getWatchlistRes.data);
+    
+          } catch (error) {
+            setWatchlist('loading');
+            console.error(error);
+          }
+        }
+        fetchData();
+      }, []);
+    }
   }
+
   const SearchResultByTitle = SearchByTitle( 'lord of the rings' );
-  const SearchResultById = SearchById( 'tt2294629' );
+  const SearchResultById = SearchById( idList );
   const SearchResultByPerson = SearchByPerson( 'keanu reeves' );
   console.log(SearchResultById);
 
@@ -122,9 +140,7 @@ function Content(){
           <div>
             <h2>Movie Ratings</h2>
             <div className="ratings-container">
-              <MovieCardById movieData={SearchResultById} />
-              <MovieCardByTitle movieData={SearchResultByTitle} />
-              <PersonCardByPerson movieData={SearchResultByPerson} />         
+              <MovieCardById movieData={SearchResultById} />        
             </div> 
           </div>
         )}
@@ -151,6 +167,11 @@ function Content(){
     </div>
   );
 }
+
+function getWatchlist(){
+  
+}
+
 
 export default Profile;
 

@@ -46,7 +46,6 @@ function newRating(){
             console.log('Response:', resp.data);
         })
         .catch(error => console.log(error.message))
-
     }
 
     function getRatingrating(){
