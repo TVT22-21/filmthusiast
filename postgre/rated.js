@@ -22,6 +22,7 @@ const database = {
     SELECT
       r.idmovie,
       r.idrated,
+      r.idmovie,
       r.rating,
       r.ratingtext,
       r.ratingdate,
