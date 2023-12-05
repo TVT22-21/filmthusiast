@@ -1,11 +1,15 @@
-
 import React, { useState } from 'react';
-import RegisterForm from './components/register';  // Adjust the import path accordingly
+import RegisterForm from './components/register/register';
+import './App.css';
 import styles from './styles';
-import CategoryButton from './components/CategoryButton';
+import CategoryButton from './components/Cathegory/CategoryButton';
+import SearchPage from './components/search/searchPage';
+import Profile from './components/profile/profile';
+
 
 function App() {
   const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
 
   const openLoginModal = () => {
     document.getElementById("loginModal").style.display = "block";
@@ -28,34 +32,40 @@ function App() {
       closeLoginModal();
     }
   };
-  
+
+  const handleOpenProfile = () => {
+    setShowProfile(true);
+  };
 
   const categories = ["Category 1", "Category 2", "Category 3"];
+  
 
   return (
     <div>
       <div className="animation-container"></div>
-
       <div style={styles.appContainer}>
-        <CategoryButton categories={categories} />
+        
         <div style={styles.body} className="App">
-
+        
         <div style={styles.middleBar}></div>
-          
+        <form1>
+        <CategoryButton categories={categories} style={styles.formElement} />
+        </form1>
           <header style={styles.header}>
             <h1 style={styles.h1}>Filmthusiast</h1>
-            <form action="#" method="get">
-              <input style={styles.inputText} type="text" name="search" placeholder="Search..." />
-              <input style={styles.inputSubmit} type="submit" value="Search" />
-              <button onClick={openLoginModal} style={styles.button}>
-                Sign in
+            <SearchPage style={styles.formElement} />
+            <form style={styles.form} action="#" method="get">
+              
+            <button onClick={handleOpenProfile}>Open Profile</button>
+      {showProfile && <Profile />} {/* Render the Profile component when showProfile is true */}
+              
+
+              <button onClick={openLoginModal} className="button">
+              Sign in
               </button>
-              <button onClick={openRegisterModal} style={{ ...styles.button, ...styles.registrationButton }} className="registration-button">
-                Register
-              </button>
-              <button style={{ ...styles.button, ...styles.settingsButton }} className="settings-button">
-                Settings
-              </button>
+              <button onClick={openRegisterModal} className="registration-button">
+              Register
+              </button>          
             </form>
           </header>
         </div>
@@ -76,8 +86,8 @@ function App() {
             <input style={styles.inputSubmit} type="submit" value="Login" />
           </form>
         </div>
-      </div>
 
+      </div>
       {showRegisterForm && <RegisterForm onClose={closeRegisterModal} />}
     </div>
   );

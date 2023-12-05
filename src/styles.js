@@ -2,40 +2,37 @@ const styles = {
   body: {
     margin: 0,
     padding: 0,
-    fontFamily: 'Arial, sans-serif',
-
+    fontFamily: 'rubik',
+    
   },
 
   header: {
     backgroundColor: '#111',
     padding: '10px',
     textAlign: 'center',
-<<<<<<< Updated upstream
-=======
-    
->>>>>>> Stashed changes
   },
+
   inputText: {
     padding: '8px',
     width: '300px',
   },
+  
   inputTextPassword: {
     padding: '8px',
     width: 'calc(20% - 10px)',
     marginBottom: '10px',
     boxSizing: 'border-box',
   },
+
   inputSubmit: {
     padding: '8px 15px',
     backgroundColor: 'rgb(0, 0, 0)',
     color: 'white',
     border: 'none',
     cursor: 'pointer',
-<<<<<<< Updated upstream
-=======
     borderRadius: '5px',
->>>>>>> Stashed changes
   },
+
   modal: {
     display: 'none',
     position: 'fixed',
@@ -48,6 +45,7 @@ const styles = {
     backgroundColor: 'rgb(0, 0, 0)',
     paddingTop: '60px',
   },
+
   modalContent: {
     backgroundColor: '#fefefe',
     margin: '5% auto',
@@ -55,12 +53,14 @@ const styles = {
     border: '1px solid #888',
     width: '80%',
   },
+
   close: {
     color: '#aaa',
     float: 'right',
     fontSize: '28px',
     fontWeight: 'bold',
   },
+
   closeHoverFocus: {
     color: 'black',
     textDecoration: 'none',
@@ -71,23 +71,9 @@ const styles = {
     zIndex: 2,
     marginLeft: '10px',
   },
+
   registrationButton: {
     zIndex: 2,
-<<<<<<< Updated upstream
-    padding: '2px',
-    backgroundColor: '#6E6D70',
-    color: 'rgb(0, 0, 0)',
-    cursor: 'pointer',
-    margin: 'auto',
-  },
-  settingsButton: {
-    zIndex: 2,
-    padding: '2px',
-    backgroundColor: '#6E6D70',
-    color: 'rgb(0, 0, 0)',
-    cursor: 'pointer',
-    margin: 'auto',
-=======
     padding: '1px',
     backgroundColor: '#fefefe',
     color: 'rgb(0, 0, 0)',
@@ -95,28 +81,37 @@ const styles = {
     margin: 'auto',
     borderRadius: '5px',
   },
-  settingsButton: {
-    zIndex: 2,
-    padding: '1px',
-    backgroundColor: '#fefefe',
-    color: 'rgb(0, 0, 0)',
-    cursor: 'pointer',
-    margin: 'auto',
-    borderRadius: '5px',
->>>>>>> Stashed changes
-    
-  },
+
   formContainer: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'flex-end',
+      justifyContent: 'center',
+      margin: '0 auto',
+      maxWidth: '800px',
   },
+  formElement: {
+    marginRight: '10px',
+    
+  },
+
   h1: {
     color: '#fefefe',
   },
+
   appContainer: {
     position: 'relative',
-    zIndex: 2, // Set a higher z-index for the appContainer to be on top
+    zIndex: 2, 
+  },
+  
+  form: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center', 
+  },
+  form1: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center', 
   },
   
 };
