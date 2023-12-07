@@ -167,7 +167,6 @@ function Content(){
           <div>
             <h2>Watch List</h2>
             <div class="watchlist-container">
-
             </div>
           </div>
         )}

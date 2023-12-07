@@ -132,7 +132,6 @@ function MovieCardById({movieData}){
   );
 };
 
-
 function MovieCardByTitle({movieData}){
   return (
     <div>
