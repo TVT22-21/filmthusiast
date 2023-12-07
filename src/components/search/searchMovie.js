@@ -8,7 +8,7 @@ function SearchById( movieId ){
     const [searchMovie, setSearch] = useState([]);
 
     useEffect(() => {
-      async function fetchData() {
+      async function fetchDataSearchById() {
         try {      
           const options = {
             headers: {
@@ -19,22 +19,21 @@ function SearchById( movieId ){
                 external_source: 'imdb_id',
             }
             };
-
+          console.log(movieId);  
           const url = `https://api.themoviedb.org/3/find/${movieId}`;
 
           const searchRes = await axios.get(url, options);
-          console.log(searchRes);
           setSearch(searchRes.data.movie_results);
           console.log('Response data:', searchRes.data.movie_results);
   
         } catch (error) {
           setSearch('loading');
-          console.error(error);
+          //console.error(error);
         }
       }
-      fetchData();
+      fetchDataSearchById();
     }, [movieId]);
-  
+    
     return searchMovie;
 };
 
@@ -43,7 +42,7 @@ function SearchByTitle(movieTitle) {
   const [searchResult, setResult] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchDataSearchByTitle() {
       try {
         const options = {
           headers: {
@@ -64,7 +63,7 @@ function SearchByTitle(movieTitle) {
         console.error(error);
       }
     }
-    fetchData();
+    fetchDataSearchByTitle();
   }, [movieTitle]);
 
   return searchResult;
@@ -76,7 +75,7 @@ function SearchByPerson( person ){
   const [searchPerson, setSearch] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchDataSearchByPerson() {
       try {      
         const options = {
           headers: {
@@ -100,7 +99,7 @@ function SearchByPerson( person ){
         console.error(error);
       }
     }
-    fetchData();
+    fetchDataSearchByPerson();
   }, [person]);
 
   return searchPerson;
@@ -175,4 +174,38 @@ function PersonCardByPerson({movieData}){
   );
 };
 
-export { SearchById, SearchByTitle, SearchByPerson, MovieCardById, MovieCardByTitle, PersonCardByPerson };
+
+function SearchByIdWithCard( movieId ){
+  
+  const [searchMovie, setSearch] = useState([]);
+
+  useEffect(() => {
+    async function fetchDataSearchById() {
+      try {      
+        const options = {
+          headers: {
+              accept: 'application/json',
+              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NGNmYzA4ZGVhMTAwZTM5OWQ4N2I4NTNlNzViMWZmNCIsInN1YiI6IjY1NjViYzVmYzJiOWRmMDEzYWUzZDU2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rrVdXNYoMFrO2zTlNB55yGjWUPfw3SmiJ4QnKhIbhX0'
+          },
+          params: {
+              external_source: 'imdb_id',
+          }
+          };
+
+        const url = `https://api.themoviedb.org/3/find/${movieId.movieId}`;
+
+        const searchRes = await axios.get(url, options);
+        setSearch(searchRes.data.movie_results);
+
+      } catch (error) {
+        setSearch('loading');
+        //console.error(error);
+      }
+    }
+    fetchDataSearchById();
+  }, [movieId]);
+  
+  return (<MovieCardById movieData={searchMovie} />);
+};
+
+export { SearchById, SearchByTitle, SearchByPerson, MovieCardById, MovieCardByTitle, PersonCardByPerson, SearchByIdWithCard };

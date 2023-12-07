@@ -28,6 +28,24 @@ main{
     background-color: rgb(211, 214, 164);
 }
 
+.info-container img{
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+
+    cursor: pointer;
+}
+
+.profile-title-container{
+    display: flex;
+    align-items: center;
+}
+
+.profile-desc-container{
+    display: flex;
+    align-items: center;
+}
+
 .content-nav{
     margin-top: 20px;
 }
@@ -49,6 +67,7 @@ main{
 
 .watchlist-container{
     display: flex;
+    flex-wrap: wrap;
 }
 
 .movie-info-card {
