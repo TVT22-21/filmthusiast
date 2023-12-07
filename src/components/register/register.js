@@ -25,8 +25,20 @@ export default function RegisterForm() {
               }
             })
             .catch(error => {
+
               console.log('Registration error:', error.response.data);
               setVirhe(error.response.data.error || 'Rekisteröinti epäonnistui');
+              if (error.response) {
+                console.log('Registration error:', error.response.data);
+                setVirhe(error.response.data.error || 'Rekisteröinti epäonnistui');
+              } else if (error.request) {
+                console.log('Network error:', error.request);
+                setVirhe('Verkkovirhe, yritä uudelleen myöhemmin');
+              } else {
+                console.error('Error message:', error.message);
+                setVirhe('Rekisteröinti epäonnistui');
+              }
+
             });
         } else {
           setVirhe('Salasanat eivät täsmää');

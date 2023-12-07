@@ -1,166 +1,33 @@
-<<<<<<< Updated upstream
-import React from 'react';
-import styles from './styles';
-import CategoryButton from './components/CategoryButton'; 
+import React from "react";
+import ReactDOM from 'react-dom';
+import './App.css';
+import { useState } from 'react';
+import RegisterForm from './components/register/register';
+import Profile from './components/profile/profile';
+import Login from './components/login/login'
+import Homepage from "./components/homepage/homepage";
+import Group from './components/group/group'
 
 
 
+import { BrowserRouter, Switch, Route, Routes } from "react-router-dom";
 function App() {
-    const openLoginModal = () => {
-        document.getElementById('loginModal').style.display = 'block';
-      };
-    
-      const closeLoginModal = () => {
-        document.getElementById('loginModal').style.display = 'none';
-      };
-    
-      const handleModalClick = (event) => {
-        if (event.target.id === 'loginModal') {
-          closeLoginModal();
-        }
-      };
-      
-        const categories = ['Category 1', 'Category 2', 'Category 3'];
-    
-        return (
-          <div>
-            <div className="animation-container"></div>
-      
-            <div style={styles.appContainer}>
-              {/* Your buttons, text, and other content */}
-              <CategoryButton categories={categories} />
-              <div style={styles.body} className="App">
-                <header style={styles.header}>
-                  <h1 style={styles.h1}>Filmthusiast</h1>
-                  <form action="#" method="get">
-                    <input style={styles.inputText} type="text" name="search" placeholder="Search..." />
-                    <input style={styles.inputSubmit} type="submit" value="Search" />
-                    <button onClick={openLoginModal} style={styles.button}>Sign in</button>
-                    <button style={{ ...styles.button, ...styles.registrationButton }} className="registration-button">Sign up</button>
-                    <button style={{ ...styles.button, ...styles.settingsButton }} className="settings-button">Settings</button>
-                  
-                  </form>
-             
-                </header>
-                </div>
-      </div>
-    
-          <div
-            id="loginModal"
-            className="modal"
-            onClick={handleModalClick}
-          >
-            <div style={styles.modalContent}>
-              <span style={styles.close} onClick={closeLoginModal}>&times;</span>
-              <h2>Login</h2>
-              <form action="#" method="post">
-                <label htmlFor="username">Username:</label>
-                <input style={styles.inputText} type="text" id="username" name="username" required />
-                <br />
-                <label htmlFor="password">Password:</label>
-                <input style={styles.inputText} type="password" id="password" name="password" required />
-    
-                <input style={styles.inputSubmit} type="submit" value="Login" />
-              </form>
-              
 
-              
-            </div>
-          </div>
-        </div>
-        
-        
-  );
+return(
+<div>
   
-};
-   
-    
-    
-    export default App;
-=======
-import React, { useState } from 'react';
-import RegisterForm from './components/register';  // Adjust the import path accordingly
-import styles from './styles';
-import CategoryButton from './components/CategoryButton';
-
-function App() {
-  const [showRegisterForm, setShowRegisterForm] = useState(false);
-
-  const openLoginModal = () => {
-    document.getElementById("loginModal").style.display = "block";
-  };
-
-  const closeLoginModal = () => {
-    document.getElementById("loginModal").style.display = "none";
-  };
-
-  const openRegisterModal = () => {
-    setShowRegisterForm(true);
-  };
-
-  const closeRegisterModal = () => {
-    setShowRegisterForm(false);
-  };
-
-  const handleModalClick = (event) => {
-    if (event.target.id === "loginModal") {
-      closeLoginModal();
-    }
-  };
-  
-
-  const categories = ["Category 1", "Category 2", "Category 3"];
-
-  return (
-    <div>
-      <div className="animation-container"></div>
-
-      <div style={styles.appContainer}>
-        <CategoryButton categories={categories} />
-        <div style={styles.body} className="App">
-
-        <div style={styles.middleBar}></div>
-          
-          <header style={styles.header}>
-            <h1 style={styles.h1}>Filmthusiast</h1>
-            <form action="#" method="get">
-              <input style={styles.inputText} type="text" name="search" placeholder="Search..." />
-              <input style={styles.inputSubmit} type="submit" value="Search" />
-              <button onClick={openLoginModal} style={styles.button}>
-                Sign in
-              </button>
-              <button onClick={openRegisterModal} style={{ ...styles.button, ...styles.registrationButton }} className="registration-button">
-                Register
-              </button>
-              <button style={{ ...styles.button, ...styles.settingsButton }} className="settings-button">
-                Settings
-              </button>
-            </form>
-          </header>
-        </div>
-      </div>
-
-      <div id="loginModal" className="modal" onClick={handleModalClick}>
-        <div style={styles.modalContent}>
-          <span style={styles.close} onClick={closeLoginModal}>
-            &times;
-          </span>
-          <h2>Login</h2>
-          <form action="#" method="post">
-            <label htmlFor="username">Username:</label>
-            <input style={styles.inputText} type="text" id="username" name="username" required />
-            <br />
-            <label htmlFor="password">Password:</label>
-            <input style={styles.inputText} type="password" id="password" name="password" required />
-            <input style={styles.inputSubmit} type="submit" value="Login" />
-          </form>
-        </div>
-      </div>
-
-      {showRegisterForm && <RegisterForm onClose={closeRegisterModal} />}
-    </div>
-  );
+<BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} /> 
+        <Route path="/group" element={<Group/>} />       
+      </Routes>
+    </BrowserRouter>
+</div>
+);
 }
+ReactDOM.render(<App />, document.getElementById('root'));
 
 export default App;
->>>>>>> Stashed changes
