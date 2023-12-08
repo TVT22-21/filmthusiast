@@ -6,6 +6,7 @@ const ratingRoute = require('./routes/rating');
 const profileRoute = require('./routes/profileRoute');
 const personRoute = require('./routes/personRoute');
 const loginRoute = require('./routes/login');
+const settingsRoute = require('./routes/settingsRoute');
 const app = express();
 const cors = require('cors');
 
@@ -20,6 +21,7 @@ app.use('/profile', profileRoute);
 app.use('/rating', ratingRoute);
 app.use('/person', personRoute);
 app.use('/login', loginRoute);
+app.use('/settings', settingsRoute);
 
 
 app.listen(PORT, function () {
