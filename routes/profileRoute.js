@@ -119,28 +119,28 @@ router.delete('/deleteFromWatchlist', async (req, res) => {
   }
 });
 
-router.get('/getWatchlist/:person_idperson', async (req, res) => {
+router.get('/getWatchlist/:username', async (req, res) => {
 
   try {  
     if (!req.body) {
       return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
     } 
-    const person_idperson = req.params.person_idperson;
-    const profileData = await getWatchlist(person_idperson);
+    const username = req.params.username;
+    const profileData = await getWatchlist(username);
     res.json(profileData);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-router.get('/getProfile/:person_idperson', async (req, res) => {
+router.get('/getProfile/:username', async (req, res) => {
 
   try {  
     if (!req.body) {
       return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
     } 
-    const person_idperson = req.params.person_idperson;
-    const profileData = await getProfile(person_idperson);
+    const username = req.params.username;
+    const profileData = await getProfile(username);
     res.json(profileData);
   } catch (error) {
     res.status(500).json({ error: error.message });

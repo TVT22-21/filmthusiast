@@ -16,11 +16,10 @@ app.use(express.static('public'));
 
 const PORT = process.env.PORT;
 
+app.use('/login', loginRoute);
 app.use('/profile', profileRoute);
 app.use('/rating', ratingRoute);
 app.use('/person', personRoute);
-app.use('/login', loginRoute);
-
 
 
 app.listen(PORT, function () {
