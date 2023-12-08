@@ -106,12 +106,12 @@ const styles = {
   form: {
     display: 'flex',
     justifyContent: 'flex-end',
-    alignItems: 'center', // Optional, if you want to vertically center the items
+    alignItems: 'center', 
   },
   form1: {
     display: 'flex',
     justifyContent: 'flex-end',
-    alignItems: 'center', // Optional, if you want to vertically center the items
+    alignItems: 'center', 
   },
   
 };
