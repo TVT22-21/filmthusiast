@@ -5,18 +5,17 @@ import RegisterForm from './components/register'
 import Profile from './components/profile/profile';
 import Login from './components/login/login'
 import { BrowserRouter, Switch, Route, Routes } from "react-router-dom";
+import SearchPage from "./components/search/searchPage";
+import TestForm from "./components/test";
+import NewestRated from "./components/viewrated/newest";
+import TopRatedMovies from "./components/viewrated/toprated";
 function App() {
 
 return(
 <div>
-<BrowserRouter>
-      <Routes>
-        <Route path="/" element={<div>Home Page</div>} />
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
-    </BrowserRouter>
+<NewestRated/>
+<TopRatedMovies/>
 </div>
-
+)
+}
 export default App;

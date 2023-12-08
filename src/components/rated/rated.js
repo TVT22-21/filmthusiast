@@ -1,39 +1,34 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-const NewRating = (idmovie, rating, ratingtext, username) => {
-  const [virhetext, setVirhetext] = useState('');
-
-  const data = new URLSearchParams();
-  data.append('idmovie', idmovie);
-  data.append('rating', rating);
-  data.append('ratingtext', ratingtext);
-  data.append('username', username);
-
-  return axios
-    .post('http://localhost:3001/rating/addrating', data)
-    .then((resp) => {
-      console.log('Rating response:', resp.data);
-      if (resp.data.message) {
-        virhetext = resp.data.message;
-      } else {
-        virhetext = 'Arvostelu onnistui!';
-      }
-      return virhetext;
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.log('Rating error:', error.response.data);
-        virhetext = error.response.data.error || 'Arvostelu epäonnistui';
-      } else if (error.request) {
-        console.log('Network error:', error.request);
-        virhetext = 'Verkkovirhe, yritä uudelleen myöhemmin';
-      } else {
-        console.error('Error message:', error.message);
-        virhetext = 'Arvostelu epäonnistui';
-      }
-      return virhetext;
+const NewRating = async (idmovie, rating, ratingtext, username) => {
+  try {
+    const response = await axios.post('http://localhost:3001/rating/addrating', {
+      idmovie,
+      rating,
+      ratingtext,
+      username,
     });
+
+    console.log('Rating response:', response.data);
+
+    if (response.data.message) {
+      return Promise.reject(response.data.message);
+    } else {
+      return Promise.resolve('Arvostelu onnistui!');
+    }
+  } catch (error) {
+    if (error.response) {
+      console.log('Rating error:', error.response.data);
+      return Promise.reject(error.response.data.error || 'Arvostelu epäonnistui');
+    } else if (error.request) {
+      console.log('Network error:', error.request);
+      return Promise.reject('Verkkovirhe, yritä uudelleen myöhemmin');
+    } else {
+      console.error('Error message:', error.message);
+      return Promise.reject('Arvostelu epäonnistui');
+    }
+  }
 };
 
 
@@ -75,6 +70,8 @@ const NewRating = (idmovie, rating, ratingtext, username) => {
         .catch(error => console.log(error.message))
 
     };
+
+    
 
 
     export {NewRating};

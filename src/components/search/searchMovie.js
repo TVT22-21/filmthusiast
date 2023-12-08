@@ -38,6 +38,36 @@ function SearchById( movieId ){
     return searchMovie;
 };
 
+function FindId(databaseId) {
+
+  console.log('FindId', databaseId);
+  const [ ImdbId, setImdbId ] = useState('');
+  useEffect(() => {
+    console.log('Imdbid', ImdbId);
+    async function fetchData() {
+      try {
+        const options = {
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NGNmYzA4ZGVhMTAwZTM5OWQ4N2I4NTNlNzViMWZmNCIsInN1YiI6IjY1NjViYzVmYzJiOWRmMDEzYWUzZDU2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rrVdXNYoMFrO2zTlNB55yGjWUPfw3SmiJ4QnKhIbhX0',
+          }
+        };
+        const url = 'https://api.themoviedb.org/3/movie/'+ databaseId +'/external_ids'
+        const searchRes = await axios.get(url, options);
+
+        setImdbId(searchRes.data.imdb_id);
+        console.log(ImdbId);
+
+      } catch (error) {
+        setImdbId('loading');
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, [databaseId]);
+  console.log('ImdbID:', ImdbId);
+  return ImdbId;
+}
 
 function SearchByTitle(movieTitle) {
   const [searchResult, setResult] = useState([]);
@@ -175,4 +205,4 @@ function PersonCardByPerson({movieData}){
   );
 };
 
-export { SearchById, SearchByTitle, SearchByPerson, MovieCardById, MovieCardByTitle, PersonCardByPerson };
+export { SearchById, SearchByTitle, SearchByPerson, MovieCardById, MovieCardByTitle, PersonCardByPerson, FindId };

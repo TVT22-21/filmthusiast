@@ -3,17 +3,21 @@ import { NewRating } from '../components/rated/rated';
 
 const TestForm = () => {
     // State variables
-    const [idmovie, setIdmovie] = useState('55');
-    const [rating, setRating] = useState('2');
-    const [ratingtext, setRatingtext] = useState('asdasdasd');
-    const [username, setUsername] = useState('niilo');
+    const [idmovie, setIdmovie] = useState('');
+    const [rating, setRating] = useState('');
+    const [ratingtext, setRatingtext] = useState('');
+    const [username, setUsername] = useState('');
   
     // Event handler for button click
     const handleRatingSubmit = async () => {
-      console.log(idmovie, rating, ratingtext, username);
-      const result = await NewRating(idmovie, rating, ratingtext, username);
-      console.log('Result:', result);
-    };
+        console.log(idmovie, rating, ratingtext, username);
+        try {
+          const result = await NewRating(idmovie, rating, ratingtext, username);
+          console.log('Result:', result);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
 
     // JSX rendering
     return (
