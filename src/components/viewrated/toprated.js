@@ -1,11 +1,13 @@
-import '../search/searchPage.css';
+import './viewrated.css';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { SearchById } from '../search/searchMovie';
+import { MovieCard, SearchById } from '../search/searchMovie';
+import { SearchByIdWithCard,RatingCard } from '../search/searchMovie';
 
 const TopRatedMovies = () => {
   const [topRated, setTopRated] = useState([]);
+  const [movieData, setMovieData] = useState({});
 
   useEffect(() => {
     const fetchTopRatedMovies = async () => {
@@ -30,14 +32,18 @@ const TopRatedMovies = () => {
   return (
     <div>
       <h2>Top 5 Rated Movies</h2>
-      <ul>
-        {topRated.map((movie, index) => (
-          <li key={index}>
-            {movie.idmovie} - 
-            Rating: {movie.rating} - 
-            {movie.ratingtext} - 
-            {movie.ratingdate} - 
-            {movie.username}
+      <ul className="movieList">
+        {topRated.map((movie, index) => (                         
+          <li key={index} className="movieListItem">
+            <div className="movieCardContainer">
+              <SearchByIdWithCard movieId={movie.idmovie}/>
+              <RatingCard RatingData={{
+                username: movie.username,
+                rating: movie.rating,
+                ratingtext: movie.ratingtext,
+                ratingdate: movie.ratingdate,
+              }}/>
+            </div>
           </li>
         ))}
       </ul>
