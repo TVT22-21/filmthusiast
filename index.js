@@ -24,14 +24,13 @@ app.use('/groups', groupRoute);
 
 app.post('/groups/create', (req, res) => {
   console.log('Received request to create a group');
-  // ... rest of the code
+
 });
 app.post('/groups/join', (req, res) => {
-  console.log('Received request to join a group');
-  // ... rest of the code
+
 });
 
-// Start the server
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
