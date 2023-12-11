@@ -4,7 +4,7 @@ const upload = multer({dest: 'upload/'});
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const {addPerson, getPerson, checkPerson} = require('../postgre/person')
+const {getPerson, checkPerson} = require('../postgre/person')
 
 router.get('/', async (req,res) => {
     try {
@@ -36,11 +36,11 @@ router.post('/login',upload.none(), async (req,res)=> {
 });
 
 router.get('/private', async (req,res)=>{
-    const token = req.headers.authorization?.split(' ')[1];
-    
+    const token = req.headers.authorization?.split(' ')[1];   
+
     try{
         const username = jwt.verify(token, process.env.JWT_SECRET_KEY).username;
-        res.status(200).json({private: 'This is private for' + username});
+        res.status(200).json({private: username});
     }catch (error){
         res.status(403).json({error: 'Access forbidden'});
     }

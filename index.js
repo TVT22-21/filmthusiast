@@ -5,7 +5,7 @@ const express = require('express');
 const ratingRoute = require('./routes/rating');
 const profileRoute = require('./routes/profileRoute');
 const personRoute = require('./routes/personRoute');
-const login = require('./routes/login');
+const loginRoute = require('./routes/login');
 const app = express();
 const cors = require('cors');
 
@@ -16,13 +16,10 @@ app.use(express.static('public'));
 
 const PORT = process.env.PORT;
 
+app.use('/login', loginRoute);
 app.use('/profile', profileRoute);
 app.use('/rating', ratingRoute);
 app.use('/person', personRoute);
-
-
-const PORT = process.env.PORT  ;
-
 
 
 app.listen(PORT, function () {

@@ -7,7 +7,8 @@ const database = {
     UPDATE_PASSWORD: 'UPDATE person SET password = $1 WHERE username = $2',
     UPDATE_EMAIL: 'UPDATE person SET email = $1 WHERE username = $2',
     CHECK_USERNAME: 'SELECT * FROM person WHERE username = $1',
-    CHECK_EMAIL: 'SELECT * FROM person WHERE email = $1'
+    CHECK_EMAIL: 'SELECT * FROM person WHERE email = $1',
+    GET_PW: 'SELECT password FROM person WHERE username = $1'
 };
 
 async function addPerson(username, password, email, createdate){
