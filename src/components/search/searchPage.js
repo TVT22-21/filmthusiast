@@ -5,7 +5,6 @@ import { SearchById, SearchByTitle, SearchByPerson } from './searchMovie';
 import './searchPage.css';
 import axios from 'axios';
 
-
 function SearchPage(){
 
   return(
@@ -22,8 +21,8 @@ function SearchBar(){
   const [isEditing, setIsEditing] = useState(false);
   const [selectedGenreCodes, setSelectedGenreCodes] = useState([]);
 
-
   const SearchResultByTitle = SearchByTitle(searchTerm);
+  
   const filteredMovies = SearchResultByTitle.filter((movie) =>
     selectedGenreCodes.every((selectedGenre) => movie.genre_ids.includes(selectedGenre.code))
   );
@@ -46,16 +45,16 @@ function SearchBar(){
 
 
   return (
-    <div className='search-container'>
-      <div className='search-bar-container'>
+    <div class='search-container'>
+      <div class='search-bar-container'>
         <input
-          className='search-bar'
+          class='search-bar'
           type="text"
           placeholder="Search..."
           value={searchWord}
           onChange={handleInputChange}
         />
-        <button className='search-btn' onClick={handleSearch}>Search</button>
+        <button class='search-btn' onClick={handleSearch}>Search</button>
 
         {isEditing ? (
           <div>
@@ -66,25 +65,25 @@ function SearchBar(){
         )}
       </div>
 
-      <div className='selected-genres'>
-        <ul className='genre-list'>
+      <div class='selected-genres'>
+        <ul class='genre-list'>
           {selectedGenreCodes.map((genre) => (
             <li key={genre.code}>{genre.name}</li>
           ))}
         </ul>
       </div>
       
-      <div className='search-results'>
+      <div class='search-results'>
         {Array.isArray(filteredMovies) ? (
           filteredMovies.map((searchdata) => (
-            <div className='movie-card' key={searchdata.id}>
+            <div class='movie-card' key={searchdata.id}>
               {searchdata.poster_path && (
                 <img src={`https://images.tmdb.org/t/p/w200${searchdata.poster_path}`} alt={`Poster for ${searchdata.title}`} />
               )}
               <p><strong>Rating: </strong>7.5</p>
               <p><strong>{searchdata.original_title}</strong></p>
               <p><strong>Release Date: </strong>{searchdata.release_date}</p>
-              <button className='add-watchlist-btn'>+ Watchlist</button>
+              <button class='add-watchlist-btn'>+ Watchlist</button>
             </div>
         ))
         ) : (
@@ -92,7 +91,7 @@ function SearchBar(){
         )}
         {Array.isArray(filteredMovies) ? (
           filteredMovies.map((searchdata) => (
-            <div className='movie-card' key={searchdata.id}>
+            <div class='movie-card' key={searchdata.id}>
               {searchdata.poster_path && (
                 <img src={`https://images.tmdb.org/t/p/w200${searchdata.poster_path}`} alt={`Poster for ${searchdata.title}`} />
               )}
@@ -100,7 +99,7 @@ function SearchBar(){
               <p><strong>{searchdata.original_title}</strong></p>
               <p><strong>Release Date: </strong>{searchdata.release_date}</p>
               <div>
-                <button className='add-watchlist-btn'>+ Watchlist</button>
+                <button class='add-watchlist-btn'>+ Watchlist</button>
                 <div></div>
               </div>          
             </div>
@@ -110,7 +109,7 @@ function SearchBar(){
         )}
         {Array.isArray(filteredMovies) ? (
           filteredMovies.map((searchdata) => (
-            <div className='movie-card' key={searchdata.id}>
+            <div class='movie-card' key={searchdata.id}>
               {searchdata.poster_path && (
                 <img src={`https://images.tmdb.org/t/p/w200${searchdata.profile_path}`} alt={`Poster for ${searchdata.title}`} />
               )}
@@ -177,7 +176,7 @@ function FilterMovies({ closeFilter, onGenreChange }) {
   };
 
   return (
-    <div className='filter-container'>
+    <div class='filter-container'>
       <h3>Select Genre:</h3>
       <div>
         {genreOptions.map((genre) => (
