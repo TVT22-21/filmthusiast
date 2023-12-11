@@ -209,6 +209,22 @@ function Content(){
     fetchDataRatings();
   }, []);
 
+  useEffect(() => {
+    
+    async function fetchData() {
+      try {
+        const response = await axios.get(`http://localhost:3001/rating/getrating?username=Seppo`);
+        setRatings(response.data);
+        console.log(response);
+
+      } catch (error) {
+        setRatings('loading');
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, []);
+  
   return (
     <div>
       <div class='content-nav'>
@@ -309,4 +325,5 @@ function Watchlist(){
 }
 
 export default Profile;
+
 

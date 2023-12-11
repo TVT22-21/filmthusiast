@@ -3,7 +3,7 @@ const styles = {
     margin: 0,
     padding: 0,
     fontFamily: 'rubik',
-    
+    backgroundColor:'#111',
   },
 
   header: {
