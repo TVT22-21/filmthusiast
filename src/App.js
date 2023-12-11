@@ -5,13 +5,16 @@ import { useState } from 'react';
 import RegisterForm from './components/register/register';
 import Profile from './components/profile/profile';
 import Login from './components/login/login'
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Homepage from "./components/homepage/homepage";
 import Group from './components/group/group'
 
 
 
-import { BrowserRouter, Switch, Route, Routes } from "react-router-dom";
+
+
 function App() {
+
 
 return(
 <div>
@@ -21,8 +24,9 @@ return(
         <Route path="/" element={<Homepage />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} /> 
-        <Route path="/group" element={<Group/>} />       
+        <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/group" element={<Group/>} />  
+        <Route path="/searchPage" element={<SearchPage />} />
       </Routes>
     </BrowserRouter>
 </div>
@@ -30,4 +34,5 @@ return(
 }
 ReactDOM.render(<App />, document.getElementById('root'));
 //test
+
 export default App;

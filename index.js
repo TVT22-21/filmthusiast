@@ -16,7 +16,6 @@ app.use(cors());
 app.use(express.static('public'));
 
 
-
 app.use('/login', loginRoute);
 app.use('/profile', profileRoute);
 app.use('/rating', ratingRoute);
@@ -30,6 +29,8 @@ app.post('/groups/create', (req, res) => {
 app.post('/groups/join', (req, res) => {
 
 });
+
+const PORT = process.env.PORT  ;
 
 
 const PORT = process.env.PORT || 3001;

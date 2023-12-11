@@ -10,22 +10,7 @@
 .search-bar-container{
     display: flex;
     align-items: center;
-    display: flex;
-    align-items: center;
     width: 100%;
-}
-
-.search-bar-container img{
-    width: 30px;
-    height: 30px;
-    margin-left: 10px;
-    padding: 5px;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-.search-bar-container img:hover{
-    background-color: aquamarine;
 }
 
 .search-bar-container img{
@@ -44,6 +29,7 @@
 .search-bar{
     width: 400px;
     height: 30px;
+
     margin-right: 5px;
 }
 
@@ -72,7 +58,6 @@
     background-color: rgb(160, 160, 160);
     border: 2px black;
 }
-
 .movie-card {
     display: flex;
     flex-direction: column;

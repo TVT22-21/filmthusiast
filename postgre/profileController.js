@@ -11,7 +11,6 @@ const database = {
     DELETE_FROM_PROFILE_WATCHLIST: 'UPDATE profile SET watchlist = array_remove(watchlist, $1) WHERE person_idperson = $2',
     //GET_PROFILE: 'SELECT * FROM profile WHERE person_idperson = $1',
     GET_PROFILE: 'SELECT pr.* FROM profile pr JOIN person p ON pr.person_idperson = p.idperson WHERE p.username = $1',
-    //GET_WATCHLIST: 'SELECT watchlist FROM profile WHERE person_idperson = $1'
     GET_WATCHLIST: 'SELECT pr.watchlist FROM profile pr JOIN person p ON pr.person_idperson = p.idperson WHERE p.username = $1'
 }
 
@@ -55,8 +54,9 @@ async function getWatchlist(username){
 
 async function getProfile(username){
     const result = await pgPool.query(database.GET_PROFILE, [username]);
-    return result.rows[0];
+    return result.rows;
 }
+
 
 module.exports = {updateProfiletitle, updateFirstname, updateLastname, 
 updateDescription, addToWatchlist, deleteFromWatchlist, getWatchlist,getProfile, deleteProfile, createProfile};
