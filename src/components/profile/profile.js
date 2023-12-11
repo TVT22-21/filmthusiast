@@ -1,12 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './profile.css';
-import { SearchById, SearchByTitle, WatchlistSearchByIdWithCard, MovieCardByTitle, MovieCardById, PersonCardByPerson, SearchByIdWithCard } from '../search/searchMovie';
+
+import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, PersonCardByPerson, SearchByIdWithCard } from '../search/searchMovie';
+import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
-import { useParams } from 'react-router-dom';
-
-
-function Profile() {  
 
   return (
     <div>
@@ -42,13 +40,14 @@ function Information(){
   const [newTitle, setNewTitle] = useState('');
   const [newDesc, setNewDesc] = useState('');
   const { username } = useParams();
+
   
   useEffect(() => {
     async function fetchData() {
       try {
         //const uName = userInfo.value?.private;
         //console.log(uName);
-       
+
         const getProfRes = await axios.get('http://localhost:3001/profile/getProfile/'+ username);
         
         console.log('Response data:', getProfRes.data);
@@ -132,8 +131,6 @@ function Information(){
           </p>
         </div>
       ))}
-
-      
       {profile.map((profinf) => (
         <div class="info-container" key={profinf.idprofile}>
           <div class="profile-title-container">
@@ -184,6 +181,7 @@ function Content(){
   const [contentType, setContentType] = useState('ratings');
   const [ratings, setRatings] = useState('');
   const [ratingIds, setRatingIds] = useState('');
+
   const { username } = useParams();
 
   function handleToggle(type) {
@@ -271,6 +269,7 @@ function Content(){
 function Watchlist(){
 
   const [watchlist, setWatchlist] = useState([]);
+
   const { username } = useParams();
 
   useEffect(() => {

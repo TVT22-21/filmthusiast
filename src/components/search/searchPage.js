@@ -1,48 +1,95 @@
 
 import React, { useState, useEffect } from 'react';
 import { MovieCardById, MovieCardByTitle, PersonCardByPerson } from './searchMovie';
-import { SearchById, SearchByTitle, SearchByPerson } from './searchMovie';
+import { SearchById, SearchByTitle, SearchByPerson, FindId } from './searchMovie';
 import './searchPage.css';
+import { NewRating, GetRatingid, NewestRated, TopRatedMovies,GetRatingById } from '../rated/rated';
 import axios from 'axios';
 
-function SearchPage(){
+function SearchPage() {
 
-  return(
+  return (
     <div>
       <SearchBar />
     </div>
   );
 }
 
-function SearchBar(){
-
+function SearchBar() {
+const [data, setData] = useState('');
+const [showTopRated, setShowTopRated] = useState(false);
+const [showNewestRated, setShowNewestRated] = useState(false);
+const[showGetRated, setShowGetRated] = useState(false);
   const [searchWord, setSearchWord] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
-  const [selectedGenreCodes, setSelectedGenreCodes] = useState([]);
 
+  const [searchDBID, setSearchDBID] = useState('');
   const SearchResultByTitle = SearchByTitle(searchTerm);
-  
+  const [showRatingWindow, setShowRatingWindow] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [ratingText, setRatingText] = useState('');
+  const [username, setUsername] = useState('');
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [selectedGenreCodes, setSelectedGenreCodes] = useState([]);
   const filteredMovies = SearchResultByTitle.filter((movie) =>
     selectedGenreCodes.every((selectedGenre) => movie.genre_ids.includes(selectedGenre.code))
   );
-  
-  //const SearchResultById = SearchById( searchTerm );
-  //const SearchResultByPerson = SearchByPerson( searchTerm );
-
-  const handleInputChange = (event) => {
-    setSearchWord(event.target.value);
-  }
-
-  function handleSearch(){
-    setSearchTerm(searchWord);
-  }
-
   const handleGenreChange = (genresCodes) => {
     setSelectedGenreCodes(genresCodes);
     console.log(genresCodes);
   };
 
+  const handleInputChange = (event) => {
+    setSearchWord(event.target.value);
+  }
+
+  function handleSearch() {
+    setSearchTerm(searchWord);
+  }
+
+  function handleNewestRated(){
+    setShowNewestRated(prevState => !prevState);
+  }
+
+  function handleTopRated(){
+    setShowTopRated(prevState => !prevState);
+  }
+  function handleArvostele(searchDBID) {
+    console.log('SDBID:', searchDBID);
+    setSelectedMovieId(searchDBID);
+    setShowRatingWindow(true);
+    
+
+  }
+  function handleArvostelu(searchFindID){
+    console.log('asdasd', searchFindID);
+  setSelectedMovieId(searchFindID);
+  setShowGetRated(prevState => !prevState);
+  }
+  const handleCloseRatingWindow = () => {
+    setShowRatingWindow(false);
+  }
+
+  const handleRatingSubmit = async () => {
+    console.log(`${searchFindID}Rating: ${rating}, Rating Text: ${ratingText}, Username: ${username}`);
+    try {
+      const result = await NewRating(searchFindID, rating, ratingText, username);
+      console.log('Result:', result);
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+    setShowRatingWindow(false); 
+  }
+
+
+
+  //const joo = FindId('597');
+  //console.log('jojojoj', joo);
+  const searchFindID = FindId(searchDBID);
+  const SearchResultById = SearchById(searchTerm);
+  const SearchResultByPerson = SearchByPerson(searchTerm);
 
   return (
     <div class='search-container'>
@@ -54,6 +101,7 @@ function SearchBar(){
           value={searchWord}
           onChange={handleInputChange}
         />
+
         <button class='search-btn' onClick={handleSearch}>Search</button>
 
         {isEditing ? (
@@ -63,64 +111,94 @@ function SearchBar(){
         ) : (
           <img src='assets/filter-icon.png' onClick={() => setIsEditing(true)} alt="editbutton" />
         )}
+
+           <button className='search-btn' onClick={handleNewestRated}>
+            Newest Rated
+          </button>
+          <button className='search-btn' onClick={handleTopRated}>
+            Top Rated
+          </button>
       </div>
 
-      <div class='selected-genres'>
-        <ul class='genre-list'>
+      <div className='selected-genres'>
+        <ul className='genre-list'>
           {selectedGenreCodes.map((genre) => (
             <li key={genre.code}>{genre.name}</li>
           ))}
         </ul>
       </div>
-      
-      <div class='search-results'>
-        {Array.isArray(filteredMovies) ? (
-          filteredMovies.map((searchdata) => (
-            <div class='movie-card' key={searchdata.id}>
-              {searchdata.poster_path && (
-                <img src={`https://images.tmdb.org/t/p/w200${searchdata.poster_path}`} alt={`Poster for ${searchdata.title}`} />
-              )}
-              <p><strong>Rating: </strong>7.5</p>
-              <p><strong>{searchdata.original_title}</strong></p>
-              <p><strong>Release Date: </strong>{searchdata.release_date}</p>
-              <button class='add-watchlist-btn'>+ Watchlist</button>
-            </div>
-        ))
+
+      <div className='search-results'>
+        {showGetRated ? (
+          <GetRatingById RatingById={searchFindID}/>
         ) : (
-        <p>Loading...</p>
+          <p></p>
+        )}
+      {showNewestRated ? (
+          <NewestRated />
+
+        ) : (
+          
+           <p></p>
+        )}
+        {showTopRated ? (
+          <TopRatedMovies/>
+        ) : (
+          
+           <p></p>
         )}
         {Array.isArray(filteredMovies) ? (
           filteredMovies.map((searchdata) => (
-            <div class='movie-card' key={searchdata.id}>
+            <div className='movie-card' key={searchdata.id}>
+
+
               {searchdata.poster_path && (
                 <img src={`https://images.tmdb.org/t/p/w200${searchdata.poster_path}`} alt={`Poster for ${searchdata.title}`} />
               )}
-              <p><strong>Rating: </strong>7.5</p>
               <p><strong>{searchdata.original_title}</strong></p>
               <p><strong>Release Date: </strong>{searchdata.release_date}</p>
-              <div>
-                <button class='add-watchlist-btn'>+ Watchlist</button>
-                <div></div>
-              </div>          
-            </div>
-        ))
-        ) : (
-        <p>Loading...</p>
-        )}
-        {Array.isArray(filteredMovies) ? (
-          filteredMovies.map((searchdata) => (
-            <div class='movie-card' key={searchdata.id}>
-              {searchdata.poster_path && (
-                <img src={`https://images.tmdb.org/t/p/w200${searchdata.profile_path}`} alt={`Poster for ${searchdata.title}`} />
+
+              <button className='add-watchlist-btn'>+ Watchlist</button>
+              <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostele(searchdata.id); }}>+ Arvostele</button>
+              <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostelu(searchFindID); }}>+ Arvostelut</button>
+              {showRatingWindow && selectedMovieId === searchdata.id && (
+                <div className="rating-window">
+                  <h3>Rate item with ID {searchFindID}</h3>
+                  <label>
+                    Rating:
+                    <input
+                      type="number"
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                    />
+                  </label>
+                  <label>
+                    Rating Text:
+                    <input
+                      type="text"
+                      value={ratingText}
+                      onChange={(e) => setRatingText(e.target.value)}
+                    />
+                  </label>
+                  <label>
+                    Username:
+                    <input
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </label>
+                  <button onClick={handleRatingSubmit}>Submit</button>
+                  <button onClick={handleCloseRatingWindow}>Close</button>
+                </div>
               )}
-              <p><strong>Name: </strong>{searchdata.name}</p>
-              <p><strong>Known for: </strong>{searchdata.known_for_department}</p>
-              <p><strong>Media type: </strong>{searchdata.media_type}</p>
-        </div>
-      ))
-      ) : (
-      <p>Loading...</p>
-      )}
+
+            </div>
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
+
       </div>
 
     </div>
@@ -153,6 +231,7 @@ function FilterMovies({ closeFilter, onGenreChange }) {
     { name: 'Western', code: 37 },
   ];
 
+
   const handleGenreChange = (event) => {
 
     const genre = event.target.value;
@@ -176,7 +255,7 @@ function FilterMovies({ closeFilter, onGenreChange }) {
   };
 
   return (
-    <div class='filter-container'>
+    <div className='filter-container'>
       <h3>Select Genre:</h3>
       <div>
         {genreOptions.map((genre) => (
@@ -198,34 +277,5 @@ function FilterMovies({ closeFilter, onGenreChange }) {
   );
 }
 
-
-function FindId(wrongId){
-
-  const [ImdbId, setImdbId] = useState('');
-  useEffect(() => {
-    async function fetchDataFindId() {
-      try {
-        const options = {
-          headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NGNmYzA4ZGVhMTAwZTM5OWQ4N2I4NTNlNzViMWZmNCIsInN1YiI6IjY1NjViYzVmYzJiOWRmMDEzYWUzZDU2ZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rrVdXNYoMFrO2zTlNB55yGjWUPfw3SmiJ4QnKhIbhX0',
-          }
-        };
-        const url = 'https://api.themoviedb.org/3/movie/'+ wrongId +'/external_ids';
-        const searchRes = await axios.get(url, options);
-
-        setImdbId(searchRes.data.imdb_id);
-        console.log(ImdbId);
-
-      } catch (error) {
-        setImdbId('loading');
-        console.error(error);
-      }
-    }
-    fetchDataFindId();
-  }, [wrongId]);
-  
-  return ImdbId;
-}
 
 export default SearchPage;

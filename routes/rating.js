@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const { addRating, getRating, getRatingid, getRatingnum, checkRatingExists, deleteRated, deleteidRated, updateRating, updateRatingText } = require('../postgre/rated');
+const { addRating, getRating, getRatingid, getRatingnum, checkRatingExists, deleteRated, deleteidRated, updateRating, updateRatingText, topRating, newestRating } = require('../postgre/rated');
 const upload = multer({ dest: 'upload/' });
 const router = express.Router();
 
@@ -122,6 +122,23 @@ if (!ratingtext || !idrated){
       res.json({error: error.message}).status(505);
   }
 }
+});
+
+router.get('/toprating', async(req,res) => {
+  try {
+    const topratingdata = await topRating();
+    res.json(topratingdata);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+router.get('/newestrating', async(req,res) => {
+  try {
+    const newestratingdata = await newestRating();
+    res.json(newestratingdata);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 
