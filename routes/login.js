@@ -40,7 +40,7 @@ router.get('/private', async (req,res)=>{
     
     try{
         const username = jwt.verify(token, process.env.JWT_SECRET_KEY).username;
-        res.status(200).json({private: 'This is private for ' + username});
+        res.status(200).json({private: username});
     }catch (error){
         res.status(403).json({error: 'Access forbidden'});
     }

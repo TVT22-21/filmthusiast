@@ -4,6 +4,7 @@ import {jwtToken, userInfo} from '../register/signals';
 import {useNavigate} from "react-router-dom";
 import './login.css';
 
+
 export default function Login(){
   return(
     <div>
@@ -26,7 +27,7 @@ function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState("");
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
     //return username.length > 0 && password.length > 0;
 
     function login() {
@@ -34,7 +35,7 @@ function LoginForm() {
         .then((resp) => {
           console.log(resp.data);
           jwtToken.value = resp.data.jwtToken;
-          //navigate("/");
+          navigate("/");
           setError("");
         })
         .catch((error) => {

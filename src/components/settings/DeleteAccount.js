@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {userInfo} from '../register/signals';
 
-const UserProfile = ({ username }) => {
+
+const UserProfile = ({ username= [userInfo.value?.private] }) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [password, setPassword] = useState('');
 
-const handleDeleteProfile = async () => {
-    try {
-      const response = await axios.delete("http://localhost:3001/deletePerson")
-      console.log(response.data.message);
-    } catch (error) {
-      console.error(error.response.data.error);
-    }
-  };
+function handleDelete(){
+  axios.post("http://localhost:3001/person/delete", { username, password })
+    .then((resp)=>{
+    console.log(resp.data);
+    console.log('Account deleted succesfully');
+  })
+    .catch((error) => {
+      console.log(error.response.data);
+      console.log('Account delete failed');
+    });
 
-  const toggleConfirmation = () => {
-    setShowConfirmation(!showConfirmation);
-  };
+  
+}
+
+
+
+    const toggleConfirmation = () => {
+      setShowConfirmation(!showConfirmation);
+    };
 
   return (
     <div>
@@ -26,7 +36,11 @@ const handleDeleteProfile = async () => {
       {showConfirmation && (
         <div>
           <p>Haluatko varmasti poistaa käyttäjäsi?</p>
-          <button onClick={handleDeleteProfile}>Kyllä, Poista</button>
+          <label>
+          <h3> Nykyinen Salasana: </h3>
+          <input type="salasana" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </label>
+          <button onClick={handleDelete}>Kyllä, Poista</button>
           <button onClick={toggleConfirmation}>Peruuta</button>
         </div>
       )}
