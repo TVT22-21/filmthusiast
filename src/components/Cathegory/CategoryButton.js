@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CategoryButton.css'; // Create this file for styling
+import './CategoryButton.css'; 
 
 const CategoryButton = ({ categories }) => {
   const [isHovered, setIsHovered] = useState(false);
