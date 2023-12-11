@@ -14,12 +14,13 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static('public'));
 
-const PORT = process.env.PORT;
 
 app.use('/login', loginRoute);
 app.use('/profile', profileRoute);
 app.use('/rating', ratingRoute);
 app.use('/person', personRoute);
+
+const PORT = process.env.PORT  ;
 
 
 app.listen(PORT, function () {
