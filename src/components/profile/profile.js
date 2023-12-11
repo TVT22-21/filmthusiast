@@ -6,12 +6,15 @@ import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardB
 import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
 
+import {useParams} from 'react-router-dom';
+
+function Profile(){
   return (
     <div>
       <Body />
     </div>
-  );
-}
+  )
+};
 
 function Body(){
 

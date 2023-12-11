@@ -1,27 +1,32 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import {userInfo} from '../register/signals';
+import { userInfo, jwtToken } from '../register/signals';
+import { useNavigate } from 'react-router';
 
 
-const UserProfile = ({ username= [userInfo.value?.private] }) => {
+const UserProfile = ({ username= userInfo.value?.private }) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
+    
 function handleDelete(){
   axios.post("http://localhost:3001/person/delete", { username, password })
     .then((resp)=>{
     console.log(resp.data);
-    console.log('Account deleted succesfully');
+    //deleteSuccess();
   })
     .catch((error) => {
       console.log(error.response.data);
       console.log('Account delete failed');
     });
-
-  
 }
-
-
+/*
+    function deleteSuccess() {
+      jwtToken.value = null;
+      console.log('Account deleted succesfully. Logged out');
+      }
+      */
 
     const toggleConfirmation = () => {
       setShowConfirmation(!showConfirmation);

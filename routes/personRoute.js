@@ -4,7 +4,6 @@ const upload = multer({dest: 'upload/'});
 const {addPerson, deletePerson, getPerson, updatePassword, updateEmail, checkEmail, checkUsername, checkPerson} = require('../postgre/person');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const { createToken } = require('../auth/auth');
 
 router.post('/register', upload.none(), async (req, res) => {
     const username = req.body.username;
@@ -25,8 +24,6 @@ router.post('/register', upload.none(), async (req, res) => {
             const hashPw = await bcrypt.hash(password, 10);
             const createdate = new Date();
             await addPerson(username, hashPw, email, createdate);
-            const token = createToken(username);
-            res.status(200).json({jwtToken : token});
             res.json({ success: true, message: 'Käyttäjän luonti onnistui' });
         } catch (error){
             res.status(500).json({ error: error.message });
