@@ -17,6 +17,7 @@ app.use(express.static('public'));
 
 
 
+app.use('/login', loginRoute);
 app.use('/profile', profileRoute);
 app.use('/rating', ratingRoute);
 app.use('/person', personRoute);
