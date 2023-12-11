@@ -6,8 +6,6 @@ import Profile from './components/profile/profile';
 import SearchPage from './components/search/searchPage';
 import Login from './components/login/login'
 import { BrowserRouter, Switch, Route, Routes } from "react-router-dom";
-import NewestRated from "./components/viewrated/newest";
-import TopRatedMovies from "./components/viewrated/toprated";
 
 
 function App() {

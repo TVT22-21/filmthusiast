@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { SearchByIdWithCard,RatingCard } from '../search/searchMovie';
+import './rated.css';
 
 
 const NewRating = async (idmovie, rating, ratingtext, username) => {
