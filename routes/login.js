@@ -36,8 +36,8 @@ router.post('/login',upload.none(), async (req,res)=> {
 });
 
 router.get('/private', async (req,res)=>{
-    const token = req.headers.authorization?.split(' ')[1];
-    
+    const token = req.headers.authorization?.split(' ')[1];   
+
     try{
         const username = jwt.verify(token, process.env.JWT_SECRET_KEY).username;
         res.status(200).json({private: username});

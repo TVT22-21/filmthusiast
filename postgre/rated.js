@@ -13,14 +13,16 @@ const database = {
       WHERE p.username = $5;
     `,
   GET_RATING: `
-    SELECT r.idrated, r.rating, r.ratingtext, r.ratingdate, p.username
+    SELECT r.idrated, r.idmovie, r.rating, r.ratingtext, r.ratingdate, p.username
     FROM rated r
     JOIN person p ON r.person_idperson = p.idperson
     WHERE p.username = $1;
   `,
   GET_RATINGID: `
     SELECT
+      r.idmovie,
       r.idrated,
+      r.idmovie,
       r.rating,
       r.ratingtext,
       r.ratingdate,
@@ -48,6 +50,36 @@ AND p.username = $2;`,
 DELETE_IDRATED:'DELETE FROM rated WHERE idrated =$1',
 UPDATE_RATING: 'UPDATE rated SET rating = $1 WHERE idrated =$2',
 UPDATE_RATING_TEXT: 'UPDATE rated SET ratingtext = $1 WHERE idrated =$2',
+GET_TOP_RATINGS: `
+SELECT
+    r.idrated,
+    r.idmovie,
+    r.rating,
+    r.ratingtext,
+    r.ratingdate,
+    p.username
+FROM
+    rated r
+JOIN
+    person p ON r.person_idperson = p.idperson
+ORDER BY
+    r.rating DESC
+LIMIT 5`,
+GET_NEWEST_RATINGS:`
+SELECT
+r.idrated,
+r.idmovie,
+r.rating,
+r.ratingtext,
+r.ratingdate,
+p.username
+FROM
+rated r
+JOIN
+person p ON r.person_idperson = p.idperson
+ORDER BY
+r.ratingdate DESC
+LIMIT 5;`
 };
 
 
@@ -111,4 +143,13 @@ async function updateRating(rating, idrated){
 async function updateRatingText(ratingtext, idrated){
   await pgPool.query(database.UPDATE_RATING_TEXT, [ratingtext, idrated])
 }
-module.exports = { addRating, getRating, getRatingid, getRatingnum, checkRatingExists, deleteRated, deleteidRated, updateRating, updateRatingText};
+
+async function topRating(){
+  const result = await pgPool.query(database.GET_TOP_RATINGS)
+  return result.rows;
+}
+async function newestRating(){
+  const result = await pgPool.query(database.GET_NEWEST_RATINGS)
+  return result.rows;
+}
+module.exports = { addRating, getRating, getRatingid, getRatingnum, checkRatingExists, deleteRated, deleteidRated, updateRating, updateRatingText, topRating, newestRating};
