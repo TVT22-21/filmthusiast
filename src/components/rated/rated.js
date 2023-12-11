@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { SearchByIdWithCard,RatingCard } from '../search/searchMovie';
+
 
 const NewRating = async (idmovie, rating, ratingtext, username) => {
   try {
@@ -31,8 +33,182 @@ const NewRating = async (idmovie, rating, ratingtext, username) => {
   }
 };
 
+const TopRatedMovies = () => {
+  const [topRated, setTopRated] = useState([]);
+  const [movieData, setMovieData] = useState({});
 
-    function GetRatingid(idmovie){
+  useEffect(() => {
+    const fetchTopRatedMovies = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/rating/toprating');
+        const movies = response.data;
+
+        const validMovies = movies.filter(movie => typeof movie.rating === 'number');
+
+        const sortedMovies = validMovies.sort((a, b) => b.rating - a.rating);
+
+        const TopRatedMovies = sortedMovies.slice(0, 5);
+        setTopRated(TopRatedMovies);
+      } catch (error) {
+        console.error('Error fetching newest-rated movies:', error.message);
+      }
+    };
+
+    fetchTopRatedMovies();
+  }, []);
+
+  return (
+    <div>
+      <h2>Top 5 Rated Movies</h2>
+      <ul className="movieList">
+        {topRated.map((movie, index) => (                         
+          <li key={index} className="movieListItem">
+            <div className="movieCardContainer">
+              <SearchByIdWithCard movieId={movie.idmovie}/>
+              <RatingCard RatingData={{
+                username: movie.username,
+                rating: movie.rating,
+                ratingtext: movie.ratingtext,
+                ratingdate: movie.ratingdate,
+              }}/>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+const NewestRated = () => {
+  
+  const [newestRatedMovies, setNewestRatedMovies] = useState([]);
+  const [movieData, setMovieData] = useState({});
+
+  useEffect(() => {
+    const fetchNewestRatedMovies = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/rating/newestrating');
+        const movies = response.data;
+
+        const validMovies = movies.filter(movie => typeof movie.rating === 'number');
+
+        const sortedMovies = validMovies.sort((a, b) => new Date(b.ratingdate) - new Date(a.ratingdate));
+
+        const newestRatedMovies = sortedMovies.slice(0, 5);
+        setNewestRatedMovies(newestRatedMovies);
+      } catch (error) {
+        console.error('Error fetching newest-rated movies:', error.message);
+      }
+    };
+
+    fetchNewestRatedMovies();
+  }, []);
+
+
+  return (
+    <div>
+      <h2>Top 5 Newest Rated Movies</h2>
+      <ul className="movieList">
+        {newestRatedMovies.map((movie, index) => (                         
+          <li key={index} className="movieListItem">
+            <div className="movieCardContainer">
+              <SearchByIdWithCard movieId={movie.idmovie}/>
+              <RatingCard RatingData={{
+                username: movie.username,
+                rating: movie.rating,
+                ratingtext: movie.ratingtext,
+                ratingdate: movie.ratingdate,
+              }}/>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const GetRatingById = ({RatingById}) => {
+  
+  const [GetRatedMovies, setGetRatedMovies] = useState([]);
+  const [movieData, setMovieData] = useState({});
+  console.log('asd', RatingById);
+
+  useEffect(() => {
+    const fetchGetRatedMovies = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/rating/getrating/idmovie?idmovie=${RatingById}`);
+        const movies = response.data;
+        setGetRatedMovies(movies);
+      } catch (error) {
+        console.error('Error fetching newest-rated movies:', error.message);
+      }
+    };
+
+    fetchGetRatedMovies();
+  }, [RatingById]);
+
+
+  return (
+    <div>
+      
+      <ul className="movieList">
+        {GetRatedMovies.map((movie, index) => (                         
+          <li key={index} className="movieListItem">
+            <div className="movieCardContainer">
+              <SearchByIdWithCard movieId={movie.idmovie}/>
+              <RatingCard RatingData={{
+                username: movie.username,
+                rating: movie.rating,
+                ratingtext: movie.ratingtext,
+                ratingdate: movie.ratingdate,
+              }}/>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const GetRatingid2 = ({searchDBID}) => {
+  const [RatedMovies, setRatedMovies] = useState([]);
+  const [movieData, setMovieData] = useState({});
+
+  useEffect(() => {
+    const fetchNewestRatedMovies = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/rating/getrating/idmovie?idmovie=${searchDBID}`);
+        const movies = response.data;
+        setRatedMovies(RatedMovies);
+      } catch (error) {
+        console.error('Error fetching newest-rated movies:', error.message);
+      }
+    };
+
+    fetchNewestRatedMovies();
+  }, []);
+
+
+  return (
+    <div>
+      <ul className="movieList">
+        {RatedMovies.map((movie, index) => (                         
+          <li key={index} className="movieListItem">
+            <div className="movieCardContainer">
+              <SearchByIdWithCard movieId={movie.idmovie}/>
+              <RatingCard RatingData={{
+                username: movie.username,
+                rating: movie.rating,
+                ratingtext: movie.ratingtext,
+                ratingdate: movie.ratingdate,
+              }}/>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+    const GetRatingid = async (idmovie) =>{
       const [data, setData] = useState([]);
       const [idmovieparam, setIdmovieparam] = useState('');
       axios.get(`http://localhost:3001/rating/getrating/idmovie?idmovie=${idmovie}`)
@@ -74,4 +250,4 @@ const NewRating = async (idmovie, rating, ratingtext, username) => {
     
 
 
-    export {NewRating};
+    export {NewRating, GetRatingById, NewestRated, TopRatedMovies};

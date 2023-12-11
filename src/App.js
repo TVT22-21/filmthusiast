@@ -13,11 +13,12 @@ import TopRatedMovies from "./components/viewrated/toprated";
 function App() {
 
     return (
-        <div>
-            <NewestRated />
-            <TopRatedMovies />
-        </div>
-    )
+        
+            <div>
+                <SearchPage />
+            </div>
+        )
+    
 }
 
 export default App;
