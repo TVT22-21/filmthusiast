@@ -296,3 +296,4 @@ function SearchByIdWithCard( movieId ){
 
 
 export { SearchById, SearchByTitle, SearchByPerson, MovieCardById, MovieCardByTitle, PersonCardByPerson, SearchByIdWithCard, FindId, MovieCard, RatingCard};
+

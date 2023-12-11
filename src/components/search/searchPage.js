@@ -6,7 +6,6 @@ import './searchPage.css';
 import { NewRating, GetRatingid, NewestRated, TopRatedMovies,GetRatingById } from '../rated/rated';
 import axios from 'axios';
 
-
 function SearchPage() {
 
   return (
@@ -23,6 +22,7 @@ const [showNewestRated, setShowNewestRated] = useState(false);
 const[showGetRated, setShowGetRated] = useState(false);
   const [searchWord, setSearchWord] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+
   const [searchDBID, setSearchDBID] = useState('');
   const SearchResultByTitle = SearchByTitle(searchTerm);
   const [showRatingWindow, setShowRatingWindow] = useState(false);
@@ -92,17 +92,18 @@ const[showGetRated, setShowGetRated] = useState(false);
   const SearchResultByPerson = SearchByPerson(searchTerm);
 
   return (
-    <div className='search-container'>
-      <div className='search-bar-container'>
+    <div class='search-container'>
+      <div class='search-bar-container'>
         <input
-          className='search-bar'
+          class='search-bar'
           type="text"
           placeholder="Search..."
           value={searchWord}
           onChange={handleInputChange}
         />
-        <button className='search-btn' onClick={handleSearch}>Search</button>
-        
+
+        <button class='search-btn' onClick={handleSearch}>Search</button>
+
         {isEditing ? (
           <div>
             <FilterMovies closeFilter={() => setIsEditing(false)} onGenreChange={handleGenreChange} />
@@ -110,6 +111,7 @@ const[showGetRated, setShowGetRated] = useState(false);
         ) : (
           <img src='assets/filter-icon.png' onClick={() => setIsEditing(true)} alt="editbutton" />
         )}
+
            <button className='search-btn' onClick={handleNewestRated}>
             Newest Rated
           </button>
@@ -134,6 +136,7 @@ const[showGetRated, setShowGetRated] = useState(false);
         )}
       {showNewestRated ? (
           <NewestRated />
+
         ) : (
           
            <p></p>
@@ -147,11 +150,14 @@ const[showGetRated, setShowGetRated] = useState(false);
         {Array.isArray(filteredMovies) ? (
           filteredMovies.map((searchdata) => (
             <div className='movie-card' key={searchdata.id}>
+
+
               {searchdata.poster_path && (
                 <img src={`https://images.tmdb.org/t/p/w200${searchdata.poster_path}`} alt={`Poster for ${searchdata.title}`} />
               )}
               <p><strong>{searchdata.original_title}</strong></p>
               <p><strong>Release Date: </strong>{searchdata.release_date}</p>
+
               <button className='add-watchlist-btn'>+ Watchlist</button>
               <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostele(searchdata.id); }}>+ Arvostele</button>
               <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostelu(searchFindID); }}>+ Arvostelut</button>
@@ -186,6 +192,7 @@ const[showGetRated, setShowGetRated] = useState(false);
                   <button onClick={handleCloseRatingWindow}>Close</button>
                 </div>
               )}
+
             </div>
           ))
         ) : (
@@ -223,6 +230,7 @@ function FilterMovies({ closeFilter, onGenreChange }) {
     { name: 'War', code: 10752 },
     { name: 'Western', code: 37 },
   ];
+
 
   const handleGenreChange = (event) => {
 

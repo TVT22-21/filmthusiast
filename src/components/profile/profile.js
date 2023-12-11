@@ -1,12 +1,11 @@
-
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './profile.css';
+
 import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, PersonCardByPerson, SearchByIdWithCard } from '../search/searchMovie';
 import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
 
-function Profile() {
   return (
     <div>
       <Body />
@@ -40,16 +39,19 @@ function Information(){
   const [isEditingDesc, setIsEditingDesc] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [newDesc, setNewDesc] = useState('');
+  const { username } = useParams();
+
   
   useEffect(() => {
     async function fetchData() {
       try {
         //const uName = userInfo.value?.private;
         //console.log(uName);
-        const getProfRes = await axios.get('http://localhost:3001/profile/getProfile/keijo');
-        setProfile(getProfRes.data);
-        console.log('Response data:', getProfRes.data);
 
+        const getProfRes = await axios.get('http://localhost:3001/profile/getProfile/'+ username);
+        
+        console.log('Response data:', getProfRes.data);
+        setProfile(getProfRes.data);
       } catch (error) {
         setProfile('loading');
         console.error(error);
@@ -68,7 +70,8 @@ function Information(){
 
   const handleSubmitTitle = async () => {
     try {
-      const personId = 47; 
+      const personId = profile.person_idperson; 
+      console.log(personId);
       await axios.put('http://localhost:3001/profile/updateTitle', {
         profiletitle: newTitle,
         person_idperson: personId,
@@ -98,7 +101,7 @@ function Information(){
 
   const handleSubmitDesc = async () => {
     try {
-      const personId = 47; 
+      const personId = profile.person_idperson; 
       await axios.put('http://localhost:3001/profile/updateDescription', {
         description: newDesc,
         person_idperson: personId,
@@ -128,7 +131,6 @@ function Information(){
           </p>
         </div>
       ))}
-
       {profile.map((profinf) => (
         <div class="info-container" key={profinf.idprofile}>
           <div class="profile-title-container">
@@ -180,6 +182,8 @@ function Content(){
   const [ratings, setRatings] = useState('');
   const [ratingIds, setRatingIds] = useState('');
 
+  const { username } = useParams();
+
   function handleToggle(type) {
     setContentType(type);
   }
@@ -190,10 +194,10 @@ function Content(){
  
     async function fetchDataRatings() {
       try {
-        const uName = userInfo.value?.private;
+        //const uName = userInfo.value?.private;
         //const uName = 'niilo';
-        console.log(uName);
-        const response = await axios.get(`http://localhost:3001/rating/getrating?username=${uName}`);
+        //console.log(uName);
+        const response = await axios.get(`http://localhost:3001/rating/getrating?username=${username}`);
         setRatings(response.data);
         
       } catch (error) {
@@ -204,8 +208,6 @@ function Content(){
 
     fetchDataRatings();
   }, []);
-  
-  
 
   return (
     <div>
@@ -213,7 +215,6 @@ function Content(){
         <button class="content-btn" onClick={() => handleToggle('ratings')}>Movie Ratings</button>
         <button class="content-btn" onClick={() => handleToggle('watchlist')}>Watch List</button>
         <button class="content-btn" onClick={() => handleToggle('groups')}>Groups</button>
-        {jwtToken.value ? <h1>{userInfo.value?.private}</h1> : <h1>Olet vierailijana</h1>}
       </div>
       
       <div>
@@ -269,12 +270,14 @@ function Watchlist(){
 
   const [watchlist, setWatchlist] = useState([]);
 
+  const { username } = useParams();
+
   useEffect(() => {
     
     async function fetchDataRatings() {
       try {
-        const uName = userInfo.value.private;
-        const response = await axios.get(`http://localhost:3001/profile/getWatchlist/keijo`);
+        //const uName = userInfo.value.private;
+        const response = await axios.get(`http://localhost:3001/profile/getWatchlist/`+ username);
         setWatchlist(response.data[0].watchlist);
         console.log(response.data[0].watchlist);
 
