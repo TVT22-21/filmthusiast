@@ -251,4 +251,6 @@ const GetRatingid2 = ({searchDBID}) => {
     
 
 
+
     export {NewRating, GetRatingById, NewestRated, TopRatedMovies};
+

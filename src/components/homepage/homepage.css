@@ -1,0 +1,25 @@
+body {
+  height: 100vh;
+  background: #111;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+header, aside {
+  position: relative;
+  z-index: 2; /* Set a higher z-index for header and aside */
+}
+
+.animation-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Set a lower z-index for the animation */
+  pointer-events: none;
+}
+
+h1{
+  color: white;
+}
