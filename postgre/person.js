@@ -57,4 +57,3 @@ async function checkPerson(username){
 }
 
 module.exports = {addPerson, deletePerson, getPerson, updatePassword, updateEmail, checkUsername, checkEmail, checkPerson};
-
