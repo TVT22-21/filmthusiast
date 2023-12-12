@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 const UserProfile = ({ username= userInfo.value?.private }) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     
 function handleDelete(){
@@ -43,7 +43,7 @@ function handleDelete(){
           <p>Haluatko varmasti poistaa käyttäjäsi?</p>
           <label>
           <h3> Nykyinen Salasana: </h3>
-          <input type="salasana" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input type="salasana" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Salasana" />
           </label>
           <button onClick={handleDelete}>Kyllä, Poista</button>
           <button onClick={toggleConfirmation}>Peruuta</button>
