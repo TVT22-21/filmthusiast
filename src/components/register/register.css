@@ -3,47 +3,39 @@
     flex-direction: column;
     align-items: center;
     margin: auto;
-    margin-top: 100px;
-    background-color: #ffffff;
-    padding-top: 15px;
-    width: 600px;
+    margin-top: 50px; /* Adjusted the margin-top */
+    background-color: #fff;
+    padding-top: 15px; /* Adjusted the padding-top */
+    width: 600px; /* Adjusted the width */
 }
 
-.header, .footer {
+.header {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-}
-
-.header {
-    gap: 6px;
-    margin-top: 15px;
-}
-
-.text, .texti {
-    font-size: 18px;
+    margin-top: 10px; /* Adjusted the margin-top */
 }
 
 .text {
-    color: rgb(0, 0, 0);
-    font-size: 24px;
+    color: black;
+    font-size: 32px; /* Adjusted the font size */
     font-weight: 700;
 }
 
 .inputs {
-    margin-top: 25px;
+    margin-top: 25px; /* Adjusted the margin-top */
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 15px; /* Adjusted the gap */
 }
 
 .input {
     display: flex;
     align-items: center;
     margin-top: auto;
-    width: 500px;
-    height: 60px;
+    width: 500px; /* Adjusted the width */
+    height: 60px; /* Adjusted the height */
     background-color: #eaeaea;
     border-radius: 6px;
 }
@@ -51,12 +43,38 @@
 .input input {
     height: 100%;
     width: 100%;
-    padding-left: 15px;
+    padding-left: 15px; /* Adjusted the padding-left */
     background: transparent;
     border: none;
     outline: none;
     color: black;
-    font-size: 16px;
+    font-size: 28px; /* Adjusted the font size */
+}
+
+.footer {
+    display: flex;
+    gap: 20px; /* Adjusted the gap */
+    margin: 30px auto; /* Adjusted the margin */
+}
+
+.nappi {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px; /* Adjusted the width */
+    height: 49px; /* Adjusted the height */
+    background-color: grey;
+    color: #fff;
+    border-radius: 50px;
+    font-size: 20px; /* Adjusted the font size */
+    cursor: pointer;
+}
+
+.texti {
+    padding-left: 10px; /* Adjusted the padding-left */
+    margin-top: 20px; /* Adjusted the margin-top */
+    color: grey;
+    font-size: 20px; /* Adjusted the font size */
 }
 
 .footer {

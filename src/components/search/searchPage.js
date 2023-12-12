@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { MovieCardById, MovieCardByTitle, PersonCardByPerson } from './searchMovie';
 import { SearchById, SearchByTitle, SearchByPerson, FindId } from './searchMovie';
