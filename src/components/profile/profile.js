@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './profile.css';
-
-import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, PersonCardByPerson, SearchByIdWithCard } from '../search/searchMovie';
+import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
 import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
+import { useParams } from 'react-router-dom';
 
+
+function Profile(){
   return (
     <div>
       <Body />
@@ -13,8 +15,8 @@ import { jwtToken, userInfo } from '../register/signals';
   );
 }
 
-function Body(){
 
+function Body(){
   return(
     <div>
       <Main />
@@ -52,16 +54,22 @@ function Information(){
         
         console.log('Response data:', getProfRes.data);
         setProfile(getProfRes.data);
+        
       } catch (error) {
         setProfile('loading');
         console.error(error);
       }
     }
     fetchData();
-  }, []);
+  }, [username]);
 
   const handleEditTitle = () => {
-    setIsEditingTitle(true);
+    console.log(userInfo.value?.private + username)
+    if(userInfo.value?.private === username){
+      setIsEditingTitle(true);
+    }else{
+      window.alert('You need to login to edit your profile!');
+    }  
   };
 
   const handleTitleChange = (e) => {
@@ -70,7 +78,7 @@ function Information(){
 
   const handleSubmitTitle = async () => {
     try {
-      const personId = profile.person_idperson; 
+      const personId = profile[0].person_idperson; 
       console.log(personId);
       await axios.put('http://localhost:3001/profile/updateTitle', {
         profiletitle: newTitle,
@@ -92,7 +100,12 @@ function Information(){
   };
 
   const handleEditDesc = () => {
-    setIsEditingDesc(true);
+    console.log(userInfo.value?.private + username)
+    if(userInfo.value?.private === username){
+      setIsEditingDesc(true);
+    }else{
+      window.alert('You need to login to edit your profile!');
+    }  
   };
 
   const handleDescChange = (e) => {
@@ -101,7 +114,8 @@ function Information(){
 
   const handleSubmitDesc = async () => {
     try {
-      const personId = profile.person_idperson; 
+      const personId = profile[0].person_idperson; 
+      
       await axios.put('http://localhost:3001/profile/updateDescription', {
         description: newDesc,
         person_idperson: personId,
@@ -180,7 +194,6 @@ function Content(){
 
   const [contentType, setContentType] = useState('ratings');
   const [ratings, setRatings] = useState('');
-  const [ratingIds, setRatingIds] = useState('');
 
   const { username } = useParams();
 
@@ -207,7 +220,7 @@ function Content(){
     }
 
     fetchDataRatings();
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     
@@ -285,8 +298,8 @@ function Content(){
 function Watchlist(){
 
   const [watchlist, setWatchlist] = useState([]);
-
   const { username } = useParams();
+  const uName = username;
 
   useEffect(() => {
     
@@ -294,9 +307,14 @@ function Watchlist(){
       try {
         //const uName = userInfo.value.private;
         const response = await axios.get(`http://localhost:3001/profile/getWatchlist/`+ username);
-        setWatchlist(response.data[0].watchlist);
-        console.log(response.data[0].watchlist);
-
+        
+        if (response.data[0]?.watchlist && response.data[0].watchlist.length > 0) {
+          setWatchlist(response.data[0].watchlist);
+          console.log(response.data[0].watchlist);
+        } else {
+          // Handle the case when the watchlist is empty
+          console.log('Watchlist is empty');
+        }
       } catch (error) {
         setWatchlist('loading');
         console.error(error);
@@ -304,7 +322,7 @@ function Watchlist(){
     }
 
     fetchDataRatings();
-  }, []);
+  }, [username]);
 
   return(
     <div>
@@ -313,7 +331,7 @@ function Watchlist(){
         {watchlist.length > 0 ? (
           watchlist.map((movieId) => (
             <div key={movieId}>
-              <SearchByIdWithCard movieId={movieId} />
+              <SearchByIdWithCardWatchlist movieId={movieId} uName={uName}/>
             </div>
           ))
         ) : (
