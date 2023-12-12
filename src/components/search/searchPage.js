@@ -4,6 +4,7 @@ import { MovieCardById, MovieCardByTitle, PersonCardByPerson } from './searchMov
 import { SearchById, SearchByTitle, SearchByPerson, FindId } from './searchMovie';
 import './searchPage.css';
 import { NewRating, GetRatingid, NewestRated, TopRatedMovies,GetRatingById } from '../rated/rated';
+import { userInfo } from '../register/signals';
 import axios from 'axios';
 
 function SearchPage() {
@@ -15,15 +16,16 @@ function SearchPage() {
   );
 }
 
+
 function SearchBar() {
-const [data, setData] = useState('');
-const [showTopRated, setShowTopRated] = useState(false);
-const [showNewestRated, setShowNewestRated] = useState(false);
-const[showGetRated, setShowGetRated] = useState(false);
+  const [data, setData] = useState('');
+  const [showTopRated, setShowTopRated] = useState(false);
+  const [showNewestRated, setShowNewestRated] = useState(false);
+  const [showGetRated, setShowGetRated] = useState(false);
   const [searchWord, setSearchWord] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-
   const [searchDBID, setSearchDBID] = useState('');
+  const [watchlistSearchDBID, setWatchlistSearchDBID] = useState('');
   const SearchResultByTitle = SearchByTitle(searchTerm);
   const [showRatingWindow, setShowRatingWindow] = useState(false);
   const [rating, setRating] = useState(0);
@@ -33,9 +35,13 @@ const[showGetRated, setShowGetRated] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedGenreCodes, setSelectedGenreCodes] = useState([]);
+
   const filteredMovies = SearchResultByTitle.filter((movie) =>
     selectedGenreCodes.every((selectedGenre) => movie.genre_ids.includes(selectedGenre.code))
   );
+  const watchlistSearchFindID = FindId(watchlistSearchDBID);
+  const searchFindID = FindId(searchDBID);
+
   const handleGenreChange = (genresCodes) => {
     setSelectedGenreCodes(genresCodes);
     console.log(genresCodes);
@@ -56,18 +62,19 @@ const[showGetRated, setShowGetRated] = useState(false);
   function handleTopRated(){
     setShowTopRated(prevState => !prevState);
   }
+
   function handleArvostele(searchDBID) {
     console.log('SDBID:', searchDBID);
     setSelectedMovieId(searchDBID);
     setShowRatingWindow(true);
-    
-
   }
+
   function handleArvostelu(searchFindID){
     console.log('asdasd', searchFindID);
-  setSelectedMovieId(searchFindID);
-  setShowGetRated(prevState => !prevState);
+    setSelectedMovieId(searchFindID);
+    setShowGetRated(prevState => !prevState);
   }
+
   const handleCloseRatingWindow = () => {
     setShowRatingWindow(false);
   }
@@ -82,12 +89,26 @@ const[showGetRated, setShowGetRated] = useState(false);
     }
     setShowRatingWindow(false); 
   }
+  
+  async function handleAddWatchlist(id){
+    setWatchlistSearchDBID(id);
+    console.log('watchlistSearchFindID immediately after set:', watchlistSearchFindID);
+    const movieId = watchlistSearchFindID;
+    
+    try {
+      const requestData = {
+        movie_id: movieId,
+        username: userInfo.value?.private,
+      };
+      const response = await axios.put(`http://localhost:3001/profile/addToWatchlist`, requestData);
+      console.log('Watchlist updated successfully:', response.data);
+    } catch (error) {
+      console.error('Error updating watchlist:', error);
+    }
+  }
 
-
-
-  //const joo = FindId('597');
-  //console.log('jojojoj', joo);
-  const searchFindID = FindId(searchDBID);
+  
+  
   const SearchResultById = SearchById(searchTerm);
   const SearchResultByPerson = SearchByPerson(searchTerm);
 
@@ -158,7 +179,7 @@ const[showGetRated, setShowGetRated] = useState(false);
               <p><strong>{searchdata.original_title}</strong></p>
               <p><strong>Release Date: </strong>{searchdata.release_date}</p>
 
-              <button className='add-watchlist-btn'>+ Watchlist</button>
+              <button className='add-watchlist-btn' onClick={() => handleAddWatchlist(searchdata.id)}>+ Watchlist</button>
               <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostele(searchdata.id); }}>+ Arvostele</button>
               <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostelu(searchFindID); }}>+ Arvostelut</button>
               {showRatingWindow && selectedMovieId === searchdata.id && (
@@ -204,6 +225,8 @@ const[showGetRated, setShowGetRated] = useState(false);
     </div>
   );
 }
+
+
 
 function FilterMovies({ closeFilter, onGenreChange }) {
 
