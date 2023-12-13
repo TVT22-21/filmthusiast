@@ -136,7 +136,7 @@ function SearchByPerson( person ){
   return searchPerson;
 };
 
-function MovieCard({movieData}){
+function MovieCard({ movieData }){
   const [expandedCard, setExpandedCard] = useState(null);
     const handleCardClick = (id) => {
       setExpandedCard((prevId) => (prevId === id ? null : id));

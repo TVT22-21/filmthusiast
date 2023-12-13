@@ -1,6 +1,8 @@
 body {
   height: 100vh;
-  background: #c7c6c6;
+
+  background: #eee9e9;
+
   overflow: hidden;
   overflow-y: scroll;
 }
