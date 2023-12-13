@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import './login.css';
 import Header from "../header/header";
 
+
 export default function Login(){
   return(
     <div>
@@ -28,7 +29,7 @@ function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState("");
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
     //return username.length > 0 && password.length > 0;
 
     function login() {
@@ -36,15 +37,18 @@ function LoginForm() {
         .then((resp) => {
           console.log(resp.data);
           jwtToken.value = resp.data.jwtToken;
-          //navigate("/");
+          navigate("/");
           setError("");
         })
         .catch((error) => {
           console.log(error.response.data); 
-          setError("Kirjautuminen epäonnistui. Tarkista salasana.");
+          setError(<div>Kirjautuminen epäonnistui.<br/>Tarkista salasana!</div>);
         });
     }
 
+    function navigateToRegister(){
+      navigate("/register");
+    }
 
     return (
       <div className="login-container">
@@ -70,12 +74,17 @@ function LoginForm() {
                   />
                 </div>
                 </div>
-                <br />
+                <div className="text">{error}</div>
                 <div>
                   <button onClick={login}>Kirjaudu sisään</button>
+                  <br/>
+                    <div className="header">
+                      <div className="text">Etkö omista käyttäjää?</div>
+                      <button onClick={navigateToRegister}>Rekisteröidy käyttäjäksi</button>
+                      <br/>
+                    </div>
                 </div>
                 <br />
-                <div className="text">{error}</div>
               </div>
             </div>
           )}

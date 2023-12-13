@@ -9,7 +9,6 @@ import axios from 'axios';
 
 import { SearchResultCard } from './searchResult';
 import { useParams } from 'react-router-dom';
-import { SearchResultCard } from './searchResult';
 
 
 function SearchPage() {
@@ -75,6 +74,7 @@ function SearchBar() {
     console.log('SDBID:', searchDBID);
     setSelectedMovieId(searchDBID);
     setShowRatingWindow(true);
+  }
 
   function handleArvostelu(searchFindID){
 
@@ -100,7 +100,6 @@ function SearchBar() {
 
   //const joo = FindId('597');
   //console.log('jojojoj', joo);
-  const searchFindID = FindId(searchDBID);
 
   async function handleAddWatchlist(id){
     setWatchlistSearchDBID(id);
@@ -186,7 +185,7 @@ function SearchBar() {
           <SearchResultCard movieData ={filteredMovies}/>
         ):(
           <p></p>
-
+        )}
       </div>
 
     
