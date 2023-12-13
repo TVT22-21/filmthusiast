@@ -53,16 +53,14 @@ router.post('/delete', upload.none(), async (req, res) => {
 router.post('/updatepassword', upload.none(), async (req, res) => {
     const password = req.body.password;
     const username = req.body.username;
-    const currentPassword = req.body.currentPassword;
-    const passwordHash = await checkPerson(username);
-    if(await checkPerson(currentPassword !== passwordHash)){
-        return res.status(400).json({ error: 'Nykyinen salasana ei täsmää.' });
+    if (!password || !username){
+        return res.status(400).json({ error: 'Käyttäjänimi ja salasana tarvitaan.' });
     }else{
         try {
             const hashPw = await bcrypt.hash(password, 10); 
-            await updatePassword(hashPw, username)
+            await updatePassword(hashPw, username);
             res.json({ message: 'Käyttäjän salasanan vaihto onnistui' });
-        } catch(error){
+        } catch (error){
             res.json({error: error.message}).status(505);
         }
     }
