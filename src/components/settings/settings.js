@@ -1,9 +1,8 @@
 import ChangePassword from './ChangePassword';
 import ChangeEmail from './ChangeEmail';
 import DeleteAccount from './DeleteAccount';
-import {jwtToken} from '../register/signals';
+import { jwtToken, userInfo } from '../register/signals';
 import {useNavigate} from "react-router-dom";
-import { userInfo } from '../register/signals';
 
 const SettingsPage = ({username= userInfo.value?.private}) => {
   const navigate = useNavigate("");
