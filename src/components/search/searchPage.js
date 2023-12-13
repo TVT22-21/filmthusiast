@@ -6,11 +6,11 @@ import { NewRating, GetRatingid, NewestRated, TopRatedMovies,GetRatingById } fro
 import { userInfo } from '../register/signals';
 
 import axios from 'axios';
-<<<<<<< HEAD
-import { useParams } from 'react-router-dom';
-=======
+
 import { SearchResultCard } from './searchResult';
->>>>>>> ac281ac110137d43f1fa0900d0c1225bd7c158f8
+import { useParams } from 'react-router-dom';
+import { SearchResultCard } from './searchResult';
+
 
 function SearchPage() {
 
