@@ -22,13 +22,13 @@ app.use('/rating', ratingRoute);
 app.use('/person', personRoute);
 //app.use('/groups', groupRoute);
 
-app.post('/groups/create', (req, res) => {
-  console.log('Received request to create a group');
+//app.post('/groups/create', (req, res) => {
+//  console.log('Received request to create a group');
 
-});
-app.post('/groups/join', (req, res) => {
+//});
+//app.post('/groups/join', (req, res) => {
 
-});
+//});
 
 const PORT = process.env.PORT  ;
 
