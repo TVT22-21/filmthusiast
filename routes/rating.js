@@ -13,9 +13,6 @@ router.post('/addrating', async function (req, res) {
     if (!req.body.idmovie || !req.body.rating || !req.body.ratingtext || !req.body.username) {
       return res.status(400).json({ error: 'Bad Request: Missing or invalid fields.' });
     }
-    if (await checkRatingExists(idmovie)) {
-      return res.status(400).json({ error: 'Arvostelu löytyy jo.' });
-    }
     await addRating(idmovie, rating, ratingtext, ratingdate = new Date(), username);
     res.json({ message: 'Arvostelu lisätty.' });
   } catch (error) {

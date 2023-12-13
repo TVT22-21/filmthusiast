@@ -1,8 +1,8 @@
-const { addGroup, addPersonToGroup } = require('./group');
+const { addGroup, addPersonToGroup } = require('../postgre/group');
 
-async function getAllGroups(req, res) {
+/*async function getAllGroups(req, res) {
 
-}
+}*/
 
 async function createGroup(req, res) {
   const { groupname, grouptitle, groupdescription } = req.body;
