@@ -10,27 +10,27 @@ const ChangeEmail = ({username = userInfo.value?.private}) => {
     axios.post("http://localhost:3001/person/updateemail", { email, username })
     .then((resp)=>{
     console.log(resp.data);
-    console.log('Päivitetään sähköpostia...');
-    setError("");
+    console.log('Updating email...');
+    setError("Email updated!");
   })
     .catch((error) =>{
       console.log(error.response.data);
       console.log('Sähköpostin päivitys epäonnistui');
-      setError("Sähköpostin päivitys epäonnistui.");
+      setError("Updating email failed.");
     });
   };
 
   return (
     <div>
-      <h3>Vaihda Sähköposti</h3>
+      <h3>Change your email</h3>
       <label>
-        Uusi Sähköposti:
+        New email:
         <br />
-        <input type="text" value={email} onChange={(e) => setNewEmail(e.target.value)} placeholder="Sähköposti"/>
+        <input type="text" value={email} onChange={(e) => setNewEmail(e.target.value)} placeholder="Email"/>
       </label>
       <br />
       <br />
-      <button onClick={handleChangeEmail}>Päivitä Sähköposti</button> 
+      <button onClick={handleChangeEmail}>Update email</button> 
       <br />
       <div className="text">{error}</div>
     </div>

@@ -40,7 +40,7 @@ function LoginForm() {
         })
         .catch((error) => {
           console.log(error.response.data); 
-          setError("Kirjautuminen epäonnistui. Tarkista salasana.");
+          setError(<div>Kirjautuminen epäonnistui.<br/>Tarkista salasana!</div>);
         });
     }
 
@@ -72,7 +72,7 @@ function LoginForm() {
                   />
                 </div>
                 </div>
-                <br />
+                <div className="text">{error}</div>
                 <div>
                   <button onClick={login}>Kirjaudu sisään</button>
                   <br/>
@@ -83,7 +83,6 @@ function LoginForm() {
                     </div>
                 </div>
                 <br />
-                <div className="text">{error}</div>
               </div>
             </div>
           )}

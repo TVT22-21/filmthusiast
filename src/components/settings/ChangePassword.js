@@ -12,32 +12,32 @@ const ChangePassword = ({username=userInfo.value?.private}) => {
       .then((resp)=>{
         console.log(resp.data);
         console.log('Changing password...');
-        setError("");
+        setError("Password updated!");
       })
       .catch((error)=>{
         console.log(error.resp.data);
-        setError("Salasanan vaihtaminen epäonnistui.");
+        setError("Updating password failed. Current password incorrect.");
       });
   };
   
 
   return (
     <div>
-      <h3>Vaihda Salasana</h3>
+      <h3>Change your password</h3>
       <label>
-        Nykyinen Salasana: 
+        Current password: 
         <br />
-        <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} placeholder="Nykyinen salasana"/>
+        <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} placeholder="Current password"/>
       </label>
       <br />
       <label>
-        Uusi Salasana:
+        New password:
         <br />
-        <input type="password" value={password} onChange={(e) => setNewPassword(e.target.value)} placeholder="Uusi salasana"/>
+        <input type="password" value={password} onChange={(e) => setNewPassword(e.target.value)} placeholder="New password"/>
       </label>
       <br />
       <br />
-      <button onClick={handleChangePassword}>Vaihda Salasana</button>
+      <button onClick={handleChangePassword}>Change password</button>
       <br />
       <div className="text">{error}</div>
     </div>

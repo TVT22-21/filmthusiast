@@ -15,13 +15,13 @@ function handleDelete(){
   axios.post("http://localhost:3001/person/delete", { username, password })
     .then((resp)=>{
     console.log(resp.data);
-    setError("");
+    setError("Account deleted.");
     //deleteSuccess();
   })
     .catch((error) => {
       console.log(error.response.data);
       console.log('Account delete failed');
-      setError("Käyttäjän poistaminen epäonnistui.");
+      setError("Account delete failed. Password incorrect.");
     });
 }
 /*
@@ -37,19 +37,19 @@ function handleDelete(){
 
   return (
     <div>
-      <h3>Käyttäjän poistaminen: {username}</h3>
+      <h3>Delete your account: {username}</h3>
       
-      <button onClick={toggleConfirmation}>Poista Käyttäjä</button>
+      <button onClick={toggleConfirmation}>Delete account</button>
 
       {showConfirmation && (
         <div>
-          <p>Haluatko varmasti poistaa käyttäjäsi?</p>
+          <p>Are you sure you want to delete your account?</p>
           <label>
-            <h3> Vahvista salasanalla: </h3>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Salasana" />
+            <h3> Confirm by using your password: </h3>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
           </label>
-          <button onClick={handleDelete}>Kyllä, Poista</button>
-          <button onClick={toggleConfirmation}>Peruuta</button>
+          <button onClick={handleDelete}>I'm sure, Delete</button>
+          <button onClick={toggleConfirmation}>Cancel</button>
           <br/>
           <div className="text">{error}</div>
         </div>
