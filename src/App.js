@@ -1,16 +1,15 @@
+
 import React from "react";
 import ReactDOM from 'react-dom';
 import './App.css';
 import { useState } from 'react';
 import RegisterForm from './components/register/register';
 import Profile from './components/profile/profile';
-import Login from './components/login/login'
+import SearchPage from './components/search/searchPage';
+import Login from './components/login/login';
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Homepage from "./components/homepage/homepage";
 import Group from './components/group/group'
-
-
-
 
 
 function App() {

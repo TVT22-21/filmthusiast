@@ -94,9 +94,9 @@ router.put('/addToWatchlist', async (req, res) => {
     if (!req.body) {
       return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
     }
-    const { movie_id, person_idperson } = req.body;
+    const { movie_id, username } = req.body;
     console.log(req.body);
-    await addToWatchlist(movie_id, person_idperson);
+    await addToWatchlist(movie_id, username);
     res.json({ message: 'Watchlist updated successfully.' });
   } catch (error) {
     console.error('Error updating watchlist:', error);
@@ -104,20 +104,32 @@ router.put('/addToWatchlist', async (req, res) => {
   }
 });
 
+router.delete('/deleteFromWatchlist/:movie_id/:username', async (req, res) => {
+  try {
+    const { movie_id, username } = req.params;
+    console.log({ movie_id, username });
+    await deleteFromWatchlist(movie_id, username);
+    res.json({ message: 'Movie deleted from watchlist successfully.' });
+  } catch (error) {
+    console.error('Error deleting movie from watchlist:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+/*
 router.delete('/deleteFromWatchlist', async (req, res) => {
   try {
     if (!req.body) {
       return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
     }
-    const { movie_id, person_idperson } = req.body;
+    const { movie_id, username } = req.body;
     console.log(req.body);
-    await deleteFromWatchlist(movie_id, person_idperson);
+    await deleteFromWatchlist(movie_id, username);
     res.json({ message: 'Movie deleted from watchlist successfully.' });
   } catch (error) {
     console.error('Error updating watchlist:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-});
+});*/
 
 router.get('/getWatchlist/:username', async (req, res) => {
 
