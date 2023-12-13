@@ -6,7 +6,11 @@ import { NewRating, GetRatingid, NewestRated, TopRatedMovies,GetRatingById } fro
 import { userInfo } from '../register/signals';
 
 import axios from 'axios';
+
 import { SearchResultCard } from './searchResult';
+import { useParams } from 'react-router-dom';
+import { SearchResultCard } from './searchResult';
+
 
 function SearchPage() {
 
@@ -37,6 +41,7 @@ function SearchBar() {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedGenreCodes, setSelectedGenreCodes] = useState([]);
+  const searchWordHeader = useParams();
 
   const filteredMovies = SearchResultByTitle.filter((movie) =>
     selectedGenreCodes.every((selectedGenre) => movie.genre_ids.includes(selectedGenre.code))
@@ -55,6 +60,7 @@ function SearchBar() {
 
   function handleSearch() {
     setSearchTerm(searchWord);
+    
   }
 
   function handleNewestRated() {
