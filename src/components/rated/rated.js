@@ -150,7 +150,6 @@ const GetRatingById = ({RatingById}) => {
 
   return (
     <div>
-      
       <ul className="movieList">
         {GetRatedMovies.map((movie, index) => (                         
           <li key={index} className="movieListItem">

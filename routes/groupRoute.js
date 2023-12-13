@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const groupController = require('./groupController');
+const groupController = require('../postgre/group');
 
 
 router.get('/', groupController.getAllGroups);
