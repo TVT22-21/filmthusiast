@@ -3,7 +3,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './searchPage.css';
 import { userInfo } from '../register/signals';
-
 import { useParams } from 'react-router-dom';
 
 function SearchById( movieId ){
