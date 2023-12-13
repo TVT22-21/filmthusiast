@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { MovieCardById, MovieCardByTitle, PersonCardByPerson } from './searchMovie';
-import { SearchById, SearchByTitle, SearchByPerson, FindId } from './searchMovie';
+import { SearchById, SearchByTitle, SearchByPerson, FindId, MovieCard, SearchByIdWithCard } from './searchMovie';
 import './searchPage.css';
 import { NewRating, GetRatingid, NewestRated, TopRatedMovies,GetRatingById } from '../rated/rated';
+import { userInfo } from '../register/signals';
+
 import axios from 'axios';
+
+import { SearchResultCard } from './searchResult';
+import { useParams } from 'react-router-dom';
+import { SearchResultCard } from './searchResult';
+
 
 function SearchPage() {
 
@@ -14,15 +21,17 @@ function SearchPage() {
   );
 }
 
+
 function SearchBar() {
-const [data, setData] = useState('');
-const [showTopRated, setShowTopRated] = useState(false);
-const [showNewestRated, setShowNewestRated] = useState(false);
-const[showGetRated, setShowGetRated] = useState(false);
+
+  const [movieData, setMovieData] = useState('');
+  const [showTopRated, setShowTopRated] = useState(false);
+  const [showNewestRated, setShowNewestRated] = useState(false);
+  const [showGetRated, setShowGetRated] = useState(false);
   const [searchWord, setSearchWord] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-
   const [searchDBID, setSearchDBID] = useState('');
+  const [watchlistSearchDBID, setWatchlistSearchDBID] = useState('');
   const SearchResultByTitle = SearchByTitle(searchTerm);
   const [showRatingWindow, setShowRatingWindow] = useState(false);
   const [rating, setRating] = useState(0);
@@ -32,9 +41,14 @@ const[showGetRated, setShowGetRated] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedGenreCodes, setSelectedGenreCodes] = useState([]);
+  const searchWordHeader = useParams();
+
   const filteredMovies = SearchResultByTitle.filter((movie) =>
     selectedGenreCodes.every((selectedGenre) => movie.genre_ids.includes(selectedGenre.code))
   );
+  const watchlistSearchFindID = FindId(watchlistSearchDBID);
+  const searchFindID = FindId(searchDBID);
+
   const handleGenreChange = (genresCodes) => {
     setSelectedGenreCodes(genresCodes);
     console.log(genresCodes);
@@ -46,27 +60,29 @@ const[showGetRated, setShowGetRated] = useState(false);
 
   function handleSearch() {
     setSearchTerm(searchWord);
+    
   }
 
-  function handleNewestRated(){
+  function handleNewestRated() {
     setShowNewestRated(prevState => !prevState);
   }
 
-  function handleTopRated(){
+  function handleTopRated() {
     setShowTopRated(prevState => !prevState);
   }
+
   function handleArvostele(searchDBID) {
     console.log('SDBID:', searchDBID);
     setSelectedMovieId(searchDBID);
     setShowRatingWindow(true);
-    
 
-  }
   function handleArvostelu(searchFindID){
+
     console.log('asdasd', searchFindID);
-  setSelectedMovieId(searchFindID);
-  setShowGetRated(prevState => !prevState);
+    setSelectedMovieId(searchFindID);
+    setShowGetRated(prevState => !prevState);
   }
+
   const handleCloseRatingWindow = () => {
     setShowRatingWindow(false);
   }
@@ -79,14 +95,30 @@ const[showGetRated, setShowGetRated] = useState(false);
     } catch (error) {
       console.error('Error:', error.message);
     }
-    setShowRatingWindow(false); 
+    setShowRatingWindow(false);
   }
-
-
 
   //const joo = FindId('597');
   //console.log('jojojoj', joo);
   const searchFindID = FindId(searchDBID);
+
+  async function handleAddWatchlist(id){
+    setWatchlistSearchDBID(id);
+    console.log('watchlistSearchFindID immediately after set:', watchlistSearchFindID);
+    const movieId = watchlistSearchFindID;
+    
+    try {
+      const requestData = {
+        movie_id: movieId,
+        username: userInfo.value?.private,
+      };
+      const response = await axios.put(`http://localhost:3001/profile/addToWatchlist`, requestData);
+      console.log('Watchlist updated successfully:', response.data);
+    } catch (error) {
+      console.error('Error updating watchlist:', error);
+    }
+  }
+
   const SearchResultById = SearchById(searchTerm);
   const SearchResultByPerson = SearchByPerson(searchTerm);
 
@@ -103,6 +135,7 @@ const[showGetRated, setShowGetRated] = useState(false);
 
         <button class='search-btn' onClick={handleSearch}>Search</button>
 
+
         {isEditing ? (
           <div>
             <FilterMovies closeFilter={() => setIsEditing(false)} onGenreChange={handleGenreChange} />
@@ -111,12 +144,12 @@ const[showGetRated, setShowGetRated] = useState(false);
           <img src='assets/filter-icon.png' onClick={() => setIsEditing(true)} alt="editbutton" />
         )}
 
-           <button className='search-btn' onClick={handleNewestRated}>
-            Newest Rated
-          </button>
-          <button className='search-btn' onClick={handleTopRated}>
-            Top Rated
-          </button>
+        <button className='search-btn' onClick={handleNewestRated}>
+          Newest Rated
+        </button>
+        <button className='search-btn' onClick={handleTopRated}>
+          Top Rated
+        </button>
       </div>
 
       <div className='selected-genres'>
@@ -127,82 +160,40 @@ const[showGetRated, setShowGetRated] = useState(false);
         </ul>
       </div>
 
-      <div className='search-results'>
+      
         {showGetRated ? (
-          <GetRatingById RatingById={searchFindID}/>
+
+          <GetRatingById RatingById={searchFindID} />
+
         ) : (
           <p></p>
         )}
-      {showNewestRated ? (
+        {showNewestRated ? (
           <NewestRated />
 
         ) : (
-          
-           <p></p>
+
+          <p></p>
         )}
         {showTopRated ? (
-          <TopRatedMovies/>
+          <TopRatedMovies />
         ) : (
-          
-           <p></p>
+
+          <p></p>
         )}
-        {Array.isArray(filteredMovies) ? (
-          filteredMovies.map((searchdata) => (
-            <div className='movie-card' key={searchdata.id}>
 
-
-              {searchdata.poster_path && (
-                <img src={`https://images.tmdb.org/t/p/w200${searchdata.poster_path}`} alt={`Poster for ${searchdata.title}`} />
-              )}
-              <p><strong>{searchdata.original_title}</strong></p>
-              <p><strong>Release Date: </strong>{searchdata.release_date}</p>
-
-              <button className='add-watchlist-btn'>+ Watchlist</button>
-              <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostele(searchdata.id); }}>+ Arvostele</button>
-              <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostelu(searchFindID); }}>+ Arvostelut</button>
-              {showRatingWindow && selectedMovieId === searchdata.id && (
-                <div className="rating-window">
-                  <h3>Rate item with ID {searchFindID}</h3>
-                  <label>
-                    Rating:
-                    <input
-                      type="number"
-                      value={rating}
-                      onChange={(e) => setRating(e.target.value)}
-                    />
-                  </label>
-                  <label>
-                    Rating Text:
-                    <input
-                      type="text"
-                      value={ratingText}
-                      onChange={(e) => setRatingText(e.target.value)}
-                    />
-                  </label>
-                  <label>
-                    Username:
-                    <input
-                      type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                    />
-                  </label>
-                  <button onClick={handleRatingSubmit}>Submit</button>
-                  <button onClick={handleCloseRatingWindow}>Close</button>
-                </div>
-              )}
-
-            </div>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
+        {filteredMovies ? (
+          <SearchResultCard movieData ={filteredMovies}/>
+        ):(
+          <p></p>
 
       </div>
 
-    </div>
+    
   );
 }
+
+
 
 function FilterMovies({ closeFilter, onGenreChange }) {
 
@@ -246,10 +237,10 @@ function FilterMovies({ closeFilter, onGenreChange }) {
       const genreObject = genreOptions.find((genre) => genre.name === selectedGenre);
       return genreObject ? { name: genreObject.name, code: genreObject.code } : null;
     });
-  
+
     const validGenreCodes = selectedGenreCodes.filter((genre) => genre !== null);
     console.log('Selected Genre Codes:', validGenreCodes);
-  
+
     onGenreChange(validGenreCodes);
   };
 
@@ -277,4 +268,8 @@ function FilterMovies({ closeFilter, onGenreChange }) {
 }
 
 
-export default SearchPage;
+
+
+
+export { SearchPage, SearchBar };
+

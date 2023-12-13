@@ -1,0 +1,47 @@
+
+
+
+
+.header-container{
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #011627;
+    
+    align-items: center;
+}
+
+.searchbar-container{
+    margin-left: 16.5%;
+}
+
+nav{ 
+    margin-left: 5px;
+}
+
+.nav-btn-header {
+  font-family: helvetica;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 7px 17px;
+  border-radius: 3px;
+  border: 1px solid #000000;
+  background: #253e63;
+}
+.nav-btn-header:hover {
+  background: #468CCF;
+}
+
+.search-btn-header{
+    font-family: helvetica;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 7px 17px;
+    border-radius: 3px;
+    border: 1px solid #000000;
+    background: #253e63;
+}
+.search-btn-header:hover {
+    background: #468CCF;
+  }

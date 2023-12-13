@@ -1,39 +1,32 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useParams } from 'react';
 import './profile.css';
-
-import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, PersonCardByPerson, SearchByIdWithCard } from '../search/searchMovie';
+import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
 import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
+import { useParams } from 'react-router-dom';
+import Header from '../header/header';
 
-import {useParams} from 'react-router-dom';
+
 
 function Profile(){
   return (
-    <div>
-      <Body />
-    </div>
-  )
-};
-
-function Body(){
-
-  return(
-    <div>
+    <div className='profile'>
+      <Header />
       <Main />
     </div>
   );
 }
 
 function Main(){
-
-  return(
-    <main>
+  return (
+    <div className='profile-container'>
       <Information /> 
       <Content /> 
-    </main>
+    </div>
   );
 }
+
 
 function Information(){
 
@@ -55,16 +48,22 @@ function Information(){
         
         console.log('Response data:', getProfRes.data);
         setProfile(getProfRes.data);
+        console.log(profile);
       } catch (error) {
         setProfile('loading');
         console.error(error);
       }
     }
     fetchData();
-  }, []);
+  }, [username]);
 
   const handleEditTitle = () => {
-    setIsEditingTitle(true);
+    console.log(userInfo.value?.private + username)
+    if(userInfo.value?.private === username){
+      setIsEditingTitle(true);
+    }else{
+      window.alert('You need to login to edit your profile!');
+    }  
   };
 
   const handleTitleChange = (e) => {
@@ -73,7 +72,7 @@ function Information(){
 
   const handleSubmitTitle = async () => {
     try {
-      const personId = profile.person_idperson; 
+      const personId = profile[0].person_idperson; 
       console.log(personId);
       await axios.put('http://localhost:3001/profile/updateTitle', {
         profiletitle: newTitle,
@@ -95,7 +94,12 @@ function Information(){
   };
 
   const handleEditDesc = () => {
-    setIsEditingDesc(true);
+    console.log(userInfo.value?.private + username)
+    if(userInfo.value?.private === username){
+      setIsEditingDesc(true);
+    }else{
+      window.alert('You need to login to edit your profile!');
+    }  
   };
 
   const handleDescChange = (e) => {
@@ -104,7 +108,8 @@ function Information(){
 
   const handleSubmitDesc = async () => {
     try {
-      const personId = profile.person_idperson; 
+      const personId = profile[0].person_idperson; 
+      
       await axios.put('http://localhost:3001/profile/updateDescription', {
         description: newDesc,
         person_idperson: personId,
@@ -123,10 +128,10 @@ function Information(){
       console.error('Error updating description:', error);
     }
   };
-
+  
   return(   
   
-    <div>  
+    <div className='information'>  
       {profile.map((name) => (
         <div class="name-container" key={name.idprofile}>
           <p>
@@ -183,7 +188,6 @@ function Content(){
 
   const [contentType, setContentType] = useState('ratings');
   const [ratings, setRatings] = useState('');
-  const [ratingIds, setRatingIds] = useState('');
 
   const { username } = useParams();
 
@@ -210,26 +214,10 @@ function Content(){
     }
 
     fetchDataRatings();
-  }, []);
-
-  useEffect(() => {
-    
-    async function fetchData() {
-      try {
-        const response = await axios.get(`http://localhost:3001/rating/getrating?username=Seppo`);
-        setRatings(response.data);
-        console.log(response);
-
-      } catch (error) {
-        setRatings('loading');
-        console.error(error);
-      }
-    }
-    fetchData();
-  }, []);
+  }, [username]);
   
   return (
-    <div>
+    <div className='content'>
       <div class='content-nav'>
         <button class="content-btn" onClick={() => handleToggle('ratings')}>Movie Ratings</button>
         <button class="content-btn" onClick={() => handleToggle('watchlist')}>Watch List</button>
@@ -288,8 +276,8 @@ function Content(){
 function Watchlist(){
 
   const [watchlist, setWatchlist] = useState([]);
-
   const { username } = useParams();
+  const uName = username;
 
   useEffect(() => {
     
@@ -297,9 +285,14 @@ function Watchlist(){
       try {
         //const uName = userInfo.value.private;
         const response = await axios.get(`http://localhost:3001/profile/getWatchlist/`+ username);
-        setWatchlist(response.data[0].watchlist);
-        console.log(response.data[0].watchlist);
-
+        
+        if (response.data[0]?.watchlist && response.data[0].watchlist.length > 0) {
+          setWatchlist(response.data[0].watchlist);
+          console.log(response.data[0].watchlist);
+        } else {
+          // Handle the case when the watchlist is empty
+          console.log('Watchlist is empty');
+        }
       } catch (error) {
         setWatchlist('loading');
         console.error(error);
@@ -307,7 +300,7 @@ function Watchlist(){
     }
 
     fetchDataRatings();
-  }, []);
+  }, [username]);
 
   return(
     <div>
@@ -316,7 +309,7 @@ function Watchlist(){
         {watchlist.length > 0 ? (
           watchlist.map((movieId) => (
             <div key={movieId}>
-              <SearchByIdWithCard movieId={movieId} />
+              <SearchByIdWithCardWatchlist movieId={movieId} uName={uName}/>
             </div>
           ))
         ) : (
