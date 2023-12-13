@@ -15,19 +15,20 @@ import Group from './components/group/group'
 function App() {
 
 
-return(
-<div>
-<BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile/:username" element={<Profile />} />
-        <Route path="/group" element={<Group/>} /> 
-      </Routes>
-    </BrowserRouter>
-</div>
-);
+  return (
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/register" element={<RegisterForm />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/group" element={<Group />} />
+          <Route path="/searchPage" element={<SearchPage />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 ReactDOM.render(<App />, document.getElementById('root'));
 //test

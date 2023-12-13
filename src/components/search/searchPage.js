@@ -4,7 +4,6 @@ import { SearchById, SearchByTitle, SearchByPerson, FindId, MovieCard, SearchByI
 import './searchPage.css';
 import { NewRating, GetRatingid, NewestRated, TopRatedMovies,GetRatingById } from '../rated/rated';
 import { userInfo } from '../register/signals';
-
 import axios from 'axios';
 import { SearchResultCard } from './searchResult';
 
@@ -180,12 +179,11 @@ function SearchBar() {
           <SearchResultCard movieData ={filteredMovies}/>
         ):(
           <p></p>
-
-      </div>
-
-    
+        )}
+    </div>
   );
 }
+
 
 
 
@@ -260,8 +258,7 @@ function FilterMovies({ closeFilter, onGenreChange }) {
     </div>
   );
 }
+}
 
 
 export default SearchPage;
-
-
