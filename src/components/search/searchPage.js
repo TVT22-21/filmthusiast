@@ -261,4 +261,8 @@ function FilterMovies({ closeFilter, onGenreChange }) {
 }
 
 
-export default SearchPage;
+
+
+
+export { SearchPage, SearchBar };
+
