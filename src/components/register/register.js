@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import './register.css';
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -11,6 +12,7 @@ export default function RegisterForm() {
     const [pw2, setPw2] = useState('');
     const [email, setEmail] = useState('');
     const [virhe, setVirhe] = useState('');
+    const navigate = useNavigate();
 
     function register() {
         console.log('Before registration:', { username, password, email });
@@ -46,6 +48,10 @@ export default function RegisterForm() {
           setVirhe('Salasanat eivät täsmää');
         }
       };
+
+      function navigateToLogin(){
+        navigate("/login");
+      }
       
 
     return (
@@ -70,7 +76,7 @@ export default function RegisterForm() {
             <div className="texti">{virhe}</div>
             <div class="footer">
                 <div className="nappi" onClick={register}>Rekisteröidy</div>
-                <div className="nappi">Kirjaudu</div>
+                <div className="nappi" onClick={navigateToLogin}>Kirjaudu</div>
             </div>
         </div>
 

@@ -44,6 +44,9 @@ function LoginForm() {
         });
     }
 
+    function navigateToRegister(){
+      navigate("/register");
+    }
 
     return (
       <div className="login-container">
@@ -72,6 +75,12 @@ function LoginForm() {
                 <br />
                 <div>
                   <button onClick={login}>Kirjaudu sisään</button>
+                  <br/>
+                    <div className="header">
+                      <div className="text">Etkö omista käyttäjää?</div>
+                      <button onClick={navigateToRegister}>Rekisteröidy käyttäjäksi</button>
+                      <br/>
+                    </div>
                 </div>
                 <br />
                 <div className="text">{error}</div>

@@ -27,8 +27,8 @@ async function getPerson(username){
 }
 
 
-async function updatePassword(password, username){
-    await pgPool.query(database.UPDATE_PASSWORD, [password, username])
+async function updatePassword(hashPw, username){
+    await pgPool.query(database.UPDATE_PASSWORD, [hashPw, username])
 }
 
 async function updateEmail(email, username){
