@@ -1,11 +1,12 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useParams } from 'react';
 import './profile.css';
 
 import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, PersonCardByPerson, SearchByIdWithCard } from '../search/searchMovie';
 import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
 
+function Profile(){
   return (
     <div>
       <Body />
