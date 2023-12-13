@@ -5,34 +5,27 @@ import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardB
 import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
+import Header from '../header/header';
 
 
 function Profile(){
   return (
-    <div>
-      <Body />
-    </div>
-  );
-}
-
-
-function Body(){
-  return(
-    <div>
+    <div className='profile'>
+      <Header />
       <Main />
     </div>
   );
 }
 
 function Main(){
-
-  return(
-    <main>
+  return (
+    <div className='profile-container'>
       <Information /> 
       <Content /> 
-    </main>
+    </div>
   );
 }
+
 
 function Information(){
 
@@ -54,7 +47,7 @@ function Information(){
         
         console.log('Response data:', getProfRes.data);
         setProfile(getProfRes.data);
-        
+        console.log(profile);
       } catch (error) {
         setProfile('loading');
         console.error(error);
@@ -134,10 +127,10 @@ function Information(){
       console.error('Error updating description:', error);
     }
   };
-
+  
   return(   
   
-    <div>  
+    <div className='information'>  
       {profile.map((name) => (
         <div class="name-container" key={name.idprofile}>
           <p>
@@ -221,25 +214,9 @@ function Content(){
 
     fetchDataRatings();
   }, [username]);
-
-  useEffect(() => {
-    
-    async function fetchData() {
-      try {
-        const response = await axios.get(`http://localhost:3001/rating/getrating?username=Seppo`);
-        setRatings(response.data);
-        console.log(response);
-
-      } catch (error) {
-        setRatings('loading');
-        console.error(error);
-      }
-    }
-    fetchData();
-  }, []);
   
   return (
-    <div>
+    <div className='content'>
       <div class='content-nav'>
         <button class="content-btn" onClick={() => handleToggle('ratings')}>Movie Ratings</button>
         <button class="content-btn" onClick={() => handleToggle('watchlist')}>Watch List</button>
