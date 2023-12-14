@@ -100,22 +100,17 @@ function SearchBar() {
     setShowRatingWindow(false);
   }
 
-  //const joo = FindId('597');
-  //console.log('jojojoj', joo);
 
-
-  const SearchResultById = SearchById(searchTerm);
-  const SearchResultByPerson = SearchByPerson(searchTerm);
 
   return (
-    <div className='search-container'>
+    <div className='searchpage-container'>
       <div className='search-bar-container'>
       {isEditing ? (
           <div>
             <FilterMovies closeFilter={() => setIsEditing(false)} onGenreChange={handleGenreChange} />
           </div>
         ) : (
-          <img src='assets/filter-icon.png' onClick={() => setIsEditing(true)} alt="editbutton" />
+          <img className='filter-button' src='assets/filter-icon.png' onClick={() => setIsEditing(true)} alt="filterbutton" />
         )}
   
         <input
@@ -138,15 +133,16 @@ function SearchBar() {
         </div> 
       </div>
   
-      <div className='selected-genres'>
-        <ul className='genre-list'>
-          {selectedGenreCodes.map((genre) => (
-            <li key={genre.code}>{genre.name}</li>
-          ))}
-        </ul>
-      </div>
+    
 
       <div className='search-results-container'>
+        <div className='selected-genres'>
+          <ul className='genre-list'>
+            {selectedGenreCodes.map((genre) => (
+              <li key={genre.code}>{genre.name}</li>
+            ))}
+          </ul>
+        </div>
         {showGetRated ? (
 
           <GetRatingById RatingById={searchFindID} />
@@ -233,11 +229,15 @@ function FilterMovies({ closeFilter, onGenreChange }) {
 
   return (
     <div className='filter-container'>
-      <h3>Select Genre:</h3>
+      <div className='filter-header'>
+        <h3>Select Genre:</h3>
+        <img className='exit-filter-button' src='assets/close-icon.png' alt='Close' onClick={closeFilter} />
+      </div>   
       <div>
         {genreOptions.map((genre) => (
           <label key={genre.name}>
             <input
+              className='checkbox'
               type='checkbox'
               value={genre.name}
               checked={selectedGenres.includes(genre.name)}
@@ -247,9 +247,7 @@ function FilterMovies({ closeFilter, onGenreChange }) {
           </label>
         ))}
       </div>
-      <button onClick={() => { saveSelectedGenres(); closeFilter(); }}>Save</button>
-      <img src='assets/close-icon.png' alt='Close' onClick={closeFilter} />
-      <p>movie</p>
+      <button className='search-btn' onClick={() => { saveSelectedGenres(); closeFilter(); }}>Save</button>
     </div>
   );
 }

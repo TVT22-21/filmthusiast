@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { MovieCard, SearchByIdWithCard, FindId } from './searchMovie';
 import { NewRating, GetRatingById } from '../rated/rated';
 import './searchPage.css';
+import './searchResult.css';
 import { userInfo } from '../register/signals';
 
 function SearchResultCard({ movieData }) {
@@ -99,7 +100,6 @@ function SearchResultCard({ movieData }) {
                             <div
                                 className={`movie-card ${expandedCard === searchdata.id ? 'expanded' : ''}`}
                                 key={searchdata.id}
-                                onClick={() => handleCardClick(searchdata.id)}
                             >
                                 {expandedCard === searchdata.id ? (
                                     <>
@@ -118,7 +118,6 @@ function SearchResultCard({ movieData }) {
                                             <strong>{searchdata.original_title}</strong>
                                         </p>
                                         <p><strong>Release Date:</strong> {searchdata.release_date}</p>
-                                        <p><strong>Media type:</strong> {searchdata.media_type}</p>
                                     </>
 
                                 )}
@@ -141,16 +140,22 @@ function SearchResultCard({ movieData }) {
                                                 onChange={(e) => setRatingText(e.target.value)}
                                             />
                                         </label>
+
                                         <button onClick={handleRatingSubmit}>Arvostele</button>
                                         <button onClick={handleCloseRatingWindow}>Sulje</button>
+
                                     </div>
                                 )}
                             </div>
-                            <div className="additional-card">
-                                <button className='add-watchlist-btn' onClick={() => { handleAddWatchlist(searchdata.id); }}>+ Watchlist</button>
-                                <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostele(searchdata.id); }}>+ Arvostele</button>
-                                <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostelu(searchFindID); }}>+ Arvostelut</button>
-                                
+                            <button className='about-btn-results' onClick={() => handleCardClick(searchdata.id)}>About</button>
+                            <div className="additional-card-container">
+                                <div className="additional-card-1">
+                                    <button className='add-watchlist-btn' onClick={() => { handleAddWatchlist(searchdata.id); }}>+ Watchlist</button>
+                                </div>
+                                <div className="additional-card-2">
+                                    <button className='add-rating-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostele(searchdata.id); }}>+ Arvostele</button>
+                                    <button className='add-rating-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostelu(searchFindID); }}>+ Arvostelut</button>
+                                </div>                              
                             </div>
                         </div>
                     ))

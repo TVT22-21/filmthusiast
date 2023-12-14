@@ -149,12 +149,12 @@ const GetRatingById = ({RatingById}) => {
 
 
   return (
-    <div>
-      <ul className="movieList">
+    <div className='movie-rating-list'>
+      <h3>Arvostelut: </h3>
+      <div className="movieList">
         {GetRatedMovies.map((movie, index) => (                         
-          <li key={index} className="movieListItem">
+          <div key={index} className="movieListItem">
             <div className="movieCardContainer">
-              <SearchByIdWithCard movieId={movie.idmovie}/>
               <RatingCard RatingData={{
                 username: movie.username,
                 rating: movie.rating,
@@ -162,9 +162,9 @@ const GetRatingById = ({RatingById}) => {
                 ratingdate: movie.ratingdate,
               }}/>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
