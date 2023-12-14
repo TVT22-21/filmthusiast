@@ -8,7 +8,6 @@ import Groups from '../group/group';
 import './homepage.css';
 import { userInfo } from '../register/signals';
 
-
 function Homepage() {
 
   
