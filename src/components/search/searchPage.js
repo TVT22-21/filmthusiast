@@ -5,16 +5,19 @@ import './searchPage.css';
 import { NewRating, GetRatingid, NewestRated, TopRatedMovies,GetRatingById } from '../rated/rated';
 import { userInfo } from '../register/signals';
 import axios from 'axios';
-
 import { SearchResultCard } from './searchResult';
 import { useParams } from 'react-router-dom';
+import { Header } from '../header/Header';
+import { Footer } from '../footer/footer';
 
 
 function SearchPage() {
 
   return (
     <div>
+      <Header />
       <SearchBar />
+      <Footer />
     </div>
   );
 }
@@ -39,8 +42,8 @@ function SearchBar() {
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedGenreCodes, setSelectedGenreCodes] = useState([]);
   
-  const { searchWordHeader } = useParams();
-  console.log('searchword: '+ searchWordHeader);
+  //const { searchWordHeader } = useParams();
+  //console.log('searchword: '+ searchWordHeader);
 
   const filteredMovies = SearchResultByTitle.filter((movie) =>
     selectedGenreCodes.every((selectedGenre) => movie.genre_ids.includes(selectedGenre.code))

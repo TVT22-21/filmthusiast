@@ -153,7 +153,7 @@ function Information() {
             ) : (
               <div class='profile-title-container'>
                 <h1>{profinf.profiletitle}</h1>
-                {userInfo.value?.private == username &&<img src='assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
+                {userInfo.value?.private == username && <img src='assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
               </div>
             )}
           </div>
@@ -172,7 +172,7 @@ function Information() {
               <div class='profile-desc-container'>
                 <div className='profile-desc-text'>
                   {profinf.description}
-                  {userInfo.value?.private == username &&<img src='assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />}
+                  {userInfo.value?.private == username && <img src='assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />}
                 </div>
                 
               </div>
