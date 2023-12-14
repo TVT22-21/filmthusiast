@@ -78,7 +78,6 @@ function SearchBarHeader(){
                 value={searchWord}
                 onChange={handleInputChange}
                 />
-        
                 <button class='nav-btn-header' onClick={handleSearch}>Search</button>
             </div>
         </div>
