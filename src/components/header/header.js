@@ -1,15 +1,18 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { userInfo } from '../register/signals';
+import { jwtToken, userInfo } from '../register/signals';
 
 import './header.css';
 
 function Header() {
 
-    //if(userInfo?.value.private){
-    //    setLoggedIn(true);
-    //}
+    const navigate = useNavigate();
+
+    function handleLogout(){
+        navigate('/login');
+        jwtToken.value = '';
+    }
 
     return (
         <div class="header-container">
@@ -30,9 +33,8 @@ function Header() {
             </Link>
 
             {!userInfo?.value?.private ? null : (
-                <Link to="/login">
-                    <button class='nav-btn-header'>Logout</button>
-                </Link>    
+                <button class='nav-btn-header' onClick={handleLogout}>Logout</button>
+
             )}
 
             {userInfo?.value?.private ? null : (
@@ -48,7 +50,7 @@ function Header() {
             )}
           </nav>
           <Link to="/settings">
-            <button class='nav-btn-header'><img src='assets/settings-icon2.png' alt="settingsbutton"/></button>
+                <button class='nav-btn-header'><img src='assets/settings-icon2.png' alt="settingsbutton"/></button>
           </Link>
           
         </div>

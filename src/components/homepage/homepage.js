@@ -7,6 +7,8 @@ import Cathegory from '../Category/CategoryButton';
 import Groups from '../group/group';
 import './homepage.css';
 import { userInfo } from '../register/signals';
+import { NewestRated, TopRatedMovies } from '../rated/rated';
+import { Header } from '../header/Header';
 
 function Homepage() {
 
@@ -15,7 +17,9 @@ function Homepage() {
   return (
     
     <div className="container">
-      <SearchPage />
+      <Header />
+      <NewestRated />
+      <TopRatedMovies />
     </div>
   );
 }
