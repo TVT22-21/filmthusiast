@@ -5,7 +5,10 @@ import './searchPage.css';
 import { NewRating, GetRatingid, NewestRated, TopRatedMovies,GetRatingById } from '../rated/rated';
 import { userInfo } from '../register/signals';
 import axios from 'axios';
+
 import { SearchResultCard } from './searchResult';
+import { useParams } from 'react-router-dom';
+
 
 function SearchPage() {
 
@@ -36,6 +39,7 @@ function SearchBar() {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedGenreCodes, setSelectedGenreCodes] = useState([]);
+  const searchWordHeader = useParams();
 
   const filteredMovies = SearchResultByTitle.filter((movie) =>
     selectedGenreCodes.every((selectedGenre) => movie.genre_ids.includes(selectedGenre.code))
@@ -54,6 +58,7 @@ function SearchBar() {
 
   function handleSearch() {
     setSearchTerm(searchWord);
+    
   }
 
   function handleNewestRated() {
@@ -68,6 +73,7 @@ function SearchBar() {
     console.log('SDBID:', searchDBID);
     setSelectedMovieId(searchDBID);
     setShowRatingWindow(true);
+  }
 
   function handleArvostelu(searchFindID){
 
@@ -93,7 +99,6 @@ function SearchBar() {
 
   //const joo = FindId('597');
   //console.log('jojojoj', joo);
-  const searchFindID = FindId(searchDBID);
 
   async function handleAddWatchlist(id){
     setWatchlistSearchDBID(id);
@@ -180,7 +185,9 @@ function SearchBar() {
         ):(
           <p></p>
         )}
-    </div>
+
+      </div>
+
   );
 }
 

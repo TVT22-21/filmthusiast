@@ -4,13 +4,13 @@ import './profile.css';
 import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
 import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
-import { useParams } from 'react-router-dom';
 import Header from '../header/header';
 import usestate from 'usestate';
 import { NewRating } from '../rated/rated';
 
 
-function Profile() {
+
+function Profile(){
   return (
     <div className='profile'>
       <Header />
