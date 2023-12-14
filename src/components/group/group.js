@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './group.css';
 import {userInfo} from '../register/signals';
-import { Header } from '../header/header';
+import { Header } from '../header/Header';
 
 function Groups() {
   const [groups, setGroups] = useState([]);
