@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './group.css';
-import { Header } from '../header/header';
+import {userInfo} from '../register/signals';
+import { Header } from '../header/Header';
 
 function Groups() {
   const [groups, setGroups] = useState([]);
@@ -9,21 +10,31 @@ function Groups() {
   const [newGroupTitle, setNewGroupTitle] = useState('');
   const [newGroupDescription, setNewGroupDescription] = useState('');
   const [createdGroup, setCreatedGroup] = useState(null);
+  const [groupId, setJoinedGroup] = useState(null);
+  const [idgroup, setIdgroup] = useState('');
+  
 
   const fetchGroups = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/groups');
+      console.log('Before fetching groups...');
+      const response = await axios.get('http://localhost:3001/groups/getgroups', );
+      console.log('Groups fetched successfully:', response.data);
       setGroups(response.data);
+      console.log('After setting groups...');
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching groups:', error);
     }
   };
-
-  const joinGroup = async (groupId) => {
-    try {
-      const idprofiili = 8;
-      await axios.post('http://localhost:3001/groups/join', { groupId, idprofiili });
-      fetchGroups();
+  
+  const joinGroup = async (id) => {
+    setIdgroup(id);
+    console.log(id);
+    try {    
+      const userName = userInfo.value?.private; 
+      await axios.post('http://localhost:3001/groups/join', { 
+        group_idgroup: 3, 
+        username: userName, 
+      });
     } catch (error) {
       console.error(error);
     }
@@ -36,10 +47,8 @@ function Groups() {
         grouptitle: newGroupTitle,
         groupdescription: newGroupDescription,
       });
-      fetchGroups();
-    
+  
       setCreatedGroup(response.data);
-      setGroups([...groups, response.data]);
       setNewGroupName('');
       setNewGroupTitle('');
       setNewGroupDescription('');
@@ -50,14 +59,13 @@ function Groups() {
 
   useEffect(() => {
     fetchGroups();
-  }, [createdGroup]); 
+  }, []); 
 
   return (
     <div>
       <Header />
       <h2>Groups</h2>
 
-    
       <div className="group-box">
         <h3>Create a New Group</h3>
         <label>Group Name:</label>
@@ -70,6 +78,7 @@ function Groups() {
         <input type="text" value={newGroupDescription} onChange={(e) => setNewGroupDescription(e.target.value)} />
 
         <button onClick={createGroup}>Create Group</button>
+        <button onClick={fetchGroups}>Show Group</button>
       </div>
 
       {createdGroup && (
@@ -80,17 +89,22 @@ function Groups() {
           <p>Group Description: {createdGroup.groupdescription}</p>
         </div>
       )}
+
+<ul>
+  {groups.map((group) => (
+    <li key={group.groupname}>
+      {group.groupname} - {group.grouptitle}
+      <button onClick={() => joinGroup(group.idgroup)}>Join Group</button>
+      <p>
+      {group.idgroup}
+      </p>
       
-      <ul>
-        {groups.map((group) => (
-          <li key={group.idGroup}>
-            {group.groupname} - {group.grouptitle}
-            <button onClick={() => joinGroup(group.idGroup)}>Join Group</button>
-          </li>
-        ))}
-      </ul>
+    </li>
+ 
+  ))}
+</ul>
     </div>
   );
 }
 
-export default Groups;
+export default Groups; 
