@@ -5,12 +5,13 @@
     flex-direction: column;
     margin-left: 10%;
     margin-right: 10%;
+    min-height: 100vh;
 }
 
 .search-bar-container{
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 100%;  
 }
 
 .search-bar-container img{
@@ -29,7 +30,6 @@
 .search-bar{
     width: 400px;
     height: 30px;
-
     margin-right: 5px;
 }
 

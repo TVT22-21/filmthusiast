@@ -2,7 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import './register.css';
 import {useNavigate} from "react-router-dom";
-import { Header } from "../header/header";
+import { Header } from "../header/Header";
+import { Footer } from "../footer/footer";
 
 
 export default function RegisterForm() {
@@ -70,7 +71,8 @@ export default function RegisterForm() {
       
 
     return (
-        <div>
+      <div>
+        <div className="register-container">
 
         <Header />
         <div className="register">
@@ -98,6 +100,8 @@ export default function RegisterForm() {
                 <div className="nappi" onClick={navigateToLogin}>Kirjaudu</div>
             </div>
         </div>
+        </div>
+        <Footer />
         </div>
 
 
