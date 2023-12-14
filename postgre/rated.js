@@ -48,7 +48,7 @@ WHERE r.person_idperson = p.idperson
 AND r.idmovie = $1
 AND p.username = $2;`,
 DELETE_IDRATED:'DELETE FROM rated WHERE idrated =$1',
-UPDATE_RATING: 'UPDATE rated SET rating = $1 WHERE idrated =$2',
+UPDATE_RATING: 'UPDATE rated SET rating = $1, ratingtext = $2 WHERE idrated =$3',
 UPDATE_RATING_TEXT: 'UPDATE rated SET ratingtext = $1 WHERE idrated =$2',
 GET_TOP_RATINGS: `
 SELECT
@@ -137,8 +137,8 @@ async function deleteidRated(idrated){
   await pgPool.query(database.DELETE_IDRATED, [idrated]);
 }
 
-async function updateRating(rating, idrated){
-  await pgPool.query(database.UPDATE_RATING, [rating, idrated])
+async function updateRating(rating, ratingtext, idrated){
+  await pgPool.query(database.UPDATE_RATING, [rating, ratingtext, idrated])
 }
 async function updateRatingText(ratingtext, idrated){
   await pgPool.query(database.UPDATE_RATING_TEXT, [ratingtext, idrated])

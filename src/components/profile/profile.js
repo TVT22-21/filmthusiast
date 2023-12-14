@@ -4,9 +4,11 @@ import './profile.css';
 import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
 import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
-import { Header } from "../header/Header";
 import { useParams } from 'react-router-dom';
+import { NewRating } from '../rated/rated';
+import { Header } from "../header/Header";
 import { Footer } from '../footer/footer';
+
 
 
 
@@ -20,17 +22,17 @@ function Profile(){
   );
 }
 
-function Main(){
+function Main() {
   return (
     <div className='profile-container'>
-      <Information /> 
-      <Content /> 
+      <Information />
+      <Content />
     </div>
   );
 }
 
 
-function Information(){
+function Information() {
 
   const [profile, setProfile] = useState([]);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -39,15 +41,15 @@ function Information(){
   const [newDesc, setNewDesc] = useState('');
   const { username } = useParams();
 
-  
+
   useEffect(() => {
     async function fetchData() {
       try {
         //const uName = userInfo.value?.private;
         //console.log(uName);
 
-        const getProfRes = await axios.get('http://localhost:3001/profile/getProfile/'+ username);
-        
+        const getProfRes = await axios.get('http://localhost:3001/profile/getProfile/' + username);
+
         console.log('Response data:', getProfRes.data);
         setProfile(getProfRes.data);
         console.log(profile);
@@ -61,11 +63,11 @@ function Information(){
 
   const handleEditTitle = () => {
     console.log(userInfo.value?.private + username)
-    if(userInfo.value?.private === username){
+    if (userInfo.value?.private === username) {
       setIsEditingTitle(true);
-    }else{
+    } else {
       window.alert('You need to login to edit your profile!');
-    }  
+    }
   };
 
   const handleTitleChange = (e) => {
@@ -74,13 +76,13 @@ function Information(){
 
   const handleSubmitTitle = async () => {
     try {
-      const personId = profile[0].person_idperson; 
+      const personId = profile[0].person_idperson;
       console.log(personId);
       await axios.put('http://localhost:3001/profile/updateTitle', {
         profiletitle: newTitle,
         person_idperson: personId,
       });
-      
+
       setProfile((prevProfile) => [
         {
           ...prevProfile[0],
@@ -97,11 +99,11 @@ function Information(){
 
   const handleEditDesc = () => {
     console.log(userInfo.value?.private + username)
-    if(userInfo.value?.private === username){
+    if (userInfo.value?.private === username) {
       setIsEditingDesc(true);
-    }else{
+    } else {
       window.alert('You need to login to edit your profile!');
-    }  
+    }
   };
 
   const handleDescChange = (e) => {
@@ -110,13 +112,13 @@ function Information(){
 
   const handleSubmitDesc = async () => {
     try {
-      const personId = profile[0].person_idperson; 
-      
+      const personId = profile[0].person_idperson;
+
       await axios.put('http://localhost:3001/profile/updateDescription', {
         description: newDesc,
         person_idperson: personId,
       });
-      
+
       setProfile((prevProfile) => [
         {
           ...prevProfile[0],
@@ -134,6 +136,7 @@ function Information(){
   return(   
   
     <div className='information'>  
+
       {profile.map((profinf) => (
         <div class="info-container" key={profinf.idprofile}>
           <div class="profile-title-edit">
@@ -148,7 +151,7 @@ function Information(){
                 <button onClick={handleSubmitTitle}>Submit</button>
               </div>
             ) : (
-              <div class='profile-title-container'> 
+              <div class='profile-title-container'>
                 <h1>{profinf.profiletitle}</h1>
                 {userInfo.value?.private == username &&<img src='assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
               </div>
@@ -182,21 +185,69 @@ function Information(){
 }
 
 
-function Content(){
+function Content() {
 
   const [contentType, setContentType] = useState('ratings');
+  const [isEditingRating, setIsEditingRating] = useState(false);
+  const [newRating, setNewRating] = useState('');
+  const [newRatingtext, setNewRatingtext] = useState('');
   const [ratings, setRatings] = useState('');
-
   const { username } = useParams();
+  const [rating, setRating] = useState([]);
+  const [idRated, setIdRated] = useState('');
+  const [expandedCard, setExpandedCard] = useState(null);
 
+  const handleEditRating = (id) => {
+    setIdRated(id);
+    setExpandedCard((prevId) => (prevId === id ? null : id));
+    console.log('id', id);
+    console.log(userInfo.value?.private + username)
+    if (username === username) {
+      setIsEditingRating(true);
+    } else {
+      window.alert('You need to login to edit rating!');
+    }
+  }
+  const handleRatingChange = (e) => {
+    setNewRating(e.target.value);
+  }
+  const handleRatinTextChange = (e) => {
+    setNewRatingtext(e.target.value);
+  }
   function handleToggle(type) {
     setContentType(type);
   }
+  const handleSubmitRating = async () => {
+    try {
+      console.log('id,rating,ratintext', idRated, newRating, newRatingtext);
+      await axios.put('http://localhost:3001/rating/update', {
+        rating: newRating,
+        ratingtext: newRatingtext,
+        idrated: idRated,
+      });
 
-  const SearchResultByTitle = SearchByTitle( 'lord of the rings' );
+      setRating((prevRating) => [
+        {
+          ...prevRating[0],
+          rating: newRating,
+          ratingtext: NewRating,
+        },
+      ]);
+      setIsEditingRating(false);
+      setExpandedCard(null);
+
+    } catch (error) {
+      console.error('Error updating rating:', error);
+    }
+  }
+  const handlePeruutaRating = () => {
+ setExpandedCard(null);
+  }
+
+  const SearchResultByTitle = SearchByTitle('lord of the rings');
 
   useEffect(() => {
- 
+
     async function fetchDataRatings() {
       try {
         //const uName = userInfo.value?.private;
@@ -204,7 +255,7 @@ function Content(){
         //console.log(uName);
         const response = await axios.get(`http://localhost:3001/rating/getrating?username=${username}`);
         setRatings(response.data);
-        
+
       } catch (error) {
         setRatings('loading');
         console.error(error);
@@ -213,7 +264,7 @@ function Content(){
 
     fetchDataRatings();
   }, [username]);
-  
+
   return (
     <div className='content'>
       <div class='content-nav'>
@@ -221,7 +272,7 @@ function Content(){
         <button class="content-btn" onClick={() => handleToggle('watchlist')}>Watch List</button>
         <button class="content-btn" onClick={() => handleToggle('groups')}>Groups</button>
       </div>
-      
+
       <div>
         {contentType === 'ratings' && (   
             <div class="ratings-container">
@@ -229,9 +280,49 @@ function Content(){
               {Array.isArray(ratings) ? (
                 ratings.map((rating) => (
                   <div class='movie-rating-card' key={rating.idrated}>
-                  <div>
-                    <SearchByIdWithCard movieId={ rating.idmovie } />
+                    <div>
+                      <SearchByIdWithCard movieId={rating.idmovie} />
+                    </div>
+                    <div 
+                     className={`movie-rating ${expandedCard === rating.idrated ? 'expanded' : ''}`}
+                    key={rating.idrated}
+                    >
+                      {expandedCard === rating.idrated ? (
+                        <div>
+                          <div class = 'content'>
+                          <input
+                            type="number"
+                            value={newRating}
+                            onChange={handleRatingChange}
+                            placeholder="Enter new rating"
+                            />
+                            </div>
+                            <div class = 'content'>
+                            <textarea
+                            type="form"
+                            rows="10"
+                            value={newRatingtext}
+                            onChange={handleRatinTextChange}
+                            placeholder="Enter new rating text"
+                            />
+                            </div>
+                            <button onClick={handleSubmitRating}>Muokkaa</button>
+                            <button onClick={handlePeruutaRating}>Peruuta</button>
+                      </div>
+                      ) : (
+                        <div class='movie-rating'>
+                          <p><strong>My Rating: </strong>{rating.rating}</p>
+                          <p><strong>Date: </strong>{new Date(rating.ratingdate).toLocaleString()}</p>
+                          <p>{rating.ratingtext}</p>
+                          <p><strong>idmovie: </strong>{rating.idmovie}</p>
+                          
+                        </div>
+                        
+                      )}
+                      <button class="content-btn" onClick={() => handleEditRating(rating.idrated)}>Muokkaa arvostelua</button>
+                    </div>
                   </div>
+
                   <div class='movie-rating'>
                     <p className='rating-number'><strong>My Rating: </strong>{rating.rating}</p>
                     <p className='rating-date'><strong>Date: </strong>{new Date(rating.ratingdate).toLocaleString()}</p>
@@ -241,8 +332,9 @@ function Content(){
                     
                   </div>
               ))
+
               ) : (
-              <p>Loading...</p>
+                <p>Loading...</p>
               )}
             </div> 
         )}
@@ -254,35 +346,36 @@ function Content(){
           </div>
         )}
 
-        {contentType === 'groups' && (
-          <div>
-            <h2>Groups</h2>
-            <div class="groups-container">
-              <MovieCardByTitle movieData={SearchResultByTitle} />
-              <MovieCardByTitle movieData={SearchResultByTitle} />
-              <MovieCardByTitle movieData={SearchResultByTitle} />
-            </div>
-          </div>
-        )}  
 
-      </div>
+      {contentType === 'groups' && (
+        <div>
+          <h2>Groups</h2>
+          <div class="groups-container">
+            <MovieCardByTitle movieData={SearchResultByTitle} />
+            <MovieCardByTitle movieData={SearchResultByTitle} />
+            <MovieCardByTitle movieData={SearchResultByTitle} />
+          </div>
+        </div>
+      )}
+
     </div>
+    </div >
   );
 }
 
-function Watchlist(){
+function Watchlist() {
 
   const [watchlist, setWatchlist] = useState([]);
   const { username } = useParams();
   const uName = username;
 
   useEffect(() => {
-    
+
     async function fetchDataRatings() {
       try {
         //const uName = userInfo.value.private;
-        const response = await axios.get(`http://localhost:3001/profile/getWatchlist/`+ username);
-        
+        const response = await axios.get(`http://localhost:3001/profile/getWatchlist/` + username);
+
         if (response.data[0]?.watchlist && response.data[0].watchlist.length > 0) {
           setWatchlist(response.data[0].watchlist);
           console.log(response.data[0].watchlist);
@@ -299,13 +392,13 @@ function Watchlist(){
     fetchDataRatings();
   }, [username]);
 
-  return(
+  return (
     <div>
       <div class="watchlist">
         {watchlist.length > 0 ? (
           watchlist.map((movieId) => (
             <div key={movieId}>
-              <SearchByIdWithCardWatchlist movieId={movieId} uName={uName}/>
+              <SearchByIdWithCardWatchlist movieId={movieId} uName={uName} />
             </div>
           ))
         ) : (
