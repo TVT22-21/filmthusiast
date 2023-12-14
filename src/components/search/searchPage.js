@@ -4,7 +4,6 @@ import { SearchById, SearchByTitle, SearchByPerson, FindId, MovieCard, SearchByI
 import './searchPage.css';
 import { NewRating, GetRatingid, NewestRated, TopRatedMovies,GetRatingById } from '../rated/rated';
 import { userInfo } from '../register/signals';
-
 import axios from 'axios';
 
 import { SearchResultCard } from './searchResult';
@@ -30,7 +29,6 @@ function SearchBar() {
   const [searchWord, setSearchWord] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchDBID, setSearchDBID] = useState('');
-  const [watchlistSearchDBID, setWatchlistSearchDBID] = useState('');
   const SearchResultByTitle = SearchByTitle(searchTerm);
   const [showRatingWindow, setShowRatingWindow] = useState(false);
   const [rating, setRating] = useState(0);
@@ -40,18 +38,19 @@ function SearchBar() {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedGenreCodes, setSelectedGenreCodes] = useState([]);
-  const searchWordHeader = useParams();
+  
+  const { searchWordHeader } = useParams();
+  console.log('searchword: '+ searchWordHeader);
 
   const filteredMovies = SearchResultByTitle.filter((movie) =>
     selectedGenreCodes.every((selectedGenre) => movie.genre_ids.includes(selectedGenre.code))
   );
-  const watchlistSearchFindID = FindId(watchlistSearchDBID);
+  
   const searchFindID = FindId(searchDBID);
-
   const handleGenreChange = (genresCodes) => {
     setSelectedGenreCodes(genresCodes);
     console.log(genresCodes);
-  };
+  }
 
   const handleInputChange = (event) => {
     setSearchWord(event.target.value);
@@ -118,23 +117,23 @@ function SearchBar() {
     }
   }
 
+
   const SearchResultById = SearchById(searchTerm);
   const SearchResultByPerson = SearchByPerson(searchTerm);
 
   return (
-    <div class='search-container'>
-      <div class='search-bar-container'>
+    <div className='search-container'>
+      <div className='search-bar-container'>
         <input
-          class='search-bar'
+          className='search-bar'
           type="text"
           placeholder="Search..."
           value={searchWord}
           onChange={handleInputChange}
         />
-
-        <button class='search-btn' onClick={handleSearch}>Search</button>
-
-
+  
+        <button className='search-btn' onClick={handleSearch}>Search</button>
+  
         {isEditing ? (
           <div>
             <FilterMovies closeFilter={() => setIsEditing(false)} onGenreChange={handleGenreChange} />
@@ -142,7 +141,7 @@ function SearchBar() {
         ) : (
           <img src='assets/filter-icon.png' onClick={() => setIsEditing(true)} alt="editbutton" />
         )}
-
+  
         <button className='search-btn' onClick={handleNewestRated}>
           Newest Rated
         </button>
@@ -150,7 +149,7 @@ function SearchBar() {
           Top Rated
         </button>
       </div>
-
+  
       <div className='selected-genres'>
         <ul className='genre-list'>
           {selectedGenreCodes.map((genre) => (
@@ -186,11 +185,12 @@ function SearchBar() {
         ):(
           <p></p>
         )}
+
       </div>
 
-    
   );
 }
+
 
 
 

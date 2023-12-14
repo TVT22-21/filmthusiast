@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { MovieCard, SearchByIdWithCard, FindId } from './searchMovie';
 import { NewRating, GetRatingById } from '../rated/rated';
 import './searchPage.css';
+import { userInfo } from '../register/signals';
 
 function SearchResultCard({ movieData }) {
     const [expandedCard, setExpandedCard] = useState(null);
@@ -13,7 +14,10 @@ function SearchResultCard({ movieData }) {
     const [rating, setRating] = useState(0);
     const [ratingText, setRatingText] = useState('');
     const [showArvostelut, setShowArvostelut] = useState(false);
+    const [watchlistSearchDBID, setWatchlistSearchDBID] = useState('');
     const [username, setUsername] = useState('');
+
+    const watchlistSearchFindID = FindId(watchlistSearchDBID);
 
     console.log('asdasdas', movieData);
     const handleCardClick = (id) => {
@@ -45,6 +49,25 @@ function SearchResultCard({ movieData }) {
     }
     const handleCloseRatingWindow = () => {
         setShowRatingWindow(false);
+    }
+
+    
+    async function handleAddWatchlist(id){
+        setWatchlistSearchDBID(id);
+        console.log('watchlistSearchDBID immediately after set:', watchlistSearchFindID);
+        const movieId = watchlistSearchFindID;
+      
+        try {
+            const requestData = {
+                movie_id: movieId,
+                username: userInfo.value?.private,
+            };
+            const response = await axios.put(`http://localhost:3001/profile/addToWatchlist`, requestData);
+            console.log('Watchlist updated successfully:', response.data);
+
+        }catch (error) {
+            console.error('Error updating watchlist:', error);
+        }
     }
 
     const searchFindID = FindId(searchDBID);
@@ -131,7 +154,7 @@ function SearchResultCard({ movieData }) {
                                 )}
                             </div>
                             <div className="additional-card">
-                                <button className='add-watchlist-btn'>+ Watchlist</button>
+                                <button className='add-watchlist-btn' onClick={() => { handleAddWatchlist(searchdata.id); }}>+ Watchlist</button>
                                 <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostele(searchdata.id); }}>+ Arvostele</button>
                                 <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostelu(searchFindID); }}>+ Arvostelut</button>
                                 
