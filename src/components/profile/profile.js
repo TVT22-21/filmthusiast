@@ -1,11 +1,13 @@
 import axios from 'axios';
-import React, { useEffect, useState, useParams } from 'react';
+import React, { useEffect, useState } from 'react';
 import './profile.css';
 import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
 import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
+import { Header } from "../header/Header";
 import { useParams } from 'react-router-dom';
-import Header from '../header/header';
+import { Footer } from '../footer/footer';
+
 
 
 function Profile(){
@@ -13,6 +15,7 @@ function Profile(){
     <div className='profile'>
       <Header />
       <Main />
+      <Footer />
     </div>
   );
 }
@@ -131,16 +134,9 @@ function Information(){
   return(   
   
     <div className='information'>  
-      {profile.map((name) => (
-        <div class="name-container" key={name.idprofile}>
-          <p>
-            {name.firstname} {name.lastname}
-          </p>
-        </div>
-      ))}
       {profile.map((profinf) => (
         <div class="info-container" key={profinf.idprofile}>
-          <div class="profile-title-container">
+          <div class="profile-title-edit">
             {isEditingTitle ? (
               <div>
                 <input
@@ -154,11 +150,11 @@ function Information(){
             ) : (
               <div class='profile-title-container'> 
                 <h1>{profinf.profiletitle}</h1>
-                <img src='assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />
+                {userInfo.value?.private == username &&<img src='assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
               </div>
             )}
           </div>
-          <div class="profile-desc-container">
+          <div class="profile-desc-edit">
             {isEditingDesc ? (
               <div>
                 <input
@@ -171,8 +167,11 @@ function Information(){
               </div>
             ) : (
               <div class='profile-desc-container'>
-                <p>{profinf.description}</p>
-                <img src='assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />
+                <div className='profile-desc-text'>
+                  {profinf.description}
+                  {userInfo.value?.private == username &&<img src='assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />}
+                </div>
+                
               </div>
             )}
           </div>
@@ -224,10 +223,9 @@ function Content(){
       </div>
       
       <div>
-        {contentType === 'ratings' && (
-          <div>
-            <h2>Movie Ratings</h2>
+        {contentType === 'ratings' && (   
             <div class="ratings-container">
+              <h2>Movie Ratings</h2>
               {Array.isArray(ratings) ? (
                 ratings.map((rating) => (
                   <div class='movie-rating-card' key={rating.idrated}>
@@ -235,10 +233,10 @@ function Content(){
                     <SearchByIdWithCard movieId={ rating.idmovie } />
                   </div>
                   <div class='movie-rating'>
-                    <p><strong>My Rating: </strong>{rating.rating}</p>
-                    <p><strong>Date: </strong>{new Date(rating.ratingdate).toLocaleString()}</p>
-                    <p>{rating.ratingtext}</p>
-                    <p><strong>idmovie: </strong>{rating.idmovie}</p>
+                    <p className='rating-number'><strong>My Rating: </strong>{rating.rating}</p>
+                    <p className='rating-date'><strong>Date: </strong>{new Date(rating.ratingdate).toLocaleString()}</p>
+                    <p className='rating-text'>{rating.ratingtext}</p>
+
                   </div>
                     
                   </div>
@@ -247,11 +245,11 @@ function Content(){
               <p>Loading...</p>
               )}
             </div> 
-          </div>
         )}
 
         {contentType === 'watchlist' && (
-          <div>
+          <div className='watchlist-container'>
+            <h2>Watch List</h2>
             <Watchlist />
           </div>
         )}
@@ -303,8 +301,7 @@ function Watchlist(){
 
   return(
     <div>
-      <h2>Watch List</h2>
-      <div class="watchlist-container">
+      <div class="watchlist">
         {watchlist.length > 0 ? (
           watchlist.map((movieId) => (
             <div key={movieId}>

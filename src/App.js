@@ -24,6 +24,7 @@ return(
         <Route path="/login" element={<Login />} />
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/group" element={<Group/>} /> 
+        <Route path="/searchpage" element={<SearchPage/>} /> 
       </Routes>
     </BrowserRouter>
 </div>

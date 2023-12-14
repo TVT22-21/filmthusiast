@@ -66,6 +66,20 @@
     padding: 10px;
     border-radius: 3px;
     border: 1px solid black; 
+    background-color: #001b30;
+}
+
+.about-btn{
+    height: 30px;
+    margin: 5px;
+    border-radius: 10px;
+    border: 1px solid black;
+    background-color: #00223b;
+    color: beige;
+    cursor: pointer;
+}
+.about-btn:hover{
+    background: #245380;
 }
 
 .add-watchlist-btn{
@@ -80,6 +94,18 @@
     background-color: rgb(58, 58, 58);
 }
 
+.delete-watchlist-btn{
+    height: 30px;
+    margin: 5px;
+    border-radius: 10px;
+    border: 1px solid black;
+    background-color: #00223b;
+    color: beige;
+    cursor: pointer;
+}
+.delete-watchlist-btn:hover{
+    background: #245380;
+}
 
 .filter-container{
 

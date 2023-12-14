@@ -9,7 +9,6 @@ import axios from 'axios';
 
 import { SearchResultCard } from './searchResult';
 import { useParams } from 'react-router-dom';
-import { SearchResultCard } from './searchResult';
 
 
 function SearchPage() {
@@ -31,7 +30,6 @@ function SearchBar() {
   const [searchWord, setSearchWord] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchDBID, setSearchDBID] = useState('');
-  const [watchlistSearchDBID, setWatchlistSearchDBID] = useState('');
   const SearchResultByTitle = SearchByTitle(searchTerm);
   const [showRatingWindow, setShowRatingWindow] = useState(false);
   const [rating, setRating] = useState(0);
@@ -41,18 +39,19 @@ function SearchBar() {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedGenreCodes, setSelectedGenreCodes] = useState([]);
-  const searchWordHeader = useParams();
+  
+  const { searchWordHeader } = useParams();
+  console.log('searchword: '+ searchWordHeader);
 
   const filteredMovies = SearchResultByTitle.filter((movie) =>
     selectedGenreCodes.every((selectedGenre) => movie.genre_ids.includes(selectedGenre.code))
   );
-  const watchlistSearchFindID = FindId(watchlistSearchDBID);
+  
   const searchFindID = FindId(searchDBID);
-
   const handleGenreChange = (genresCodes) => {
     setSelectedGenreCodes(genresCodes);
     console.log(genresCodes);
-  };
+  }
 
   const handleInputChange = (event) => {
     setSearchWord(event.target.value);
@@ -75,6 +74,7 @@ function SearchBar() {
     console.log('SDBID:', searchDBID);
     setSelectedMovieId(searchDBID);
     setShowRatingWindow(true);
+  }
 
   function handleArvostelu(searchFindID){
 
@@ -100,42 +100,23 @@ function SearchBar() {
 
   //const joo = FindId('597');
   //console.log('jojojoj', joo);
-  const searchFindID = FindId(searchDBID);
-
-  async function handleAddWatchlist(id){
-    setWatchlistSearchDBID(id);
-    console.log('watchlistSearchFindID immediately after set:', watchlistSearchFindID);
-    const movieId = watchlistSearchFindID;
-    
-    try {
-      const requestData = {
-        movie_id: movieId,
-        username: userInfo.value?.private,
-      };
-      const response = await axios.put(`http://localhost:3001/profile/addToWatchlist`, requestData);
-      console.log('Watchlist updated successfully:', response.data);
-    } catch (error) {
-      console.error('Error updating watchlist:', error);
-    }
-  }
-
+  
   const SearchResultById = SearchById(searchTerm);
   const SearchResultByPerson = SearchByPerson(searchTerm);
 
   return (
-    <div class='search-container'>
-      <div class='search-bar-container'>
+    <div className='search-container'>
+      <div className='search-bar-container'>
         <input
-          class='search-bar'
+          className='search-bar'
           type="text"
           placeholder="Search..."
           value={searchWord}
           onChange={handleInputChange}
         />
-
-        <button class='search-btn' onClick={handleSearch}>Search</button>
-
-
+  
+        <button className='search-btn' onClick={handleSearch}>Search</button>
+  
         {isEditing ? (
           <div>
             <FilterMovies closeFilter={() => setIsEditing(false)} onGenreChange={handleGenreChange} />
@@ -143,7 +124,7 @@ function SearchBar() {
         ) : (
           <img src='assets/filter-icon.png' onClick={() => setIsEditing(true)} alt="editbutton" />
         )}
-
+  
         <button className='search-btn' onClick={handleNewestRated}>
           Newest Rated
         </button>
@@ -151,7 +132,7 @@ function SearchBar() {
           Top Rated
         </button>
       </div>
-
+  
       <div className='selected-genres'>
         <ul className='genre-list'>
           {selectedGenreCodes.map((genre) => (
@@ -159,37 +140,31 @@ function SearchBar() {
           ))}
         </ul>
       </div>
-
-      
-        {showGetRated ? (
-
-          <GetRatingById RatingById={searchFindID} />
-
-        ) : (
-          <p></p>
-        )}
-        {showNewestRated ? (
-          <NewestRated />
-
-        ) : (
-
-          <p></p>
-        )}
-        {showTopRated ? (
-          <TopRatedMovies />
-        ) : (
-
-          <p></p>
-        )}
-
-        {filteredMovies ? (
-          <SearchResultCard movieData ={filteredMovies}/>
-        ):(
-          <p></p>
-
-      </div>
-
-    
+  
+      {showGetRated ? (
+        <GetRatingById RatingById={searchFindID} />
+      ) : (
+        <p></p>
+      )}
+  
+      {showNewestRated ? (
+        <NewestRated />
+      ) : (
+        <p></p>
+      )}
+  
+      {showTopRated ? (
+        <TopRatedMovies />
+      ) : (
+        <p></p>
+      )}
+  
+      {filteredMovies ? (
+        <SearchResultCard movieData={filteredMovies} />
+      ) : (
+        <p></p>
+      )}
+    </div>
   );
 }
 
