@@ -5,16 +5,19 @@ import './searchPage.css';
 import { NewRating, GetRatingid, NewestRated, TopRatedMovies,GetRatingById } from '../rated/rated';
 import { userInfo } from '../register/signals';
 import axios from 'axios';
-
 import { SearchResultCard } from './searchResult';
 import { useParams } from 'react-router-dom';
+import { Header } from '../header/header';
+import { Footer } from '../footer/footer';
 
 
 function SearchPage() {
 
   return (
     <div>
+      <Header />
       <SearchBar />
+      <Footer />
     </div>
   );
 }
@@ -39,8 +42,8 @@ function SearchBar() {
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [selectedGenreCodes, setSelectedGenreCodes] = useState([]);
   
-  const { searchWordHeader } = useParams();
-  console.log('searchword: '+ searchWordHeader);
+  //const { searchWordHeader } = useParams();
+  //console.log('searchword: '+ searchWordHeader);
 
   const filteredMovies = SearchResultByTitle.filter((movie) =>
     selectedGenreCodes.every((selectedGenre) => movie.genre_ids.includes(selectedGenre.code))
@@ -107,6 +110,14 @@ function SearchBar() {
   return (
     <div className='search-container'>
       <div className='search-bar-container'>
+      {isEditing ? (
+          <div>
+            <FilterMovies closeFilter={() => setIsEditing(false)} onGenreChange={handleGenreChange} />
+          </div>
+        ) : (
+          <img src='assets/filter-icon.png' onClick={() => setIsEditing(true)} alt="editbutton" />
+        )}
+  
         <input
           className='search-bar'
           type="text"
@@ -117,20 +128,14 @@ function SearchBar() {
   
         <button className='search-btn' onClick={handleSearch}>Search</button>
   
-        {isEditing ? (
-          <div>
-            <FilterMovies closeFilter={() => setIsEditing(false)} onGenreChange={handleGenreChange} />
-          </div>
-        ) : (
-          <img src='assets/filter-icon.png' onClick={() => setIsEditing(true)} alt="editbutton" />
-        )}
-  
-        <button className='search-btn' onClick={handleNewestRated}>
-          Newest Rated
-        </button>
-        <button className='search-btn' onClick={handleTopRated}>
-          Top Rated
-        </button>
+        <div className='featured-buttons'>
+          <button className='search-btn' onClick={handleNewestRated}>
+            Newest Ratings
+          </button>
+          <button className='search-btn' onClick={handleTopRated}>
+            Top Rated
+          </button>
+        </div> 
       </div>
   
       <div className='selected-genres'>
@@ -141,7 +146,7 @@ function SearchBar() {
         </ul>
       </div>
 
-      
+      <div className='search-results-container'>
         {showGetRated ? (
 
           <GetRatingById RatingById={searchFindID} />
@@ -170,7 +175,7 @@ function SearchBar() {
         )}
 
       </div>
-
+    </div>
   );
 }
 

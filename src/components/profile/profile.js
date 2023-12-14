@@ -6,10 +6,8 @@ import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
 import { NewRating } from '../rated/rated';
-import { Header } from "../header/Header";
+import { Header } from "../header/header";
 import { Footer } from '../footer/footer';
-
-
 
 
 function Profile(){
@@ -153,7 +151,7 @@ function Information() {
             ) : (
               <div class='profile-title-container'>
                 <h1>{profinf.profiletitle}</h1>
-                {userInfo.value?.private == username &&<img src='assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
+                {userInfo.value?.private == username && <img src='assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
               </div>
             )}
           </div>
@@ -172,7 +170,7 @@ function Information() {
               <div class='profile-desc-container'>
                 <div className='profile-desc-text'>
                   {profinf.description}
-                  {userInfo.value?.private == username &&<img src='assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />}
+                  {userInfo.value?.private == username && <img src='assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />}
                 </div>
                 
               </div>
@@ -282,7 +280,7 @@ function Content() {
                     <SearchByIdWithCard movieId={rating.idmovie} />
                   </div>
                   <div
-                    className={`movie-rating ${expandedCard === rating.idrated ? 'expanded' : ''}`}
+                    className={`movie-rating-container ${expandedCard === rating.idrated ? 'expanded' : ''}`}
                     key={rating.idrated}
                   >
                     {expandedCard === rating.idrated ? (
@@ -315,7 +313,7 @@ function Content() {
                         <p><strong>idmovie: </strong>{rating.idmovie}</p>
                       </div>
                     )}
-                    <button className='content-btn' onClick={() => handleEditRating(rating.idrated)}>Muokkaa arvostelua</button>
+                    <button className='edit-rating-btn' onClick={() => handleEditRating(rating.idrated)}>Muokkaa arvostelua</button>
                   </div>
                 </div>
               ))

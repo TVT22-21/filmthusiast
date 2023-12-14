@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { userInfo, jwtToken,  } from '../register/signals';
+import { userInfo, jwtToken  } from '../register/signals';
 
 import './header.css';
 
@@ -20,6 +20,7 @@ function Header() {
 
     return (
         <div class="header-container">
+          <img src='assets/filmthusiast-log.png' alt='logo' />
           <div class='searchbar-container'>
             <SearchBarHeader />
           </div>
@@ -27,7 +28,7 @@ function Header() {
           <nav>   
             {!userInfo?.value?.private ? null : (     
                 <Link to={`/profile/${userInfo.value.private}`}>
-                    <button class='nav-btn-header-profile'>{userInfo?.value?.private}</button>
+                    <button class='nav-btn-header'>{userInfo?.value?.private}</button>
                 </Link>             
             )}
 
@@ -51,7 +52,10 @@ function Header() {
               </>
             )}
           </nav>
-          <button class='settings-btn-header'><img src='assets/settings-icon.png' alt="settingsbutton"/></button>
+          <Link to="/settings">
+                <button class='nav-btn-header'><img src='assets/settings-icon2.png' alt="settingsbutton"/></button>
+          </Link>
+          
         </div>
       );
   }
@@ -66,13 +70,12 @@ function SearchBarHeader(){
     }
     
     function handleSearch() {
-        navigate(`/searchPage?query=${searchWord}`);
-        console.log('asdasdasdasjooooooooooooo'+ userInfo?.value.private);
+        navigate(`/searchPage`);
     }
   
     return (
-        <div class='search-container'>
-            <div class='search-bar-container'>
+        <div class='search-container-header'>
+            <div class='search-bar-container-header'>
                 <input
                 class='search-bar'
                 type="text"
@@ -80,8 +83,7 @@ function SearchBarHeader(){
                 value={searchWord}
                 onChange={handleInputChange}
                 />
-        
-                <button class='search-btn-header' onClick={handleSearch}>Search</button>
+                <button class='nav-btn-header' onClick={handleSearch}>Search</button>
             </div>
         </div>
     );
