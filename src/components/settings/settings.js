@@ -3,7 +3,7 @@ import ChangeEmail from './ChangeEmail';
 import DeleteAccount from './DeleteAccount';
 import { jwtToken, userInfo } from '../register/signals';
 import {useNavigate} from "react-router-dom";
-import { Header } from '../header/Header';
+import { Header } from '../header/header';
 
 const SettingsPage = ({username= userInfo.value?.private}) => {
   const navigate = useNavigate("");
