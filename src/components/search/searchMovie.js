@@ -150,12 +150,13 @@ function MovieCard({ movieData }){
           <div
             className={`movie-card ${expandedCard === searchdata.id ? 'expanded' : ''}`}
             key={searchdata.id}
-            onClick={() => handleCardClick(searchdata.id)}
+           
           >
             {expandedCard === searchdata.id ? (
               <>
         
                 <p><strong></strong> {searchdata.overview}</p>
+                <button className='about-btn' onClick={() => handleCardClick(searchdata.id)}>Close</button>
               </>
             ) : (
               <>
@@ -169,7 +170,7 @@ function MovieCard({ movieData }){
                   <strong>{searchdata.original_title}</strong>
                 </p>
                 <p><strong>Release Date:</strong> {searchdata.release_date}</p>
-                <p><strong>Media type:</strong> {searchdata.media_type}</p>
+                <button className='about-btn' onClick={() => handleCardClick(searchdata.id)}>About</button>
               </>
             )}
           </div>
@@ -366,7 +367,7 @@ function MovieCardByIdWatchlist({ movieData }) {
             )}
             <p><strong>{searchdata.original_title}</strong></p>
             <p><strong>Release Date: </strong>{searchdata.release_date}</p>
-            <p><strong>Media type: </strong>{searchdata.media_type}</p>
+            
             {userInfo.value?.private == username && <button className='delete-watchlist-btn' onClick={() => handleDeleteWatchlist(searchdata.id)}>- Watchlist</button>}
             
           </div>

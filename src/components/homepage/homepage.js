@@ -7,23 +7,28 @@ import Cathegory from '../Category/CategoryButton'
 import Groups from '../group/group';
 import './homepage.css';
 import { userInfo } from '../register/signals';
+import { Header } from '../header/Header';
 
 function Homepage() {
+
+
   const [searchTerm, setSearchTerm] = useState('');
 
 
   const handleSearchInputChange = (event) => {
     setSearchTerm(event.target.value);
-
+    
     const categories = ["Category 1", "Category 2", "Category 3"];
   }
 
   return (
     
     <div className="container">
-      <div className="animation-container"></div>
+
+    <Header />
+      
       <header>
-        <div className="search-container">
+        <div className="search-container"><div class="animation-container"></div>
           <h1>Filmthusiast</h1>
 
         </div>
