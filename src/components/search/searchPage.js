@@ -100,23 +100,6 @@ function SearchBar() {
   //const joo = FindId('597');
   //console.log('jojojoj', joo);
 
-  async function handleAddWatchlist(id){
-    setWatchlistSearchDBID(id);
-    console.log('watchlistSearchFindID immediately after set:', watchlistSearchFindID);
-    const movieId = watchlistSearchFindID;
-    
-    try {
-      const requestData = {
-        movie_id: movieId,
-        username: userInfo.value?.private,
-      };
-      const response = await axios.put(`http://localhost:3001/profile/addToWatchlist`, requestData);
-      console.log('Watchlist updated successfully:', response.data);
-    } catch (error) {
-      console.error('Error updating watchlist:', error);
-    }
-  }
-
 
   const SearchResultById = SearchById(searchTerm);
   const SearchResultByPerson = SearchByPerson(searchTerm);

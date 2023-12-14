@@ -186,12 +186,11 @@ function Information() {
 
 
 function Content() {
-
   const [contentType, setContentType] = useState('ratings');
   const [isEditingRating, setIsEditingRating] = useState(false);
   const [newRating, setNewRating] = useState('');
   const [newRatingtext, setNewRatingtext] = useState('');
-  const [ratings, setRatings] = useState('');
+  const [ratings, setRatings] = useState([]);
   const { username } = useParams();
   const [rating, setRating] = useState([]);
   const [idRated, setIdRated] = useState('');
@@ -201,25 +200,29 @@ function Content() {
     setIdRated(id);
     setExpandedCard((prevId) => (prevId === id ? null : id));
     console.log('id', id);
-    console.log(userInfo.value?.private + username)
+    console.log(userInfo.value?.private + username);
     if (username === username) {
       setIsEditingRating(true);
     } else {
-      window.alert('You need to login to edit rating!');
+      window.alert('You need to login to edit the rating!');
     }
-  }
+  };
+
   const handleRatingChange = (e) => {
     setNewRating(e.target.value);
-  }
+  };
+
   const handleRatinTextChange = (e) => {
     setNewRatingtext(e.target.value);
-  }
-  function handleToggle(type) {
+  };
+
+  const handleToggle = (type) => {
     setContentType(type);
-  }
+  };
+
   const handleSubmitRating = async () => {
     try {
-      console.log('id,rating,ratintext', idRated, newRating, newRatingtext);
+      console.log('id, rating, ratingtext', idRated, newRating, newRatingtext);
       await axios.put('http://localhost:3001/rating/update', {
         rating: newRating,
         ratingtext: newRatingtext,
@@ -230,32 +233,27 @@ function Content() {
         {
           ...prevRating[0],
           rating: newRating,
-          ratingtext: NewRating,
+          ratingtext: newRatingtext,
         },
       ]);
       setIsEditingRating(false);
       setExpandedCard(null);
-
     } catch (error) {
-      console.error('Error updating rating:', error);
+      console.error('Error updating the rating:', error);
     }
-  }
-  const handlePeruutaRating = () => {
- setExpandedCard(null);
-  }
+  };
 
-  const SearchResultByTitle = SearchByTitle('lord of the rings');
+  const handlePeruutaRating = () => {
+    setExpandedCard(null);
+  };
+
+  const SearchResultByTitle = SearchByTitle('lord of the rings'); 
 
   useEffect(() => {
-
     async function fetchDataRatings() {
       try {
-        //const uName = userInfo.value?.private;
-        //const uName = 'niilo';
-        //console.log(uName);
         const response = await axios.get(`http://localhost:3001/rating/getrating?username=${username}`);
         setRatings(response.data);
-
       } catch (error) {
         setRatings('loading');
         console.error(error);
@@ -267,76 +265,64 @@ function Content() {
 
   return (
     <div className='content'>
-      <div class='content-nav'>
-        <button class="content-btn" onClick={() => handleToggle('ratings')}>Movie Ratings</button>
-        <button class="content-btn" onClick={() => handleToggle('watchlist')}>Watch List</button>
-        <button class="content-btn" onClick={() => handleToggle('groups')}>Groups</button>
+      <div className='content-nav'>
+        <button className='content-btn' onClick={() => handleToggle('ratings')}>Movie Ratings</button>
+        <button className='content-btn' onClick={() => handleToggle('watchlist')}>Watch List</button>
+        <button className='content-btn' onClick={() => handleToggle('groups')}>Groups</button>
       </div>
 
       <div>
-        {contentType === 'ratings' && (   
-            <div class="ratings-container">
-              <h2>Movie Ratings</h2>
-              {Array.isArray(ratings) ? (
-                ratings.map((rating) => (
-                  <div class='movie-rating-card' key={rating.idrated}>
-                    <div>
-                      <SearchByIdWithCard movieId={rating.idmovie} />
-                    </div>
-                    <div 
-                     className={`movie-rating ${expandedCard === rating.idrated ? 'expanded' : ''}`}
+        {contentType === 'ratings' && (
+          <div className='ratings-container'>
+            <h2>Movie Ratings</h2>
+            {Array.isArray(ratings) ? (
+              ratings.map((rating) => (
+                <div className='movie-rating-card' key={rating.idrated}>
+                  <div>
+                    <SearchByIdWithCard movieId={rating.idmovie} />
+                  </div>
+                  <div
+                    className={`movie-rating ${expandedCard === rating.idrated ? 'expanded' : ''}`}
                     key={rating.idrated}
-                    >
-                      {expandedCard === rating.idrated ? (
-                        <div>
-                          <div class = 'content'>
+                  >
+                    {expandedCard === rating.idrated ? (
+                      <div>
+                        <div className='content'>
                           <input
-                            type="number"
+                            type='number'
                             value={newRating}
                             onChange={handleRatingChange}
-                            placeholder="Enter new rating"
-                            />
-                            </div>
-                            <div class = 'content'>
-                            <textarea
-                            type="form"
-                            rows="10"
+                            placeholder='Enter new rating'
+                          />
+                        </div>
+                        <div className='content'>
+                          <textarea
+                            type='form'
+                            rows='10'
                             value={newRatingtext}
                             onChange={handleRatinTextChange}
-                            placeholder="Enter new rating text"
-                            />
-                            </div>
-                            <button onClick={handleSubmitRating}>Muokkaa</button>
-                            <button onClick={handlePeruutaRating}>Peruuta</button>
-                      </div>
-                      ) : (
-                        <div class='movie-rating'>
-                          <p><strong>My Rating: </strong>{rating.rating}</p>
-                          <p><strong>Date: </strong>{new Date(rating.ratingdate).toLocaleString()}</p>
-                          <p>{rating.ratingtext}</p>
-                          <p><strong>idmovie: </strong>{rating.idmovie}</p>
-                          
+                            placeholder='Enter new rating text'
+                          />
                         </div>
-                        
-                      )}
-                      <button class="content-btn" onClick={() => handleEditRating(rating.idrated)}>Muokkaa arvostelua</button>
-                    </div>
+                        <button onClick={handleSubmitRating}>Muokkaa</button>
+                        <button onClick={handlePeruutaRating}>Peruuta</button>
+                      </div>
+                    ) : (
+                      <div className='movie-rating'>
+                        <p><strong>My Rating: </strong>{rating.rating}</p>
+                        <p><strong>Date: </strong>{new Date(rating.ratingdate).toLocaleString()}</p>
+                        <p>{rating.ratingtext}</p>
+                        <p><strong>idmovie: </strong>{rating.idmovie}</p>
+                      </div>
+                    )}
+                    <button className='content-btn' onClick={() => handleEditRating(rating.idrated)}>Muokkaa arvostelua</button>
                   </div>
-
-                  <div class='movie-rating'>
-                    <p className='rating-number'><strong>My Rating: </strong>{rating.rating}</p>
-                    <p className='rating-date'><strong>Date: </strong>{new Date(rating.ratingdate).toLocaleString()}</p>
-                    <p className='rating-text'>{rating.ratingtext}</p>
-
-                  </div>
-                    
-                  </div>
+                </div>
               ))
-
-              ) : (
-                <p>Loading...</p>
-              )}
-            </div> 
+            ) : (
+              <p>Loading...</p>
+            )}
+          </div>
         )}
 
         {contentType === 'watchlist' && (
@@ -346,20 +332,18 @@ function Content() {
           </div>
         )}
 
-
-      {contentType === 'groups' && (
-        <div>
-          <h2>Groups</h2>
-          <div class="groups-container">
-            <MovieCardByTitle movieData={SearchResultByTitle} />
-            <MovieCardByTitle movieData={SearchResultByTitle} />
-            <MovieCardByTitle movieData={SearchResultByTitle} />
+        {contentType === 'groups' && (
+          <div>
+            <h2>Groups</h2>
+            <div className='groups-container'>
+              <MovieCardByTitle movieData={SearchResultByTitle} />
+              <MovieCardByTitle movieData={SearchResultByTitle} />
+              <MovieCardByTitle movieData={SearchResultByTitle} />
+            </div>
           </div>
-        </div>
-      )}
-
+        )}
+      </div>
     </div>
-    </div >
   );
 }
 
