@@ -10,8 +10,8 @@ router.post('/createProfile', async function(req, res){
     if (!req.body) {
       return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
     }
-    const { profiletitle, firstname, lastname, description, person_idperson } = req.body;
-    await createProfile(profiletitle, firstname, lastname, description, person_idperson);
+    const { profiletitle, firstname, lastname, description, username } = req.body;
+    await createProfile(profiletitle, firstname, lastname, description, username);
     res.json({ message: 'Profile created successfully.' });
   } catch (error) {
     console.error('Error creating profile:', error);
@@ -115,21 +115,6 @@ router.delete('/deleteFromWatchlist/:movie_id/:username', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-/*
-router.delete('/deleteFromWatchlist', async (req, res) => {
-  try {
-    if (!req.body) {
-      return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
-    }
-    const { movie_id, username } = req.body;
-    console.log(req.body);
-    await deleteFromWatchlist(movie_id, username);
-    res.json({ message: 'Movie deleted from watchlist successfully.' });
-  } catch (error) {
-    console.error('Error updating watchlist:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});*/
 
 router.get('/getWatchlist/:username', async (req, res) => {
 

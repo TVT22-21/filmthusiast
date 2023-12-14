@@ -2,7 +2,8 @@ const { use } = require('../routes/rating');
 const pgPool = require('./connection');
 
 const database = {
-    INSERT_PROFILE: 'INSERT INTO profile (profiletitle, firstname, lastname, description, person_idperson) VALUES ($1, $2, $3, $4, $5)',
+    //INSERT_PROFILE: 'INSERT INTO profile (profiletitle, firstname, lastname, description, person_idperson) VALUES ($1, $2, $3, $4, $5)',
+    INSERT_PROFILE: 'INSERT INTO profile (profiletitle, firstname, lastname, description, person_idperson) SELECT $1, $2, $3, $4, idperson FROM person WHERE username = $5',
     DELETE_PROFILE: 'DELETE FROM profile WHERE person_idperson = $1',
     UPDATE_PROFILE_TITLE: 'UPDATE profile SET profiletitle = $1 WHERE person_idperson = $2',
     UPDATE_PROFILE_FNAME: 'UPDATE profile SET firstname = $1 WHERE person_idperson = $2',
@@ -15,8 +16,9 @@ const database = {
 }
 
 
-async function createProfile(profiletitle, firstname, lastname, description, person_idperson){
-    await pgPool.query(database.INSERT_PROFILE, [profiletitle, firstname, lastname, description, person_idperson])
+async function createProfile(profiletitle, firstname, lastname, description, username){
+    console.log(profiletitle+ firstname+ lastname+ description+ username);
+    await pgPool.query(database.INSERT_PROFILE, [profiletitle, firstname, lastname, description, username])
 }
 
 async function deleteProfile(person_idperson){
