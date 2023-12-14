@@ -5,7 +5,7 @@ import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardB
 import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
 import Header from '../header/header';
-import usestate from 'usestate';
+import { useParams } from 'react-router-dom';
 import { NewRating } from '../rated/rated';
 
 
@@ -234,6 +234,7 @@ function Content() {
         },
       ]);
       setIsEditingRating(false);
+      setExpandedCard(null);
 
     } catch (error) {
       console.error('Error updating rating:', error);

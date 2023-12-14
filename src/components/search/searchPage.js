@@ -265,7 +265,6 @@ function FilterMovies({ closeFilter, onGenreChange }) {
     </div>
   );
 }
-}
 
 
 
