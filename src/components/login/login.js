@@ -3,7 +3,7 @@ import axios from "axios";
 import {jwtToken, userInfo} from '../register/signals';
 import {useNavigate} from "react-router-dom";
 import './login.css';
-import { Header } from "../header/Header";
+import { Header } from "../header/header";
 
 
 export default function Login(){

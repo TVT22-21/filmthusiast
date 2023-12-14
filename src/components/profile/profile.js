@@ -6,7 +6,7 @@ import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
 import { NewRating } from '../rated/rated';
-import { Header } from "../header/Header";
+import { Header } from "../header/header";
 import { Footer } from '../footer/footer';
 
 

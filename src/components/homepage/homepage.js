@@ -7,7 +7,7 @@ import Cathegory from '../Category/CategoryButton'
 import Groups from '../group/group';
 import './homepage.css';
 import { userInfo } from '../register/signals';
-import { Header } from '../header/Header';
+import { Header } from '../header/header';
 
 function Homepage() {
 

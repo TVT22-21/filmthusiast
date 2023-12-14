@@ -49,7 +49,7 @@ router.put('/updateFirstname', async (req, res) => {
 
 router.put('/updateLastname', async (req, res) => {
   try {
-    if (!req.body || !req.body.firstname || !req.body.person_idperson) {
+    if (!req.body || !req.body.lastname || !req.body.person_idperson) {
       return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
     }
     const { lastname, person_idperson } = req.body;
