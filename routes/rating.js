@@ -13,9 +13,6 @@ router.post('/addrating', async function (req, res) {
     if (!req.body.idmovie || !req.body.rating || !req.body.ratingtext || !req.body.username) {
       return res.status(400).json({ error: 'Bad Request: Missing or invalid fields.' });
     }
-    if (await checkRatingExists(idmovie)) {
-      return res.status(400).json({ error: 'Arvostelu löytyy jo.' });
-    }
     await addRating(idmovie, rating, ratingtext, ratingdate = new Date(), username);
     res.json({ message: 'Arvostelu lisätty.' });
   } catch (error) {
@@ -94,15 +91,17 @@ router.delete('/deleteid', upload.none(), async (req, res) => {
   }
 });
 
-router.patch('/update/rating', async (req, res) => {
+router.put('/update', async (req, res) => {
   const rating = req.body.rating;
+  const ratingtext = req.body.ratingtext;
   const idrated = req.body.idrated;
-if (!rating || !idrated){
+  console.log('asd', rating, ratingtext, idrated);
+if (!rating || !ratingtext || !idrated){
   return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
 }else{
   try {     
-      await updateRating(rating, idrated);
-      res.json({ message: 'Arvosanan vaihtaminen onnistui' });
+      await updateRating(rating, ratingtext, idrated);
+      res.json({ message: 'Arvostelun muokkaaminen onnistui' });
   } catch (error){
       res.json({error: error.message}).status(505);
   }

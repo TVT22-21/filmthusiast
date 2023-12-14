@@ -2,7 +2,7 @@ const pgPool = require('./connection');
 
 const database = {
     INSERT_PERSON: 'INSERT INTO person (username, password, email, createdate) VALUES ($1, $2, $3, $4)',
-    DELETE_PERSON: 'DELETE FROM person WHERE username = $1 AND password = $2',
+    DELETE_PERSON: 'DELETE FROM person WHERE username = $1',
     GET_PERSON: 'SELECT email, createdate FROM person where username = $1',
     UPDATE_PASSWORD: 'UPDATE person SET password = $1 WHERE username = $2',
     UPDATE_EMAIL: 'UPDATE person SET email = $1 WHERE username = $2',
@@ -16,8 +16,8 @@ async function addPerson(username, password, email, createdate){
 }
 
 
-async function deletePerson(username, password){
-    await pgPool.query(database.DELETE_PERSON, [username, password])
+async function deletePerson(username){
+    await pgPool.query(database.DELETE_PERSON, [username])
 }
 
 async function getPerson(username){
@@ -27,8 +27,8 @@ async function getPerson(username){
 }
 
 
-async function updatePassword(password, username){
-    await pgPool.query(database.UPDATE_PASSWORD, [password, username])
+async function updatePassword(hashPw, username){
+    await pgPool.query(database.UPDATE_PASSWORD, [hashPw, username])
 }
 
 async function updateEmail(email, username){

@@ -10,8 +10,8 @@ router.post('/createProfile', async function(req, res){
     if (!req.body) {
       return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
     }
-    const { profiletitle, firstname, lastname, description, person_idperson } = req.body;
-    await createProfile(profiletitle, firstname, lastname, description, person_idperson);
+    const { profiletitle, firstname, lastname, description, username } = req.body;
+    await createProfile(profiletitle, firstname, lastname, description, username);
     res.json({ message: 'Profile created successfully.' });
   } catch (error) {
     console.error('Error creating profile:', error);
@@ -94,9 +94,9 @@ router.put('/addToWatchlist', async (req, res) => {
     if (!req.body) {
       return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
     }
-    const { movie_id, person_idperson } = req.body;
+    const { movie_id, username } = req.body;
     console.log(req.body);
-    await addToWatchlist(movie_id, person_idperson);
+    await addToWatchlist(movie_id, username);
     res.json({ message: 'Watchlist updated successfully.' });
   } catch (error) {
     console.error('Error updating watchlist:', error);
@@ -104,17 +104,14 @@ router.put('/addToWatchlist', async (req, res) => {
   }
 });
 
-router.delete('/deleteFromWatchlist', async (req, res) => {
+router.delete('/deleteFromWatchlist/:movie_id/:username', async (req, res) => {
   try {
-    if (!req.body) {
-      return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
-    }
-    const { movie_id, person_idperson } = req.body;
-    console.log(req.body);
-    await deleteFromWatchlist(movie_id, person_idperson);
+    const { movie_id, username } = req.params;
+    console.log({ movie_id, username });
+    await deleteFromWatchlist(movie_id, username);
     res.json({ message: 'Movie deleted from watchlist successfully.' });
   } catch (error) {
-    console.error('Error updating watchlist:', error);
+    console.error('Error deleting movie from watchlist:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { addGroup, updateGroup, addPersonToGroup } = require('../postgre/group');
 const pgPool = require('../postgre/connection');
+const groupController = require('../postgre/group');
 
 
 router.get('/getgroups', async (req, res) => {

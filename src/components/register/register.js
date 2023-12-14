@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import './register.css';
+import {useNavigate} from "react-router-dom";
+import { Header } from "../header/Header";
+
 
 export default function RegisterForm() {
 
@@ -9,8 +12,9 @@ export default function RegisterForm() {
     const [pw2, setPw2] = useState('');
     const [email, setEmail] = useState('');
     const [virhe, setVirhe] = useState('');
+    const navigate = useNavigate();
 
-    function register() {
+    async function register() {
         console.log('Before registration:', { username, password, email });
       
         if (password === pw2) {
@@ -40,14 +44,37 @@ export default function RegisterForm() {
               }
 
             });
+          
+          const profileData = {
+            profiletitle: username,
+            firstname: '',
+            lastname: '',
+            description: '',
+            username: username,
+          };
+          try {
+            const responseData = await axios.post('http://localhost:3001/profile/createProfile', profileData);
+            console.log(responseData.data); 
+          } catch (error) {
+            console.error('Error creating profile:', error);
+          }
+        
         } else {
           setVirhe('Salasanat eivät täsmää');
         }
       };
+
+      function navigateToLogin(){
+        navigate("/login");
+      }
       
 
     return (
+        <div>
+
+        <Header />
         <div className="register">
+        
             <div className="header">
                 <div className="text">Rekisteröidy käyttäjäksi</div>
             </div>
@@ -68,8 +95,9 @@ export default function RegisterForm() {
             <div className="texti">{virhe}</div>
             <div class="footer">
                 <div className="nappi" onClick={register}>Rekisteröidy</div>
-                <div className="nappi">Kirjaudu</div>
+                <div className="nappi" onClick={navigateToLogin}>Kirjaudu</div>
             </div>
+        </div>
         </div>
 
 
