@@ -110,6 +110,14 @@ function SearchBar() {
   return (
     <div className='search-container'>
       <div className='search-bar-container'>
+      {isEditing ? (
+          <div>
+            <FilterMovies closeFilter={() => setIsEditing(false)} onGenreChange={handleGenreChange} />
+          </div>
+        ) : (
+          <img src='assets/filter-icon.png' onClick={() => setIsEditing(true)} alt="editbutton" />
+        )}
+  
         <input
           className='search-bar'
           type="text"
@@ -120,20 +128,14 @@ function SearchBar() {
   
         <button className='search-btn' onClick={handleSearch}>Search</button>
   
-        {isEditing ? (
-          <div>
-            <FilterMovies closeFilter={() => setIsEditing(false)} onGenreChange={handleGenreChange} />
-          </div>
-        ) : (
-          <img src='assets/filter-icon.png' onClick={() => setIsEditing(true)} alt="editbutton" />
-        )}
-  
-        <button className='search-btn' onClick={handleNewestRated}>
-          Newest Rated
-        </button>
-        <button className='search-btn' onClick={handleTopRated}>
-          Top Rated
-        </button>
+        <div className='featured-buttons'>
+          <button className='search-btn' onClick={handleNewestRated}>
+            Newest Ratings
+          </button>
+          <button className='search-btn' onClick={handleTopRated}>
+            Top Rated
+          </button>
+        </div> 
       </div>
   
       <div className='selected-genres'>
@@ -144,7 +146,7 @@ function SearchBar() {
         </ul>
       </div>
 
-      
+      <div className='search-results-container'>
         {showGetRated ? (
 
           <GetRatingById RatingById={searchFindID} />
@@ -173,7 +175,7 @@ function SearchBar() {
         )}
 
       </div>
-
+    </div>
   );
 }
 

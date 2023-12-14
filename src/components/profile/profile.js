@@ -10,8 +10,6 @@ import { Header } from "../header/Header";
 import { Footer } from '../footer/footer';
 
 
-
-
 function Profile(){
   return (
     <div className='profile'>
@@ -282,7 +280,7 @@ function Content() {
                     <SearchByIdWithCard movieId={rating.idmovie} />
                   </div>
                   <div
-                    className={`movie-rating ${expandedCard === rating.idrated ? 'expanded' : ''}`}
+                    className={`movie-rating-container ${expandedCard === rating.idrated ? 'expanded' : ''}`}
                     key={rating.idrated}
                   >
                     {expandedCard === rating.idrated ? (
@@ -315,7 +313,7 @@ function Content() {
                         <p><strong>idmovie: </strong>{rating.idmovie}</p>
                       </div>
                     )}
-                    <button className='content-btn' onClick={() => handleEditRating(rating.idrated)}>Muokkaa arvostelua</button>
+                    <button className='edit-rating-btn' onClick={() => handleEditRating(rating.idrated)}>Muokkaa arvostelua</button>
                   </div>
                 </div>
               ))
