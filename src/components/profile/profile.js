@@ -201,7 +201,7 @@ function Content() {
     setExpandedCard((prevId) => (prevId === id ? null : id));
     console.log('id', id);
     console.log(userInfo.value?.private + username);
-    if (username === username) {
+    if (userInfo?.value?.private === username) {
       setIsEditingRating(true);
     } else {
       window.alert('You need to login to edit the rating!');
