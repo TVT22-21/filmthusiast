@@ -147,4 +147,19 @@ router.get('/getProfile/:username', async (req, res) => {
   }
 });
 
+router.get('/:username', async (req, res) => {
+
+  try {  
+    if (!req.body) {
+      return res.status(400).json({ error: 'Bad Request: Missing required fields.' });
+    } 
+    const username = req.params.username;
+    const profileData = await getProfile(username);
+    res.json(profileData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 module.exports = router;
