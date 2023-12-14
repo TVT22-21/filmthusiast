@@ -218,6 +218,19 @@ function Content() {
     setContentType(type);
   };
 
+  function handleDeleteRating(id){
+    setIdRated(id);
+    axios.post("http://localhost:3001/rating/deleteid", {
+      idrated: id
+    })
+      .then((resp)=>{
+      console.log(resp.data);
+    })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  }
+
   const handleSubmitRating = async () => {
     try {
       console.log('id, rating, ratingtext', idRated, newRating, newRatingtext);
@@ -310,10 +323,10 @@ function Content() {
                         <p><strong>My Rating: </strong>{rating.rating}</p>
                         <p><strong>Date: </strong>{new Date(rating.ratingdate).toLocaleString()}</p>
                         <p>{rating.ratingtext}</p>
-                        <p><strong>idmovie: </strong>{rating.idmovie}</p>
                       </div>
                     )}
                     <button className='edit-rating-btn' onClick={() => handleEditRating(rating.idrated)}>Muokkaa arvostelua</button>
+                    <button className='edit-rating-btn'onClick={() => handleDeleteRating(rating.idrated)}>Poista arvostelu</button>
                   </div>
                 </div>
               ))

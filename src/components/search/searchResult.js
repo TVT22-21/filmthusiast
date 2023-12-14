@@ -24,6 +24,7 @@ function SearchResultCard({ movieData }) {
         setExpandedCard((prevId) => (prevId === id ? null : id));
     };
     const handleRatingSubmit = async () => {
+        setUsername(userInfo?.value.private);
         console.log(`${searchFindID}Rating: ${rating}, Rating Text: ${ratingText}, Username: ${username}`);
         try {
             const result = await NewRating(searchFindID, rating, ratingText, username);
@@ -138,14 +139,6 @@ function SearchResultCard({ movieData }) {
                                                 type="text"
                                                 value={ratingText}
                                                 onChange={(e) => setRatingText(e.target.value)}
-                                            />
-                                        </label>
-                                        <label>
-                                            Username:
-                                            <input
-                                                type="text"
-                                                value={username}
-                                                onChange={(e) => setUsername(e.target.value)}
                                             />
                                         </label>
                                         <button onClick={handleRatingSubmit}>Arvostele</button>
