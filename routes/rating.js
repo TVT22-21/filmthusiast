@@ -77,7 +77,7 @@ router.delete('/delete', upload.none(), async (req, res) => {
       }
   }
 });
-router.delete('/deleteid', upload.none(), async (req, res) => {
+router.post('/deleteid', upload.none(), async (req, res) => {
   const idrated = req.body.idrated;
   if (!idrated){
       return res.status(500).json({ error: 'Bad Request: Missing required fields.' });
