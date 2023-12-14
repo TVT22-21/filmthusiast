@@ -181,11 +181,12 @@ function MovieCard({ movieData }){
     </div>
   );
 }
+
 function RatingCard({RatingData}){
   console.log(RatingData);
   return (
     <div>
-          <div className='movie-card' key={RatingData.id}>
+          <div className='ratings-info-card' key={RatingData.id}>
             <p><strong>Arvosana: </strong>{RatingData.rating}</p>
             <p><strong>Tekijä: </strong>{RatingData.username}</p>
             <p><strong>PVM: </strong>{RatingData.ratingdate}</p>
