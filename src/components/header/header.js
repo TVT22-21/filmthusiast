@@ -1,17 +1,21 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { jwtToken, userInfo } from '../register/signals';
+import { userInfo, jwtToken  } from '../register/signals';
 
 import './header.css';
 
 function Header() {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
-
-    function handleLogout(){
-        navigate('/login');
-        jwtToken.value = '';
+    const [loggedIn, setLoggedIn] = useState(false);
+    //if(userInfo?.value.private){
+    //    setLoggedIn(true);
+    //}
+    function logOut(){
+      jwtToken.value = '';
+      console.log("logged out");
+      window.location.reload(false);
     }
 
     return (
@@ -33,8 +37,7 @@ function Header() {
             </Link>
 
             {!userInfo?.value?.private ? null : (
-                <button class='nav-btn-header' onClick={handleLogout}>Logout</button>
-
+                    <button onClick={logOut} class='nav-btn-header'>Logout</button>
             )}
 
             {userInfo?.value?.private ? null : (

@@ -3,7 +3,9 @@ import ChangeEmail from './ChangeEmail';
 import DeleteAccount from './DeleteAccount';
 import { jwtToken, userInfo } from '../register/signals';
 import {useNavigate} from "react-router-dom";
-import { Header } from '../header/header';
+import './settings.css';
+import { Header } from "../header/Header";
+import { Footer } from '../footer/footer';
 
 const SettingsPage = ({username= userInfo.value?.private}) => {
   const navigate = useNavigate("");
@@ -13,23 +15,28 @@ const SettingsPage = ({username= userInfo.value?.private}) => {
   }
 
   return (
-    <div className="container">
-    {jwtToken.value.length === 0 ? (
-      <div>
-        <h2>Olet vierailijana</h2>
-          <div>
-            <button onClick={navigateToHomePage}>Takaisin etusivulle:</button>
-          </div>
-      </div>
-    ) : (
-    <div>
+    <div className='settings'>
       <Header />
-      <h2>Käyttäjän {username} asetukset</h2>
-      <ChangePassword />
-      <ChangeEmail />
-      <DeleteAccount />
-    </div>
-    )}
+      <div className="settings-container">
+        {jwtToken.value.length === 0 ? (
+          <div>
+            <h2>Olet vierailijana</h2>
+              <div>
+                <button className="settings-btn" onClick={navigateToHomePage}>Takaisin etusivulle</button>
+              </div>
+          </div>
+        ) : (
+        <div>
+          <h2>Käyttäjän {username} asetukset</h2>
+          <br/>
+          <ChangePassword />
+          <br/>
+          <ChangeEmail />
+          <br/>
+          <DeleteAccount />
+        </div>
+        )}
+      </div>
     </div>
     )
 }

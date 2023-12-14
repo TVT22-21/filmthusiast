@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { userInfo } from '../register/signals';
+import { userInfo, jwtToken } from '../register/signals';
+import './settings.css';
 //import { useNavigate } from 'react-router';
 
 
@@ -16,7 +17,7 @@ function handleDelete(){
     .then((resp)=>{
     console.log(resp.data);
     setError("Account deleted.");
-    //deleteSuccess();
+    deleteSuccess();
   })
     .catch((error) => {
       console.log(error.response.data);
@@ -24,34 +25,39 @@ function handleDelete(){
       setError("Account delete failed. Password incorrect.");
     });
 }
-/*
+
     function deleteSuccess() {
-      jwtToken.value = null;
+      jwtToken.value = '';
       console.log('Account deleted succesfully. Logged out');
+      window.location.reload(false);
       }
-      */
+      
 
     const toggleConfirmation = () => {
       setShowConfirmation(!showConfirmation);
     };
 
   return (
-    <div>
-      <h3>Delete your account: {username}</h3>
-      
-      <button onClick={toggleConfirmation}>Delete account</button>
-
+    <div className="setting">
+      <label>
+        <h3>Delete your account: {username}</h3>
+        <button className="settings-btn" onClick={toggleConfirmation}>Delete account</button>
+      </label>
       {showConfirmation && (
         <div>
+          <br/>
           <p>Are you sure you want to delete your account?</p>
+          <br/>
           <label>
             <h3> Confirm by using your password: </h3>
+            <br/>
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
           </label>
-          <button onClick={handleDelete}>I'm sure, Delete</button>
-          <button onClick={toggleConfirmation}>Cancel</button>
           <br/>
-          <div className="text">{error}</div>
+          <button className="settings-btn" onClick={handleDelete}>I'm sure, Delete</button>
+          <button className="settings-btn" onClick={toggleConfirmation}>Cancel</button>
+          <br/>
+          <div className="p">{error}</div>
         </div>
       )}
       <br/>
