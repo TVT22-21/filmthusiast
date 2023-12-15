@@ -7,7 +7,7 @@ const database = {
     SHOW_GROUP_MEMBERS: 'SELECT username FROM person WHERE idperson = $1',
     GET_GROUP: 'SELECT * FROM grouptable WHERE groupname = $1',
     GET_GROUP_BY_ID: 'SELECT * FROM persongroup WHERE person_idperson = $1',
-    GET_GROUP_INFO: 'SELECT * FROM grouptable WHERE idgroup = $1'
+    GET_GROUP_INFO: 'SELECT * FROM grouptable WHERE idgroup = $1',
     GET_MEMBERS: `SELECT group_idgroup, person_idperson FROM persongroup WHERE group_idgroup = $1`
 
 };

@@ -343,7 +343,7 @@ function MovieCardByIdWatchlist({ movieData }) {
 
   async function handleDeleteWatchlist(id) { 
     setWatchlistSearchDBID(id);
-    console.log('deleting movie: ' + watchlistSearchFindID);    
+    console.log('deleting movie: ' + watchlistSearchFindID);  
     
     try {
       const requestData = {
