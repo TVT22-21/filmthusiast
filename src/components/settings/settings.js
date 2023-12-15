@@ -15,28 +15,33 @@ const SettingsPage = ({username= userInfo.value?.private}) => {
   }
 
   return (
-    <div className='settings'>
+    <div className='settings-page'>
       <Header />
-      <div className="settings-container">
-        {jwtToken.value.length === 0 ? (
+      <div className='settings'>
+        
+        <div className="settings-container">
+          {jwtToken.value.length === 0 ? (
+            <div>
+              <h2>Olet vierailijana</h2>
+                <div>
+                  <button className="settings-btn" onClick={navigateToHomePage}>Takaisin etusivulle</button>
+                </div>
+            </div>
+          ) : (
           <div>
-            <h2>Olet vierailijana</h2>
-              <div>
-                <button className="settings-btn" onClick={navigateToHomePage}>Takaisin etusivulle</button>
-              </div>
+            <h2>Käyttäjän {username} asetukset</h2>
+            <br/>
+            <ChangePassword />
+            <br/>
+            <ChangeEmail />
+            <br/>
+            <DeleteAccount />
           </div>
-        ) : (
-        <div>
-          <h2>Käyttäjän {username} asetukset</h2>
-          <br/>
-          <ChangePassword />
-          <br/>
-          <ChangeEmail />
-          <br/>
-          <DeleteAccount />
+          )}
         </div>
-        )}
+        
       </div>
+      <Footer />
     </div>
     )
 }

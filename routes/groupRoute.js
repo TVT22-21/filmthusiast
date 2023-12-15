@@ -11,7 +11,20 @@ router.get('/getgroups', async (req, res) => {
       SELECT groupname, grouptitle, groupdescription, groupcreatedate
       FROM grouptable;
     `;
+    const { rows, fields } = await pgPool.query(query);
+    res.status(200).json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
+router.get('/getAllGroups', async (req, res) => {
+  console.log('get all groups dasdasdadad');
+  try {
+    
+    const response = await getAllGroups();
+    console.log(response);
     const { rows, fields } = await pgPool.query(query);
     res.status(200).json(rows);
   } catch (error) {

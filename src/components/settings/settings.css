@@ -1,3 +1,5 @@
+
+
 .settings{
     background-color: #00101b;
     padding: 0px;
@@ -5,7 +7,7 @@
     color: beige;
     font-family: 'Roboto', monospace;
     z-index: 2;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .setting{
@@ -29,7 +31,7 @@
     min-height: 100px;
     padding: 20px;
     margin: auto; 
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 20px;
     border-radius: 10px;
     border: 1px solid black;

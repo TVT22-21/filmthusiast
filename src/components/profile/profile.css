@@ -2,16 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Asar&family=Castoro+Titling&family=Inter:wght@300&family=Roboto+Mono:wght@200&display=swap');
 
 
-
 .profile{
     background-color: #00101b;
     padding: 0px;
     margin: 0px;
     color: beige;
-    z-index: 2;
-   
+    z-index: 2; 
 }
-
 
 .profile-container{
     margin-left: 15%;
@@ -20,7 +17,6 @@
     background-color: #001b30;
     min-height: 1000px;
 }
-
 
 /*-------Profile information-------*/
 .info-container{
@@ -191,7 +187,4 @@
     border-bottom: 1px solid black;
 }
 
-.rating-text{
-
-}
   

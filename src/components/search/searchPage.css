@@ -7,7 +7,7 @@
     background-color: #001b30;
 }
 
-.search-bar-container{
+.searchbar-container{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -19,8 +19,19 @@
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     background-color: #00223b;
-
 }
+
+.searchbar{
+    background-color: #eaeaea;
+    width: 400px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 6px;
+    padding-right: 10px;
+    align-items: center;
+    outline: none;
+    text-align: center;
+    }
 
 .filter-button{
     width: 40px;
@@ -34,12 +45,6 @@
 }
 .filter-button:hover{
     background-color: #011627;
-}
-
-.search-bar{
-    width: 400px;
-    height: 30px;
-    margin-right: 5px;
 }
 
 .selected-genres{
