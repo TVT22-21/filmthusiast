@@ -83,10 +83,7 @@ LIMIT 5;`
 };
 
 
-//getRatingrating(5);
-//getRatingid(4);
-//getRating('niilo');
-//addRating(3, 5, '111Hyvä leffa, asdasddasdasdasdoapsdkaspdkaspodkapsdkapsokdasd', new Date(), 'niilo');
+
 
 async function addRating(idmovie, rating, ratingtext, ratingdate, username) {
   try {
