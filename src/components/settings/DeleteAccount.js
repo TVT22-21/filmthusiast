@@ -13,7 +13,7 @@ const UserProfile = ({ username= userInfo.value?.private }) => {
 
     
 function handleDelete(){
-  axios.post("http://localhost:3001/person/delete", { username, password })
+  axios.post("/person/delete", { username, password })
     .then((resp)=>{
     console.log(resp.data);
     setError("Account deleted.");

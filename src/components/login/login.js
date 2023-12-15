@@ -26,7 +26,7 @@ function LoginForm() {
     //return username.length > 0 && password.length > 0;
 
     function login() {
-      axios.post("http://localhost:3001/login/login", { username, password })
+      axios.post("/login/login", { username, password })
         .then((resp) => {
           console.log(resp.data);
           jwtToken.value = resp.data.jwtToken;
