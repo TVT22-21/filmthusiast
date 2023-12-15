@@ -44,7 +44,7 @@ function Information() {
         //const uName = userInfo.value?.private;
         //console.log(uName);
 
-        const getProfRes = await axios.get('http://localhost:3001/profile/getProfile/' + username);
+        const getProfRes = await axios.get('/profile/getProfile/' + username);
 
         console.log('Response data:', getProfRes.data);
         setProfile(getProfRes.data);
@@ -74,7 +74,7 @@ function Information() {
     try {
       const personId = profile[0].person_idperson;
       console.log(personId);
-      await axios.put('http://localhost:3001/profile/updateTitle', {
+      await axios.put('/profile/updateTitle', {
         profiletitle: newTitle,
         person_idperson: personId,
       });
@@ -110,7 +110,7 @@ function Information() {
     try {
       const personId = profile[0].person_idperson;
 
-      await axios.put('http://localhost:3001/profile/updateDescription', {
+      await axios.put('/profile/updateDescription', {
         description: newDesc,
         person_idperson: personId,
       });
@@ -219,7 +219,7 @@ function Content() {
   function handleDeleteRating(id){
     setIdRated(id);
     if(userInfo.value?.private === username) {
-      axios.post("http://localhost:3001/rating/deleteid", {
+      axios.post("/rating/deleteid", {
       idrated: id
     })
       .then((resp)=>{
@@ -237,7 +237,7 @@ function Content() {
   const handleSubmitRating = async () => {
     try {
       console.log('id, rating, ratingtext', idRated, newRating, newRatingtext);
-      await axios.put('http://localhost:3001/rating/update', {
+      await axios.put('/rating/update', {
         rating: newRating,
         ratingtext: newRatingtext,
         idrated: idRated,
@@ -266,7 +266,7 @@ function Content() {
   useEffect(() => {
     async function fetchDataRatings() {
       try {
-        const response = await axios.get(`http://localhost:3001/rating/getrating?username=${username}`);
+        const response = await axios.get(`/rating/getrating?username=${username}`);
         setRatings(response.data);
       } catch (error) {
         setRatings('loading');
@@ -372,7 +372,7 @@ function Watchlist() {
     async function fetchDataRatings() {
       try {
         //const uName = userInfo.value.private;
-        const response = await axios.get(`http://localhost:3001/profile/getWatchlist/` + username);
+        const response = await axios.get(`/profile/getWatchlist/` + username);
 
         if (response.data[0]?.watchlist && response.data[0].watchlist.length > 0) {
           setWatchlist(response.data[0].watchlist);

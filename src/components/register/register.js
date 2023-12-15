@@ -19,7 +19,7 @@ export default function RegisterForm() {
         console.log('Before registration:', { username, password, email });
       
         if (password === pw2) {
-          axios.post('http://localhost:3001/person/register', { username, password, email })
+          axios.post('/person/register', { username, password, email })
             .then(resp => {
               console.log('Registration response:', resp.data);
       
@@ -54,7 +54,7 @@ export default function RegisterForm() {
             username: username,
           };
           try {
-            const responseData = await axios.post('http://localhost:3001/profile/createProfile', profileData);
+            const responseData = await axios.post('/profile/createProfile', profileData);
             console.log(responseData.data); 
           } catch (error) {
             console.error('Error creating profile:', error);

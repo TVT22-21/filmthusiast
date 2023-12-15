@@ -64,7 +64,7 @@ function SearchResultCard({ movieData }) {
                 movie_id: movieId,
                 username: userInfo.value?.private,
             };
-            const response = await axios.put(`http://localhost:3001/profile/addToWatchlist`, requestData);
+            const response = await axios.put(`/profile/addToWatchlist`, requestData);
             console.log('Watchlist updated successfully:', response.data);
 
         }catch (error) {
@@ -153,7 +153,7 @@ function SearchResultCard({ movieData }) {
                                     <button className='add-watchlist-btn' onClick={() => { handleAddWatchlist(searchdata.id); }}>+ Watchlist</button>
                                 </div>
                                 <div className="additional-card-2">
-                                    <button className='add-rating-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostele(searchdata.id); }}>+ Arvostele</button>
+                                    <button className='add-rating-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostele(searchDBID); }}>+ Arvostele</button>
                                     <button className='add-rating-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostelu(searchFindID); }}>+ Arvostelut</button>
                                 </div>                              
                             </div>

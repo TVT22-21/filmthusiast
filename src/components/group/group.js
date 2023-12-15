@@ -18,7 +18,8 @@ function Groups() {
   const fetchGroups = async () => {
     try {
       console.log('Before fetching groups...');
-      const response = await axios.get('http://localhost:3001/groups/getgroups');
+      const response = await axios.get('/groups/getgroups', );
+
       console.log('Groups fetched successfully:', response.data);
       setGroups(response.data);
       console.log('After setting groups...');
@@ -32,7 +33,7 @@ function Groups() {
     console.log(id);
     try {    
       const userName = userInfo.value?.private; 
-      await axios.post('http://localhost:3001/groups/join', { 
+      await axios.post('/groups/join', { 
         group_idgroup: 3, 
         username: userName, 
       });
@@ -43,7 +44,7 @@ function Groups() {
 
   const createGroup = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/groups/create', {
+      const response = await axios.post('/groups/create', {
         groupname: newGroupName,
         grouptitle: newGroupTitle,
         groupdescription: newGroupDescription,
