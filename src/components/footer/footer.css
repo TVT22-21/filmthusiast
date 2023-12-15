@@ -1,10 +1,97 @@
 
 
 .footer-container{
-    height: 50px;
-    display: flex;
+    height: 55px;
+    display: grid;
+    justify-items: center;
     align-items: center;
-    justify-content: center;
     background-color: black;
     color: azure;
+    
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
 }
+
+.footer-left{
+    width: 100%; 
+    text-align: left;
+}
+
+.footer-center{
+    width: 100%; 
+    text-align: center;
+}
+
+.footer-right{
+    width: 100%; 
+    text-align: right;
+    margin-right: 5%;
+}
+
+.footer-btn {
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin: 10px;
+  }
+
+  .footer-btn:before {
+    content: "";
+    background: linear-gradient(
+      45deg,
+      #000000,
+      #0044ff,
+      #0051ff,
+      #00eeff,
+      #000000,
+      #00ffdd,
+      #0004ff,
+      #4400ff,
+      #000000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(4px);
+    -webkit-filter: blur(1px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-85 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+  }
+
+  @keyframes glowing-button-85 {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 400% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+
+  .footer-btn:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #001b30;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+  }
