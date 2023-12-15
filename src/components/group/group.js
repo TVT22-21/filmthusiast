@@ -28,10 +28,8 @@ function Groups() {
     }
   };
   
-  const joinGroup = async (id) => {
-    setIdgroup(id);
-    console.log(id);
-    try {    
+  const joinGroup = async (groupname) => {
+    try {
       const userName = userInfo.value?.private; 
       await axios.post('/groups/join', { 
         group_idgroup: 3, 
