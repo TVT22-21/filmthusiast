@@ -7,6 +7,7 @@ const database = {
     UPDATE_PASSWORD: 'UPDATE person SET password = $1 WHERE username = $2',
     UPDATE_EMAIL: 'UPDATE person SET email = $1 WHERE username = $2',
     CHECK_USERNAME: 'SELECT * FROM person WHERE username = $1',
+    CHECK_UNAME: 'SELECT * FROM person WHERE idperson = $1',
     CHECK_EMAIL: 'SELECT * FROM person WHERE email = $1',
     GET_PW: 'SELECT password FROM person WHERE username = $1'
 };
@@ -40,6 +41,11 @@ async function checkUsername(username){
     return result.rows.length > 0;
 }
 
+async function checkUname(idperson){
+    const result = await pgPool.query(database.CHECK_UNAME, [idperson]);
+    return result.rows.length > 0;
+}
+
 async function checkEmail(email){
     const result = await pgPool.query(database.CHECK_EMAIL, [email]);
     return result.rows.length > 0;
@@ -56,4 +62,4 @@ async function checkPerson(username){
 
 }
 
-module.exports = {addPerson, deletePerson, getPerson, updatePassword, updateEmail, checkUsername, checkEmail, checkPerson};
+module.exports = {addPerson, deletePerson, getPerson, updatePassword, updateEmail, checkUsername, checkEmail, checkPerson, checkUname};

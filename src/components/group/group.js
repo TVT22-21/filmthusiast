@@ -12,7 +12,9 @@ function Groups() {
   const [newGroupTitle, setNewGroupTitle] = useState('');
   const [newGroupDescription, setNewGroupDescription] = useState('');
   const [createdGroup, setCreatedGroup] = useState(null);
-  const [idgroup, setIdgroup] = useState('');
+  const [groupId, setJoinedGroup] = useState(null);
+  const [selectedPersonId, setSelectedPersonId] = useState(null);
+
   
 
   const fetchGroups = async () => {
@@ -29,16 +31,71 @@ function Groups() {
   };
   
   const joinGroup = async (groupname) => {
-    try {
+    try {    
       const userName = userInfo.value?.private; 
-      await axios.post('/groups/join', { 
-        group_idgroup: 3, 
+      await axios.post('http://localhost:3001/groups/join', { 
+        groupname,
         username: userName, 
       });
     } catch (error) {
       console.error(error);
     }
   };
+
+  
+  const Members = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/groups/members`);
+      console.log('Group Members:', response.data);
+      setSelectedPersonId(response.data[0]?.person_idperson); // Store the first person_idperson
+    } catch (error) {
+      console.error('Error fetching group members:', error);
+    }
+  };
+
+  const showMembers = async () => {
+    try {
+      if (!selectedPersonId) {
+        console.log('No selected person_idperson');
+        return;
+      }
+
+      const response = await axios.get(`http://localhost:3001/groups/getmembers/${selectedPersonId}`);
+      console.log('Group Member:', response.data.username);
+    } catch (error) {
+      console.error('Error fetching group member:', error);
+    }
+  };
+
+  /*
+  const showGroupMembers = async (id) => {
+    try {
+        const response = await axios.get(`http://localhost:3001/groups/getusernames/${id}`);
+        console.log('Group Members by name:', response.data);
+    } catch (error) {
+        console.error('Error getting member name:', error);
+    }
+};*/
+/*
+  const showMembers = async (person_idperson) => {
+    try {
+      if (!person_idperson) {
+        console.log('Person ID is undefined');
+        return;
+      }
+
+      const response = await axios.get(`http://localhost:3001/groups/getusername/${person_idperson}`);
+      
+      if (response.data.username) {
+        console.log('Group Member:', response.data.username);
+        // Update your UI or state with the fetched username
+      } else {
+        console.log('User not found');
+      }
+    } catch (error) {
+      console.error('Error fetching group member:', error);
+    }
+  };*/
 
   const createGroup = async () => {
     try {
@@ -91,25 +148,23 @@ function Groups() {
         </div>
       )}
 
-      <div className='show-groups'>
-        <h3>Liity ryhmiiin</h3>
-        <ul>
-          {groups.map((group) => (
-            <li key={group.groupname}>
-              {group.groupname} - {group.grouptitle}
-              <button className='show-groups-btn' onClick={() => joinGroup(group.idgroup)}>Join Group</button>
-              <p>
-              {group.idgroup}
-              </p>
-              
-            </li>
-
-          ))}
-        </ul>
-      </div>
-        <Footer />
+<ul>
+  {groups.map((group) => (
+          <li key={group.groupname}>
+          {group.groupname} - {group.grouptitle}
+          <button onClick={() => joinGroup(group.groupname)}>Join Group</button>
+          <button onClick={() => Members(group.idgroup)}>Members</button>
+          <button onClick={showMembers}>Show Members</button>
+      <p>
+      {group.idgroup}
+      </p>
+      
+    </li>
+ 
+  ))}
+</ul>
     </div>
   );
 }
 
-export default Groups; 
+export default Groups;
