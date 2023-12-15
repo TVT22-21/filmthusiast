@@ -4,7 +4,7 @@ import DeleteAccount from './DeleteAccount';
 import { jwtToken, userInfo } from '../register/signals';
 import {useNavigate} from "react-router-dom";
 import './settings.css';
-import { Header } from "../header/header";
+import { Header } from "../header/Header";
 import { Footer } from '../footer/footer';
 
 const SettingsPage = ({username= userInfo.value?.private}) => {
