@@ -5,6 +5,7 @@ import {userInfo} from '../register/signals';
 import { Header } from '../header/Header';
 import { Footer } from '../footer/footer';
 
+
 function Groups() {
   const [groups, setGroups] = useState([]);
   const [newGroupName, setNewGroupName] = useState('');

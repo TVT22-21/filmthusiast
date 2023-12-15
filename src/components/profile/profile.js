@@ -217,15 +217,20 @@ function Content() {
 
   function handleDeleteRating(id){
     setIdRated(id);
-    axios.post("http://localhost:3001/rating/deleteid", {
+    if(userInfo.value?.private === username) {
+      axios.post("http://localhost:3001/rating/deleteid", {
       idrated: id
     })
       .then((resp)=>{
       console.log(resp.data);
+      window.location.reload();
     })
       .catch((error) => {
         console.log(error.response.data);
       });
+    } else {
+      window.alert('You need to login to delete!');
+    }
   }
 
   const handleSubmitRating = async () => {
