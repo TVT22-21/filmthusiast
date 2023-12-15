@@ -2,6 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 
+//const jwtController = require('./src/controllers/jwtController'); //testi
+
 const ratingRoute = require('./routes/rating');
 const profileRoute = require('./routes/profileRoute');
 const personRoute = require('./routes/personRoute');
@@ -29,6 +31,8 @@ app.use('/person', personRoute);
 //app.post('/groups/join', (req, res) => {
 
 //});
+
+//app.post('/login/login', jwtController.issueToken);//testi
 
 const PORT = process.env.PORT;
 
