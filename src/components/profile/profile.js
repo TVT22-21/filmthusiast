@@ -30,32 +30,28 @@ function Main() {
 
 function Information() {
 
-  const [profile, setProfile] = useState([]);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDesc, setIsEditingDesc] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [newDesc, setNewDesc] = useState('');
+  const [profile, setProfile] = useState([]);
   const { username } = useParams();
 
 
   useEffect(() => {
     async function fetchData() {
       try {
-        //const uName = userInfo.value?.private;
-        //console.log(uName);
-
         const getProfRes = await axios.get('/profile/getProfile/' + username);
 
-        console.log('Response data:', getProfRes.data);
         setProfile(getProfRes.data);
-        console.log(profile);
+
       } catch (error) {
         setProfile('loading');
         console.error(error);
       }
     }
     fetchData();
-  }, [profile, username]);
+  }, [username]);
 
   const handleEditTitle = () => {
     console.log(userInfo.value?.private + username)
@@ -73,7 +69,7 @@ function Information() {
   const handleSubmitTitle = async () => {
     try {
       const personId = profile[0].person_idperson;
-      console.log(personId);
+
       await axios.put('/profile/updateTitle', {
         profiletitle: newTitle,
         person_idperson: personId,
@@ -191,7 +187,11 @@ function Content() {
   const [rating, setRating] = useState([]);
   const [idRated, setIdRated] = useState('');
   const [expandedCard, setExpandedCard] = useState(null);
+  const [personId, setPersonId] = useState(0);
+  const [groupIds, setGroupIds] = useState([]);
+  const [groupData, setGroupData] = useState([]);
 
+  
   const handleEditRating = (id) => {
     setIdRated(id);
     setExpandedCard((prevId) => (prevId === id ? null : id));
@@ -277,6 +277,69 @@ function Content() {
     fetchDataRatings();
   }, [username]);
 
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const getProfRes = await axios.get('/profile/getProfile/' + username);
+        console.log('Response data:', getProfRes.data[0].person_idperson);
+        setPersonId(getProfRes.data[0].person_idperson);
+      } catch (error) {
+        setPersonId('loading');
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, [username]);
+
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+
+        const responseInfo = await axios.get('/groups/getGroupById', {
+          params: {
+            person_idperson: personId
+          },
+        });
+      
+        const responseGroupIds = responseInfo.data.map(item => item.group_idgroup);
+        setGroupIds(responseGroupIds);
+      } catch (error) {
+        setGroupIds('loading');
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, [personId]);
+  
+  useEffect(() => {
+    async function fetchData() {
+      try {
+
+
+        const groupDataPromises = groupIds.map(async (groupId) => {
+          const responseInfo = await axios.get('/groups/getGroupsByIdGroup', {
+            params: {
+              idgroup: groupId,
+            },
+          });
+
+          return responseInfo.data.rows;
+        });
+
+        const resolvedGroupData = await Promise.all(groupDataPromises);
+
+        setGroupData(resolvedGroupData);
+      } catch (error) {
+        setGroupData('loading');
+        console.error(error);
+      }
+    }
+  
+      fetchData();
+    }, [groupIds]);
+
   return (
     <div className='content'>
       <div className='content-nav'>
@@ -353,9 +416,18 @@ function Content() {
           <div>
             <h2>Groups</h2>
             <div className='groups-container'>
-              <MovieCardByTitle movieData={SearchResultByTitle} />
-              <MovieCardByTitle movieData={SearchResultByTitle} />
-              <MovieCardByTitle movieData={SearchResultByTitle} />
+              {groupData.map((innerArray, index) => (
+                <div className='group-info-container' key={index}>
+                  {innerArray.map((group) => (
+                    <div key={group.idgroup}>
+                      
+                      <h3 className='group-info-text'>{group.groupname}</h3>
+                      <p className='group-info-text'>{group.grouptitle}</p>
+                      <p className='group-info-text'>{group.groupdescription}</p>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -379,7 +451,7 @@ function Watchlist() {
 
         if (response.data[0]?.watchlist && response.data[0].watchlist.length > 0) {
           setWatchlist(response.data[0].watchlist);
-          console.log(response.data[0].watchlist);
+
         } else {
           // Handle the case when the watchlist is empty
           console.log('Watchlist is empty');
