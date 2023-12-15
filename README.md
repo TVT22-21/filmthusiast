@@ -13,6 +13,9 @@ Sisään kirjautuessa käyttäjä saa joka kerta uniikin “tokenin”, jonka pe
 
 Teknologia
 Websovellus luotiin käyttämällä React ja Node arkkitehtuuria. Backendin taustalla toimii Nodejs express-kirjasto, joka käsittelee routtausta eli tiedon lähetystä ja on todella helppokäyttöinen.  Tämä mahdollistaa nopean ja skaalautuvan kehityksen palvelinpään logiikalle. Postgre-tietokanta sisältää kaiken sovelluksessa käytettävän tiedon. Esimerkiksi käyttäjänimet, salasanat jne.
+
+
+![image](https://github.com/TVT22-21/filmthusiast/assets/112549873/7f6c44d6-6380-4f02-8891-038890a7d03b)
  
 1.	KUVA. Pala login routtauksen koodia. Tässä verrataan annettua salasanaa sekoitettuun salasanaan. Jos käyttäjätunnus ja salasana ovat tosi, käyttäjälle annetaan tokeni, jolloin hän on kirjautunut sisään.
 Frontendissä käytimme Reactia ja Reactin axios-kirjastoa, mikä yhdistää frontendin helposti backendiin. Reactilla toteutettu käyttöliittymä tarjoaa joustavan ja tehokkaan tavan rakentaa dynaamisia käyttöliittymiä.
@@ -33,6 +36,7 @@ Frontendissä käytimme Reactia ja Reactin axios-kirjastoa, mikä yhdistää fro
  
 5.	KUVA. Sivuston elokuvan haku osio. Sivustolla voidaan selata valitsemansa elokuvan arvosteluja. Kirjautuneena käyttäjä voi lisätä elokuvan omalle watchlistille tai luoda arvostelun.
  
+
 
 
 
