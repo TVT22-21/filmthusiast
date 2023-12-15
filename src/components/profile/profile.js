@@ -4,7 +4,7 @@ import './profile.css';
 import { SearchByTitle, MovieCardByTitle, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
 import { userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
-import { Header } from "../header/Header";
+import { Header } from "../header/header";
 import { Footer } from '../footer/footer';
 
 
@@ -310,6 +310,27 @@ function Content() {
     }
     fetchData();
   }, [personId]);
+
+  /*dfdfdfdfdfdfdff*/ 
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        console.log(personId);
+        const responseInfo = await axios.get('/groups/getGroupById', {
+          params: {
+            person_idperson: personId
+          },
+        });
+        console.log('Response data:', responseInfo.data);
+        setGroupData(responseInfo.data);
+      } catch (error) {
+        setGroupData('loading');
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, [groupData]);
 
 
   return (
