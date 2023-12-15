@@ -3,7 +3,7 @@ import axios from "axios";
 import {jwtToken, userInfo} from '../register/signals';
 import {useNavigate} from "react-router-dom";
 import './login.css';
-import { Header } from "../header/Header";
+import { Header } from "../header/header";
 
 
 export default function Login(){
@@ -26,7 +26,7 @@ function LoginForm() {
     //return username.length > 0 && password.length > 0;
 
     function login() {
-      axios.post("http://localhost:3001/login/login", { username, password })
+      axios.post("/login/login", { username, password })
         .then((resp) => {
           console.log(resp.data);
           jwtToken.value = resp.data.jwtToken;

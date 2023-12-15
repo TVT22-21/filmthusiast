@@ -1,25 +1,39 @@
 
 
-.search-container{
+.searchpage-container{
     display: flex; 
     flex-direction: column;
     min-height: 100vh;
     background-color: #001b30;
 }
 
-.search-bar-container{
+.searchbar-container{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     padding-top: 40px;
     padding-bottom: 20px;
-    width: 100%;  
+    margin-left: 13%;
+    margin-right: 13%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     background-color: #00223b;
-
 }
 
-.search-bar-container img{
+.searchbar{
+    background-color: #eaeaea;
+    width: 400px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 6px;
+    padding-right: 10px;
+    align-items: center;
+    outline: none;
+    text-align: center;
+    }
+
+.filter-button{
     width: 40px;
     height: 40px;
     margin-left: 10px;
@@ -29,14 +43,13 @@
     cursor: pointer;
     background-color: #094f85;
 }
-.search-bar-container img:hover{
+.filter-button:hover{
     background-color: #011627;
 }
 
-.search-bar{
-    width: 400px;
-    height: 30px;
-    margin-right: 5px;
+.selected-genres{
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .genre-list {
@@ -50,7 +63,7 @@
     margin-right: 10px; 
     padding: 5px;
     border-radius: 30px;
-    background-color: rgb(0, 218, 218);
+    background-color: rgb(34, 160, 160);
 }
 
 .search-results{
@@ -58,19 +71,14 @@
     flex-wrap: wrap;
 }
 
-.filter-container{
 
-    padding: 5px;
-    background-color: rgb(160, 160, 160);
-    border: 2px black;
-}
-.movie-card {
+.ratings-info-card {
     display: flex;
     flex-direction: column;
-    width: 200px;
+    width: 100%;
     margin: 10px; 
     padding: 10px;
-    border-radius: 3px;
+    border-radius: 5px;
     border: 1px solid black; 
     background-color: #001b30;
 }
@@ -81,9 +89,12 @@
     margin: 5px;
     border-radius: 10px;
     border: 1px solid black;
-    background-color: #00223b;
+    background-color: #001b30;;
     color: beige;
     cursor: pointer;
+}
+.search-btn:hover{
+    background-color: #094f85;
 }
 
 .featured-buttons{
@@ -104,22 +115,14 @@
 }
 
 .search-results-container{
-    margin-left: 15%;
-    margin-right: 15%;
-    min-height: 100vh;
-    background-color: #ff1818;
-}
-
-.add-watchlist-btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 35px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    background-color: rgb(58, 58, 58);
+    margin-top: 20px;
+    margin-bottom: 50px;
+    margin-left: 13%;
+    margin-right: 13%;
+    padding: 20px;
+    min-height: 200px;
+    border-radius: 10px;
+    background-color: #00223b;
 }
 
 .delete-watchlist-btn{
@@ -136,10 +139,30 @@
 }
 
 .filter-container{
-
-    padding: 5px;
-    background-color: rgb(160, 160, 160);
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #074874;
     border: 2px black;
+}
+
+.filter-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.exit-filter-button{
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.checkbox{
+    margin: 8px;
 }
 
 .movie-card {
@@ -150,18 +173,6 @@
     padding: 5px;
     border-radius: 3px;
     border: 1px solid black; 
-}
-
-.add-watchlist-btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 35px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    background-color: rgb(58, 58, 58);
 }
 
 .movieList {

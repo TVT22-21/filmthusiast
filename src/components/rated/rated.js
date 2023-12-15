@@ -6,7 +6,7 @@ import './rated.css';
 
 const NewRating = async (idmovie, rating, ratingtext, username) => {
   try {
-    const response = await axios.post('http://localhost:3001/rating/addrating', {
+    const response = await axios.post('/rating/addrating', {
       idmovie,
       rating,
       ratingtext,
@@ -41,7 +41,7 @@ const TopRatedMovies = () => {
   useEffect(() => {
     const fetchTopRatedMovies = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/rating/toprating');
+        const response = await axios.get('/rating/toprating');
         const movies = response.data;
 
         const validMovies = movies.filter(movie => typeof movie.rating === 'number');
@@ -87,7 +87,7 @@ const NewestRated = () => {
   useEffect(() => {
     const fetchNewestRatedMovies = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/rating/newestrating');
+        const response = await axios.get('/rating/newestrating');
         const movies = response.data;
 
         const validMovies = movies.filter(movie => typeof movie.rating === 'number');
@@ -136,7 +136,7 @@ const GetRatingById = ({RatingById}) => {
   useEffect(() => {
     const fetchGetRatedMovies = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/rating/getrating/idmovie?idmovie=${RatingById}`);
+        const response = await axios.get(`/rating/getrating/idmovie?idmovie=${RatingById}`);
         const movies = response.data;
         setGetRatedMovies(movies);
       } catch (error) {
@@ -149,12 +149,12 @@ const GetRatingById = ({RatingById}) => {
 
 
   return (
-    <div>
-      <ul className="movieList">
+    <div className='movie-rating-list'>
+      <h3>Arvostelut: </h3>
+      <div className="movieList">
         {GetRatedMovies.map((movie, index) => (                         
-          <li key={index} className="movieListItem">
+          <div key={index} className="movieListItem">
             <div className="movieCardContainer">
-              <SearchByIdWithCard movieId={movie.idmovie}/>
               <RatingCard RatingData={{
                 username: movie.username,
                 rating: movie.rating,
@@ -162,9 +162,9 @@ const GetRatingById = ({RatingById}) => {
                 ratingdate: movie.ratingdate,
               }}/>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
@@ -176,7 +176,7 @@ const GetRatingid2 = ({searchDBID}) => {
   useEffect(() => {
     const fetchNewestRatedMovies = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/rating/getrating/idmovie?idmovie=${searchDBID}`);
+        const response = await axios.get(`/rating/getrating/idmovie?idmovie=${searchDBID}`);
         const movies = response.data;
         setRatedMovies(RatedMovies);
       } catch (error) {
@@ -211,7 +211,7 @@ const GetRatingid2 = ({searchDBID}) => {
     const GetRatingid = async (idmovie) =>{
       const [data, setData] = useState([]);
       const [idmovieparam, setIdmovieparam] = useState('');
-      axios.get(`http://localhost:3001/rating/getrating/idmovie?idmovie=${idmovie}`)
+      axios.get(`/rating/getrating/idmovie?idmovie=${idmovie}`)
         .then(resp => {
             console.log('Response:', resp.data);
             setData(resp.data);
@@ -224,7 +224,7 @@ const GetRatingid2 = ({searchDBID}) => {
     function GetRating(username){
       const [usernameparam, setUnameparam] = useState('');
       const [data, setData] = useState([]);
-        axios.get(`http://localhost:3001/rating/getrating?username=${username}`)
+        axios.get(`/rating/getrating?username=${username}`)
         .then(resp => {
             console.log('Response:', resp.data);
             setData(resp.data);
@@ -237,7 +237,7 @@ const GetRatingid2 = ({searchDBID}) => {
     function GetRatingrating(rating){
       const [ratingparam, setRatingparam] = useState('');
       const [data, setData] = useState([]);
-        axios.get(`http://localhost:3001/rating/getrating/rating?rating=${rating}`)
+        axios.get(`/rating/getrating/rating?rating=${rating}`)
         .then(resp => {
             console.log('Response:', resp.data);
             setData(resp.data);

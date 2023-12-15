@@ -3,6 +3,8 @@ import axios from 'axios';
 import './group.css';
 import {userInfo} from '../register/signals';
 import { Header } from '../header/Header';
+import { Footer } from '../footer/footer';
+
 
 function Groups() {
   const [groups, setGroups] = useState([]);
@@ -10,14 +12,14 @@ function Groups() {
   const [newGroupTitle, setNewGroupTitle] = useState('');
   const [newGroupDescription, setNewGroupDescription] = useState('');
   const [createdGroup, setCreatedGroup] = useState(null);
-  const [groupId, setJoinedGroup] = useState(null);
   const [idgroup, setIdgroup] = useState('');
   
 
   const fetchGroups = async () => {
     try {
       console.log('Before fetching groups...');
-      const response = await axios.get('http://localhost:3001/groups/getgroups', );
+      const response = await axios.get('/groups/getgroups', );
+
       console.log('Groups fetched successfully:', response.data);
       setGroups(response.data);
       console.log('After setting groups...');
@@ -31,7 +33,7 @@ function Groups() {
     console.log(id);
     try {    
       const userName = userInfo.value?.private; 
-      await axios.post('http://localhost:3001/groups/join', { 
+      await axios.post('/groups/join', { 
         group_idgroup: 3, 
         username: userName, 
       });
@@ -42,7 +44,7 @@ function Groups() {
 
   const createGroup = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/groups/create', {
+      const response = await axios.post('/groups/create', {
         groupname: newGroupName,
         grouptitle: newGroupTitle,
         groupdescription: newGroupDescription,
@@ -62,9 +64,8 @@ function Groups() {
   }, []); 
 
   return (
-    <div>
+    <div className='groups-container'>
       <Header />
-      <h2>Groups</h2>
 
       <div className="group-box">
         <h3>Create a New Group</h3>
@@ -77,8 +78,10 @@ function Groups() {
         <label>Group Description:</label>
         <input type="text" value={newGroupDescription} onChange={(e) => setNewGroupDescription(e.target.value)} />
 
-        <button onClick={createGroup}>Create Group</button>
-        <button onClick={fetchGroups}>Show Group</button>
+        <div className='group-box-btn-container'>
+        <button className='group-box-btn' onClick={createGroup}>Create Group</button>
+        <button className='group-box-btn' onClick={fetchGroups}>Show Group</button>
+        </div>     
       </div>
 
       {createdGroup && (
@@ -90,19 +93,23 @@ function Groups() {
         </div>
       )}
 
-<ul>
-  {groups.map((group) => (
-    <li key={group.groupname}>
-      {group.groupname} - {group.grouptitle}
-      <button onClick={() => joinGroup(group.idgroup)}>Join Group</button>
-      <p>
-      {group.idgroup}
-      </p>
-      
-    </li>
- 
-  ))}
-</ul>
+      <div className='show-groups'>
+        <h3>Liity ryhmiiin</h3>
+        <ul>
+          {groups.map((group) => (
+            <li key={group.groupname}>
+              {group.groupname} - {group.grouptitle}
+              <button className='show-groups-btn' onClick={() => joinGroup(group.idgroup)}>Join Group</button>
+              <p>
+              {group.idgroup}
+              </p>
+              
+            </li>
+
+          ))}
+        </ul>
+      </div>
+        <Footer />
     </div>
   );
 }

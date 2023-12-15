@@ -1,9 +1,9 @@
-
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './searchPage.css';
 import { userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
+
 
 function SearchById( movieId ){
   
@@ -181,11 +181,12 @@ function MovieCard({ movieData }){
     </div>
   );
 }
+
 function RatingCard({RatingData}){
   console.log(RatingData);
   return (
     <div>
-          <div className='movie-card' key={RatingData.id}>
+          <div className='ratings-info-card' key={RatingData.id}>
             <p><strong>Arvosana: </strong>{RatingData.rating}</p>
             <p><strong>Tekijä: </strong>{RatingData.username}</p>
             <p><strong>PVM: </strong>{RatingData.ratingdate}</p>

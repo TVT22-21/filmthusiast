@@ -1,11 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './profile.css';
-import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
-import { SearchPage } from '../search/searchPage';
-import { jwtToken, userInfo } from '../register/signals';
+import { SearchByTitle, MovieCardByTitle, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
+import { userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
-import { NewRating } from '../rated/rated';
 import { Header } from "../header/Header";
 import { Footer } from '../footer/footer';
 
@@ -46,7 +44,7 @@ function Information() {
         //const uName = userInfo.value?.private;
         //console.log(uName);
 
-        const getProfRes = await axios.get('http://localhost:3001/profile/getProfile/' + username);
+        const getProfRes = await axios.get('/profile/getProfile/' + username);
 
         console.log('Response data:', getProfRes.data);
         setProfile(getProfRes.data);
@@ -57,7 +55,7 @@ function Information() {
       }
     }
     fetchData();
-  }, [username]);
+  }, [profile, username]);
 
   const handleEditTitle = () => {
     console.log(userInfo.value?.private + username)
@@ -76,7 +74,7 @@ function Information() {
     try {
       const personId = profile[0].person_idperson;
       console.log(personId);
-      await axios.put('http://localhost:3001/profile/updateTitle', {
+      await axios.put('/profile/updateTitle', {
         profiletitle: newTitle,
         person_idperson: personId,
       });
@@ -112,7 +110,7 @@ function Information() {
     try {
       const personId = profile[0].person_idperson;
 
-      await axios.put('http://localhost:3001/profile/updateDescription', {
+      await axios.put('/profile/updateDescription', {
         description: newDesc,
         person_idperson: personId,
       });
@@ -151,7 +149,7 @@ function Information() {
             ) : (
               <div class='profile-title-container'>
                 <h1>{profinf.profiletitle}</h1>
-                {userInfo.value?.private == username && <img src='assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
+                {userInfo.value?.private === username && <img src='/assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
               </div>
             )}
           </div>
@@ -170,7 +168,7 @@ function Information() {
               <div class='profile-desc-container'>
                 <div className='profile-desc-text'>
                   {profinf.description}
-                  {userInfo.value?.private == username && <img src='assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />}
+                  {userInfo.value?.private == username && <img src='/assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />}
                 </div>
                 
               </div>
@@ -218,10 +216,28 @@ function Content() {
     setContentType(type);
   };
 
+  function handleDeleteRating(id){
+    setIdRated(id);
+    if(userInfo.value?.private === username) {
+      axios.post("/rating/deleteid", {
+      idrated: id
+    })
+      .then((resp)=>{
+      console.log(resp.data);
+      window.location.reload();
+    })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+    } else {
+      window.alert('You need to login to delete!');
+    }
+  }
+
   const handleSubmitRating = async () => {
     try {
       console.log('id, rating, ratingtext', idRated, newRating, newRatingtext);
-      await axios.put('http://localhost:3001/rating/update', {
+      await axios.put('/rating/update', {
         rating: newRating,
         ratingtext: newRatingtext,
         idrated: idRated,
@@ -250,7 +266,7 @@ function Content() {
   useEffect(() => {
     async function fetchDataRatings() {
       try {
-        const response = await axios.get(`http://localhost:3001/rating/getrating?username=${username}`);
+        const response = await axios.get(`/rating/getrating?username=${username}`);
         setRatings(response.data);
       } catch (error) {
         setRatings('loading');
@@ -310,10 +326,10 @@ function Content() {
                         <p><strong>My Rating: </strong>{rating.rating}</p>
                         <p><strong>Date: </strong>{new Date(rating.ratingdate).toLocaleString()}</p>
                         <p>{rating.ratingtext}</p>
-                        <p><strong>idmovie: </strong>{rating.idmovie}</p>
                       </div>
                     )}
                     <button className='edit-rating-btn' onClick={() => handleEditRating(rating.idrated)}>Muokkaa arvostelua</button>
+                    <button className='edit-rating-btn'onClick={() => handleDeleteRating(rating.idrated)}>Poista arvostelu</button>
                   </div>
                 </div>
               ))
@@ -356,7 +372,7 @@ function Watchlist() {
     async function fetchDataRatings() {
       try {
         //const uName = userInfo.value.private;
-        const response = await axios.get(`http://localhost:3001/profile/getWatchlist/` + username);
+        const response = await axios.get(`/profile/getWatchlist/` + username);
 
         if (response.data[0]?.watchlist && response.data[0].watchlist.length > 0) {
           setWatchlist(response.data[0].watchlist);

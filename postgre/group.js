@@ -4,7 +4,8 @@ const database = {
     INSERT_GROUP: 'INSERT INTO grouptable (groupname, grouptitle, groupdescription, groupcreatedate) VALUES ($1, $2, $3, NOW())',
     UPDATE_GROUP: 'UPDATE grouptable SET groupname = $1, grouptitle = $2, groupdescription = $3 WHERE idgroup = $4',
     ADD_PERSON_TO_GROUP: 'INSERT INTO persongroup (group_idgroup, person_idperson) SELECT $1 AS group_idgroup, idperson FROM person WHERE username = $2',
-    GET_GROUP: 'SELECT * FROM grouptable WHERE groupname = $1'
+    GET_GROUP: 'SELECT * FROM grouptable WHERE groupname = $1',
+    GET_GROUPS: 'SELECT * FROM grouptable'
 };
 
 async function addGroup(groupname, grouptitle, groupdescription) {
@@ -25,4 +26,9 @@ async function getGroup(groupname) {
     return rows;
 }
 
-module.exports = { addGroup, updateGroup, addPersonToGroup, getGroup };
+async function getAllGroups() {
+    const { rows } = await pgPool.query(database.GET_GROUP);
+    return rows;
+}
+
+module.exports = { addGroup, updateGroup, addPersonToGroup, getGroup, getAllGroups };

@@ -8,7 +8,7 @@ const ChangeEmail = ({username = userInfo.value?.private}) => {
   const [error, setError] = useState("");
 
   const handleChangeEmail = () => {
-    axios.post("http://localhost:3001/person/updateemail", { email, username })
+    axios.post("/person/updateemail", { email, username })
     .then((resp)=>{
     console.log(resp.data);
     console.log('Updating email...');
