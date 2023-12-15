@@ -22,6 +22,7 @@ Frontendissä käytimme Reactia ja Reactin axios-kirjastoa, mikä yhdistää fro
 
  ![LogIn](https://github.com/TVT22-21/filmthusiast/assets/112549873/c6d37018-8bb3-4bd8-8a5d-be10f278be28)
 3.	KUVA. Käyttäjän kirjautuminen sivustolle.
+
  ![ProfileArvostelu](https://github.com/TVT22-21/filmthusiast/assets/112549873/8072097a-7f2a-4fa2-8dda-aa1a85b1a55f)
 4.	KUVA. Käyttäjän profiili sivun elokuva-arvostelu kortti. Käyttäjällä mahdollisuus poistaa arvostelu tai muokata kyseistä arvostelua.
 
