@@ -18,15 +18,19 @@ Websovellus luotiin käyttämällä React ja Node arkkitehtuuria. Backendin taus
 Frontendissä käytimme Reactia ja Reactin axios-kirjastoa, mikä yhdistää frontendin helposti backendiin. Reactilla toteutettu käyttöliittymä tarjoaa joustavan ja tehokkaan tavan rakentaa dynaamisia käyttöliittymiä.
 
  ![RegisterUser](https://github.com/TVT22-21/filmthusiast/assets/112549873/196312e4-ca99-4b8c-94ad-922e5932a691)
+ 
 2.	KUVA. Käyttäjän rekisteröinti lomake sivustolle. Rekisteröitymällä käyttäjällä on mahdollisuus lisätä arvosteluja, muokata profiiliaan ja liittyä ryhmiin.
 
  ![LogIn](https://github.com/TVT22-21/filmthusiast/assets/112549873/c6d37018-8bb3-4bd8-8a5d-be10f278be28)
+ 
 3.	KUVA. Käyttäjän kirjautuminen sivustolle.
 
  ![ProfileArvostelu](https://github.com/TVT22-21/filmthusiast/assets/112549873/8072097a-7f2a-4fa2-8dda-aa1a85b1a55f)
+ 
 4.	KUVA. Käyttäjän profiili sivun elokuva-arvostelu kortti. Käyttäjällä mahdollisuus poistaa arvostelu tai muokata kyseistä arvostelua.
 
  ![SearchPage](https://github.com/TVT22-21/filmthusiast/assets/112549873/ca2bdba7-30df-4e4f-934c-d4683a373a33)
+ 
 5.	KUVA. Sivuston elokuvan haku osio. Sivustolla voidaan selata valitsemansa elokuvan arvosteluja. Kirjautuneena käyttäjä voi lisätä elokuvan omalle watchlistille tai luoda arvostelun.
  
 
