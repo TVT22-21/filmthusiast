@@ -8,7 +8,7 @@ import Groups from '../group/group';
 import './homepage.css';
 import { userInfo } from '../register/signals';
 import { NewestRated, TopRatedMovies } from '../rated/rated';
-import { Header } from '../header/header';
+import { Header } from '../header/Header';
 
 function Homepage() {
 
