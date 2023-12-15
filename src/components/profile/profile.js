@@ -1,12 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './profile.css';
-import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
-import { SearchPage } from '../search/searchPage';
-import { jwtToken, userInfo } from '../register/signals';
+import { SearchByTitle, MovieCardByTitle, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
+import { userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
-import { NewRating } from '../rated/rated';
-import { Header } from "../header/header";
+import { Header } from "../header/Header";
 import { Footer } from '../footer/footer';
 
 
@@ -57,7 +55,7 @@ function Information() {
       }
     }
     fetchData();
-  }, [username]);
+  }, [profile, username]);
 
   const handleEditTitle = () => {
     console.log(userInfo.value?.private + username)
@@ -151,7 +149,7 @@ function Information() {
             ) : (
               <div class='profile-title-container'>
                 <h1>{profinf.profiletitle}</h1>
-                {userInfo.value?.private == username && <img src='assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
+                {userInfo.value?.private === username && <img src='/assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
               </div>
             )}
           </div>
@@ -170,7 +168,7 @@ function Information() {
               <div class='profile-desc-container'>
                 <div className='profile-desc-text'>
                   {profinf.description}
-                  {userInfo.value?.private == username && <img src='assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />}
+                  {userInfo.value?.private == username && <img src='/assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />}
                 </div>
                 
               </div>

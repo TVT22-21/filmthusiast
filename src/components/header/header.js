@@ -5,6 +5,7 @@ import { userInfo, jwtToken  } from '../register/signals';
 
 import './header.css';
 
+
 function Header() {
   const navigate = useNavigate();
 
@@ -20,8 +21,8 @@ function Header() {
 
     return (
         <div class="header-container">
-          <img src='assets/filmthusiast-log.png' alt='logo' />
-          <div class='searchbar-container'>
+          <img className='logo-icon' src='/assets/filmthusiast-logo.png' alt='logo'/>
+          <div class='search-container-header'>
             <SearchBarHeader />
           </div>
     
@@ -53,7 +54,7 @@ function Header() {
             )}
           </nav>
           <Link to="/settings">
-                <button class='nav-btn-header'><img src='assets/settings-icon2.png' alt="settingsbutton"/></button>
+                <button class='nav-btn-header'><img className='settings-icon' src='/assets/settings-icon2.png' alt="settingsbutton"/></button>
           </Link>
           
         </div>
@@ -74,18 +75,18 @@ function SearchBarHeader(){
     }
   
     return (
-        <div class='search-container-header'>
-            <div class='search-bar-container-header'>
-                <input
-                class='search-bar'
-                type="text"
-                placeholder="Search..."
-                value={searchWord}
-                onChange={handleInputChange}
-                />
-                <button class='nav-btn-header' onClick={handleSearch}>Search</button>
-            </div>
-        </div>
+        
+      <div class='searchbar-container-header'>
+          <input
+          class='searchbar-header'
+          type="text"
+          placeholder="Search..."
+          value={searchWord}
+          onChange={handleInputChange}
+          />
+          <button class='nav-btn-header' onClick={handleSearch}>Search</button>
+      </div>
+        
     );
   }
 

@@ -104,7 +104,7 @@ function SearchBar() {
 
   return (
     <div className='searchpage-container'>
-      <div className='search-bar-container'>
+      <div className='searchbar-container'>
       {isEditing ? (
           <div>
             <FilterMovies closeFilter={() => setIsEditing(false)} onGenreChange={handleGenreChange} />
@@ -114,7 +114,7 @@ function SearchBar() {
         )}
   
         <input
-          className='search-bar'
+          className='searchbar'
           type="text"
           placeholder="Search..."
           value={searchWord}
