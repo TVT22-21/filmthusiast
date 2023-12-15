@@ -1,5 +1,11 @@
 
-
+.textarea{
+    background-color: #eaeaea;
+    border-radius: 6px;
+    align-items: center;
+    outline: none;
+    text-align: left;
+    }
 
 
 .search-results{
