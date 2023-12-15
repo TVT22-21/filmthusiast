@@ -134,5 +134,19 @@ router.get('/getPerson', async (req, res) => {
     }
 });
 
+router.get('/getPersonById', async (req, res) => {
+    const idperson = req.query.idperson;
+    if (!idperson) {
+        return res.status(400).json({ error: 'Id tarvitaan.' });
+    }else{
+        try {
+            const personData = await checkUname(idperson);
+            res.json(personData);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+});
+
 
 module.exports = router;
