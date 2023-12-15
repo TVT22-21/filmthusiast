@@ -1,15 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import './profile.css';
-import { SearchById, SearchByTitle, SearchByPerson, MovieCardByTitle, MovieCardById, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
-import { SearchPage } from '../search/searchPage';
-import { jwtToken, userInfo } from '../register/signals';
+import { SearchByTitle, MovieCardByTitle, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
+import { userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
-import { NewRating } from '../rated/rated';
-import { Header } from "../header/Header";
+import { Header } from "../header/header";
 import { Footer } from '../footer/footer';
-
-
 
 
 function Profile(){
@@ -34,22 +30,18 @@ function Main() {
 
 function Information() {
 
-  const [profile, setProfile] = useState([]);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDesc, setIsEditingDesc] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [newDesc, setNewDesc] = useState('');
+  const [profile, setProfile] = useState([]);
   const { username } = useParams();
 
 
   useEffect(() => {
     async function fetchData() {
       try {
-        //const uName = userInfo.value?.private;
-        //console.log(uName);
-
-        const getProfRes = await axios.get('http://localhost:3001/profile/getProfile/' + username);
-
+        const getProfRes = await axios.get('/profile/getProfile/' + username);
         console.log('Response data:', getProfRes.data);
         setProfile(getProfRes.data);
         console.log(profile);
@@ -78,7 +70,7 @@ function Information() {
     try {
       const personId = profile[0].person_idperson;
       console.log(personId);
-      await axios.put('http://localhost:3001/profile/updateTitle', {
+      await axios.put('/profile/updateTitle', {
         profiletitle: newTitle,
         person_idperson: personId,
       });
@@ -114,7 +106,7 @@ function Information() {
     try {
       const personId = profile[0].person_idperson;
 
-      await axios.put('http://localhost:3001/profile/updateDescription', {
+      await axios.put('/profile/updateDescription', {
         description: newDesc,
         person_idperson: personId,
       });
@@ -153,7 +145,7 @@ function Information() {
             ) : (
               <div class='profile-title-container'>
                 <h1>{profinf.profiletitle}</h1>
-                {userInfo.value?.private == username &&<img src='assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
+                {userInfo.value?.private === username && <img src='/assets/edit-icon.png' onClick={handleEditTitle} alt="editbutton" />}
               </div>
             )}
           </div>
@@ -172,7 +164,7 @@ function Information() {
               <div class='profile-desc-container'>
                 <div className='profile-desc-text'>
                   {profinf.description}
-                  {userInfo.value?.private == username &&<img src='assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />}
+                  {userInfo.value?.private == username && <img src='/assets/edit-icon.png' onClick={handleEditDesc} alt="editbutton" />}
                 </div>
                 
               </div>
@@ -195,7 +187,10 @@ function Content() {
   const [rating, setRating] = useState([]);
   const [idRated, setIdRated] = useState('');
   const [expandedCard, setExpandedCard] = useState(null);
+  const [personId, setPersonId] = useState(0);
+  const [groupData, setGroupData] = useState([]);
 
+  
   const handleEditRating = (id) => {
     setIdRated(id);
     setExpandedCard((prevId) => (prevId === id ? null : id));
@@ -220,10 +215,28 @@ function Content() {
     setContentType(type);
   };
 
+  function handleDeleteRating(id){
+    setIdRated(id);
+    if(userInfo.value?.private === username) {
+      axios.post("/rating/deleteid", {
+      idrated: id
+    })
+      .then((resp)=>{
+      console.log(resp.data);
+      window.location.reload();
+    })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+    } else {
+      window.alert('You need to login to delete!');
+    }
+  }
+
   const handleSubmitRating = async () => {
     try {
       console.log('id, rating, ratingtext', idRated, newRating, newRatingtext);
-      await axios.put('http://localhost:3001/rating/update', {
+      await axios.put('/rating/update', {
         rating: newRating,
         ratingtext: newRatingtext,
         idrated: idRated,
@@ -252,7 +265,7 @@ function Content() {
   useEffect(() => {
     async function fetchDataRatings() {
       try {
-        const response = await axios.get(`http://localhost:3001/rating/getrating?username=${username}`);
+        const response = await axios.get(`/rating/getrating?username=${username}`);
         setRatings(response.data);
       } catch (error) {
         setRatings('loading');
@@ -262,6 +275,42 @@ function Content() {
 
     fetchDataRatings();
   }, [username]);
+
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const getProfRes = await axios.get('/profile/getProfile/' + username);
+        console.log('Response data:', getProfRes.data[0].person_idperson);
+        setPersonId(getProfRes.data[0].person_idperson);
+      } catch (error) {
+        setPersonId('loading');
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, [username]);
+
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        console.log(personId);
+        const responseInfo = await axios.get('/groups/getGroupById', {
+          params: {
+            person_idperson: personId
+          },
+        });
+        console.log('Response data:', responseInfo.data);
+        setGroupData(responseInfo.data);
+      } catch (error) {
+        setGroupData('loading');
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, [personId]);
+
 
   return (
     <div className='content'>
@@ -282,21 +331,24 @@ function Content() {
                     <SearchByIdWithCard movieId={rating.idmovie} />
                   </div>
                   <div
-                    className={`movie-rating ${expandedCard === rating.idrated ? 'expanded' : ''}`}
+                    className={`movie-rating-container ${expandedCard === rating.idrated ? 'expanded' : ''}`}
                     key={rating.idrated}
                   >
                     {expandedCard === rating.idrated ? (
                       <div>
                         <div className='content'>
                           <input
+                          className='textarea'
                             type='number'
                             value={newRating}
                             onChange={handleRatingChange}
                             placeholder='Enter new rating'
                           />
+                          
                         </div>
                         <div className='content'>
-                          <textarea
+                        <textarea
+                          className='textarea'
                             type='form'
                             rows='10'
                             value={newRatingtext}
@@ -304,18 +356,18 @@ function Content() {
                             placeholder='Enter new rating text'
                           />
                         </div>
-                        <button onClick={handleSubmitRating}>Muokkaa</button>
-                        <button onClick={handlePeruutaRating}>Peruuta</button>
+                        <button class='add-rating-btn' onClick={handleSubmitRating}>Muokkaa</button>
+                        <button class='add-rating-btn' onClick={handlePeruutaRating}>Peruuta</button>
                       </div>
                     ) : (
                       <div className='movie-rating'>
                         <p><strong>My Rating: </strong>{rating.rating}</p>
                         <p><strong>Date: </strong>{new Date(rating.ratingdate).toLocaleString()}</p>
                         <p>{rating.ratingtext}</p>
-                        <p><strong>idmovie: </strong>{rating.idmovie}</p>
                       </div>
                     )}
-                    <button className='content-btn' onClick={() => handleEditRating(rating.idrated)}>Muokkaa arvostelua</button>
+                    <button className='edit-rating-btn' onClick={() => handleEditRating(rating.idrated)}>Muokkaa arvostelua</button>
+                    <button className='edit-rating-btn'onClick={() => handleDeleteRating(rating.idrated)}>Poista arvostelu</button>
                   </div>
                 </div>
               ))
@@ -336,9 +388,6 @@ function Content() {
           <div>
             <h2>Groups</h2>
             <div className='groups-container'>
-              <MovieCardByTitle movieData={SearchResultByTitle} />
-              <MovieCardByTitle movieData={SearchResultByTitle} />
-              <MovieCardByTitle movieData={SearchResultByTitle} />
             </div>
           </div>
         )}
@@ -358,7 +407,7 @@ function Watchlist() {
     async function fetchDataRatings() {
       try {
         //const uName = userInfo.value.private;
-        const response = await axios.get(`http://localhost:3001/profile/getWatchlist/` + username);
+        const response = await axios.get(`/profile/getWatchlist/` + username);
 
         if (response.data[0]?.watchlist && response.data[0].watchlist.length > 0) {
           setWatchlist(response.data[0].watchlist);

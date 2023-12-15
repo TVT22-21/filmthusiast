@@ -4,26 +4,21 @@ import {jwtToken, userInfo} from '../register/signals';
 import {useNavigate} from "react-router-dom";
 import './login.css';
 import { Header } from "../header/Header";
+import { Footer } from "../footer/footer";
 
 
 export default function Login(){
   return(
     <div>
       <Header />
-      <UserInfo/>
       { jwtToken.value.length === 0 ? <LoginForm/> :
         <button onClick={() => jwtToken.value = ''}>Kirjaudu ulos</button>}
+      <Footer/>
     </div>
   )
 }
 
-function UserInfo(){
-  return(
-    <div>
-      {jwtToken.value ? <h1>{userInfo.value?.private}</h1> : <h1>Olet vierailijana</h1>}
-    </div>
-  )
-}
+
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -33,7 +28,7 @@ function LoginForm() {
     //return username.length > 0 && password.length > 0;
 
     function login() {
-      axios.post("http://localhost:3001/login/login", { username, password })
+      axios.post("/login/login", { username, password })
         .then((resp) => {
           console.log(resp.data);
           jwtToken.value = resp.data.jwtToken;
@@ -57,7 +52,7 @@ function LoginForm() {
             <div className="text">Kirjaudu sisään</div>
           </div>
           {jwtToken.value.length !== 0 ? (
-            <h2>Kirjauduttu sisään</h2>
+            <h3>Kirjauduttu sisään</h3>
           ) : (
             <div>
               <div className="inputs">
@@ -67,20 +62,22 @@ function LoginForm() {
                     onChange={(e) => setUsername(e.target.value)} placeholder="Käyttäjätunnus"
                   />
                   <br />
+                  </div>
                   <div className="input">
                   <input
                     type="password"
                     onChange={(e) => setPassword(e.target.value)} placeholder="Salasana"
                   />
-                </div>
-                </div>
+                  </div>
+
+                
                 <div className="text">{error}</div>
                 <div>
-                  <button onClick={login}>Kirjaudu sisään</button>
+                  <button className="login-btn" onClick={login}>Kirjaudu sisään</button>
                   <br/>
                     <div className="header">
                       <div className="text">Etkö omista käyttäjää?</div>
-                      <button onClick={navigateToRegister}>Rekisteröidy käyttäjäksi</button>
+                      <button className="login-btn" onClick={navigateToRegister}>Rekisteröidy käyttäjäksi</button>
                       <br/>
                     </div>
                 </div>

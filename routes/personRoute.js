@@ -122,6 +122,7 @@ if (!username || !email){
 
 router.get('/getPerson', async (req, res) => {
     const username = req.query.username;
+    console.log(username+ '');
     if (!username) {
         return res.status(400).json({ error: 'Käyttäjänimi tarvitaan.' });
     }else{

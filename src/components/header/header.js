@@ -1,27 +1,35 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { userInfo } from '../register/signals';
+import { userInfo, jwtToken  } from '../register/signals';
 
 import './header.css';
 
+
 function Header() {
+  const navigate = useNavigate();
 
     const [loggedIn, setLoggedIn] = useState(false);
     //if(userInfo?.value.private){
     //    setLoggedIn(true);
     //}
+    function logOut(){
+      jwtToken.value = '';
+      console.log("logged out");
+      window.location.reload(false);
+    }
 
     return (
         <div class="header-container">
-          <div class='searchbar-container'>
+          <img className='logo-icon' src='/assets/filmthusiast-logo.png' alt='logo'/>
+          <div class='search-container-header'>
             <SearchBarHeader />
           </div>
     
           <nav>   
             {!userInfo?.value?.private ? null : (     
                 <Link to={`/profile/${userInfo.value.private}`}>
-                    <button class='nav-btn-header-profile'>{userInfo?.value?.private}</button>
+                    <button class='nav-btn-header'>{userInfo?.value?.private}</button>
                 </Link>             
             )}
 
@@ -30,9 +38,7 @@ function Header() {
             </Link>
 
             {!userInfo?.value?.private ? null : (
-                <Link to="/login">
-                    <button class='nav-btn-header'>Logout</button>
-                </Link>    
+                    <button onClick={logOut} class='nav-btn-header'>Logout</button>
             )}
 
             {userInfo?.value?.private ? null : (
@@ -47,7 +53,10 @@ function Header() {
               </>
             )}
           </nav>
-          <button class='settings-btn-header'><img src='assets/settings-icon.png' alt="settingsbutton"/></button>
+          <Link to="/settings">
+                <button class='nav-btn-header'><img className='settings-icon' src='/assets/settings-icon2.png' alt="settingsbutton"/></button>
+          </Link>
+          
         </div>
       );
   }
@@ -62,24 +71,22 @@ function SearchBarHeader(){
     }
     
     function handleSearch() {
-        navigate(`/searchPage?query=${searchWord}`);
-        console.log('asdasdasdasjooooooooooooo'+ userInfo?.value.private);
+        navigate(`/searchPage`);
     }
   
     return (
-        <div class='search-container'>
-            <div class='search-bar-container'>
-                <input
-                class='search-bar'
-                type="text"
-                placeholder="Search..."
-                value={searchWord}
-                onChange={handleInputChange}
-                />
         
-                <button class='search-btn-header' onClick={handleSearch}>Search</button>
-            </div>
-        </div>
+      <div class='searchbar-container-header'>
+          <input
+          class='searchbar-header'
+          type="text"
+          placeholder="Search..."
+          value={searchWord}
+          onChange={handleInputChange}
+          />
+          <button class='nav-btn-header' onClick={handleSearch}>Search</button>
+      </div>
+        
     );
   }
 

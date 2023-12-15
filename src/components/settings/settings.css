@@ -1,34 +1,45 @@
 
 
-.footer-container{
-    height: 55px;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    background-color: black;
-    color: azure;
-    
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto auto;
+.settings{
+    background-color: #00101b;
+    padding: 0px;
+    margin: 0px;
+    color: beige;
+    font-family: 'Roboto', monospace;
+    z-index: 2;
+    min-height: 100vh;
 }
 
-.footer-left{
-    width: 100%; 
-    text-align: left;
+.setting{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #001a2c;
+    padding: 10px;
+    margin: 10px;
+    color: beige;
+    font-family: 'Roboto', monospace;
+    z-index: 2;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
 }
 
-.footer-center{
-    width: 100%; 
+.settings-container{
+    display: flex;
+    flex-direction:column;
+    flex-wrap: wrap;
+    min-height: 100px;
+    padding: 20px;
+    margin: auto; 
+    margin-top: 50px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid black;
+    background-color: #00223b;
+    width: 450px;
     text-align: center;
 }
-
-.footer-right{
-    width: 100%; 
-    text-align: right;
-    margin-right: 5%;
-}
-
-.footer-btn {
+.settings-btn {
     padding: 0.6em 2em;
     border: none;
     outline: none;
@@ -44,7 +55,7 @@
     margin: 10px;
   }
 
-  .footer-btn:before {
+  .settings-btn:before {
     content: "";
     background: linear-gradient(
       45deg,
@@ -84,7 +95,7 @@
     }
   }
 
-  .footer-btn:after {
+  .settings-btn:after {
     z-index: -1;
     content: "";
     position: absolute;

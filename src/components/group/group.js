@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './group.css';
 import {userInfo} from '../register/signals';
-import { Header } from '../header/Header';
+import { Header } from '../header/header';
+import { Footer } from '../footer/footer';
+
 
 function Groups() {
   const [groups, setGroups] = useState([]);
@@ -12,12 +14,14 @@ function Groups() {
   const [createdGroup, setCreatedGroup] = useState(null);
   const [groupId, setJoinedGroup] = useState(null);
   const [selectedPersonId, setSelectedPersonId] = useState(null);
+
   
 
   const fetchGroups = async () => {
     try {
       console.log('Before fetching groups...');
-      const response = await axios.get('http://localhost:3001/groups/getgroups', );
+      const response = await axios.get('/groups/getgroups', );
+
       console.log('Groups fetched successfully:', response.data);
       setGroups(response.data);
       console.log('After setting groups...');
@@ -95,7 +99,7 @@ function Groups() {
 
   const createGroup = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/groups/create', {
+      const response = await axios.post('/groups/create', {
         groupname: newGroupName,
         grouptitle: newGroupTitle,
         groupdescription: newGroupDescription,
@@ -115,9 +119,8 @@ function Groups() {
   }, []); 
 
   return (
-    <div>
+    <div className='groups-container'>
       <Header />
-      <h2>Groups</h2>
 
       <div className="group-box">
         <h3>Create a New Group</h3>
@@ -130,8 +133,10 @@ function Groups() {
         <label>Group Description:</label>
         <input type="text" value={newGroupDescription} onChange={(e) => setNewGroupDescription(e.target.value)} />
 
-        <button onClick={createGroup}>Create Group</button>
-        <button onClick={fetchGroups}>Show Group</button>
+        <div className='group-box-btn-container'>
+        <button className='group-box-btn' onClick={createGroup}>Create Group</button>
+        <button className='group-box-btn' onClick={fetchGroups}>Show Group</button>
+        </div>     
       </div>
 
       {createdGroup && (

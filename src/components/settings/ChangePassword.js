@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { userInfo } from '../register/signals';
+import './settings.css';
 
 const ChangePassword = ({username=userInfo.value?.private}) => {
   //const [currentPassword, setCurrentPassword] = useState('');
@@ -8,21 +9,21 @@ const ChangePassword = ({username=userInfo.value?.private}) => {
   const [error, setError] = useState("");
 
   const handleChangePassword = () => {
-    axios.post("http://localhost:3001/person/updatepassword", { password, username })
+    axios.post("/person/updatepassword", { password, username })
       .then((resp)=>{
         console.log(resp.data);
         console.log('Changing password...');
         setError("Password updated!");
       })
       .catch((error)=>{
-        console.log(error.resp.data);
-        setError("Updating password failed. Current password incorrect.");
+        console.log(error.response.data);
+        setError("Updating password failed.");
       });
   };
   
 
   return (
-    <div>
+    <div className="setting">
       <h3>Change your password</h3>
       {/*<label>
         Current password: 
@@ -30,16 +31,13 @@ const ChangePassword = ({username=userInfo.value?.private}) => {
         <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} placeholder="Current password"/>
       </label>
       <br />*/}
-      <label>
-        New password:
-        <br />
-        <input type="password" value={password} onChange={(e) => setNewPassword(e.target.value)} placeholder="New password"/>
-      </label>
-      <br />
-      <br />
-      <button onClick={handleChangePassword}>Change password</button>
-      <br />
-      <div className="text">{error}</div>
+      <br/>
+        <label>
+          <input type="password" value={password} onChange={(e) => setNewPassword(e.target.value)} placeholder="New Password"/>
+          <button className="settings-btn" onClick={handleChangePassword}>Update Password</button>
+        </label>
+      <br/>
+      <div className="h3">{error}</div>
     </div>
   );
 };

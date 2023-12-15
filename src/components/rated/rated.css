@@ -1,0 +1,20 @@
+
+
+
+.movie-rating-list{
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #011627;
+    color: #b8b7b7;
+}
+/*
+.movie-rating-list h3{
+    color: #b8b7b7;
+}*/
+
+
+.movieList{
+    display: flex;
+    flex-wrap: wrap;
+}

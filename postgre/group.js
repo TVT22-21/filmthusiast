@@ -35,3 +35,4 @@ async function showGroupMembers(idperson) {
 }
 
 module.exports = { addGroup, updateGroup, addPersonToGroup, getGroup, showGroupMembers };
+

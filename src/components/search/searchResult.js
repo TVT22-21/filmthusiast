@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { MovieCard, SearchByIdWithCard, FindId } from './searchMovie';
 import { NewRating, GetRatingById } from '../rated/rated';
 import './searchPage.css';
+import './searchResult.css';
 import { userInfo } from '../register/signals';
 
 function SearchResultCard({ movieData }) {
@@ -24,6 +25,7 @@ function SearchResultCard({ movieData }) {
         setExpandedCard((prevId) => (prevId === id ? null : id));
     };
     const handleRatingSubmit = async () => {
+        setUsername(userInfo?.value.private);
         console.log(`${searchFindID}Rating: ${rating}, Rating Text: ${ratingText}, Username: ${username}`);
         try {
             const result = await NewRating(searchFindID, rating, ratingText, username);
@@ -62,7 +64,7 @@ function SearchResultCard({ movieData }) {
                 movie_id: movieId,
                 username: userInfo.value?.private,
             };
-            const response = await axios.put(`http://localhost:3001/profile/addToWatchlist`, requestData);
+            const response = await axios.put(`/profile/addToWatchlist`, requestData);
             console.log('Watchlist updated successfully:', response.data);
 
         }catch (error) {
@@ -98,7 +100,6 @@ function SearchResultCard({ movieData }) {
                             <div
                                 className={`movie-card ${expandedCard === searchdata.id ? 'expanded' : ''}`}
                                 key={searchdata.id}
-                                onClick={() => handleCardClick(searchdata.id)}
                             >
                                 {expandedCard === searchdata.id ? (
                                     <>
@@ -117,7 +118,6 @@ function SearchResultCard({ movieData }) {
                                             <strong>{searchdata.original_title}</strong>
                                         </p>
                                         <p><strong>Release Date:</strong> {searchdata.release_date}</p>
-                                        <p><strong>Media type:</strong> {searchdata.media_type}</p>
                                     </>
 
                                 )}
@@ -127,37 +127,38 @@ function SearchResultCard({ movieData }) {
                                         <label>
                                             Arvosana
                                             <input
+                                            class="textarea"
                                                 type="number"
                                                 value={rating}
                                                 onChange={(e) => setRating(e.target.value)}
                                             />
                                         </label>
                                         <label>
-                                            Arvostelu
-                                            <input
+                                            <textarea
+                                            class="textarea"
                                                 type="text"
+                                                cols="14"
+                                                rows="10"
                                                 value={ratingText}
                                                 onChange={(e) => setRatingText(e.target.value)}
                                             />
                                         </label>
-                                        <label>
-                                            Username:
-                                            <input
-                                                type="text"
-                                                value={username}
-                                                onChange={(e) => setUsername(e.target.value)}
-                                            />
-                                        </label>
-                                        <button onClick={handleRatingSubmit}>Arvostele</button>
-                                        <button onClick={handleCloseRatingWindow}>Sulje</button>
+                                        <br></br>
+                                        <button className="add-rating-btn" onClick={handleRatingSubmit}>Arvostele</button>
+                                        <button className="add-rating-btn" onClick={handleCloseRatingWindow}>Sulje</button>
+                                        
                                     </div>
                                 )}
                             </div>
-                            <div className="additional-card">
-                                <button className='add-watchlist-btn' onClick={() => { handleAddWatchlist(searchdata.id); }}>+ Watchlist</button>
-                                <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostele(searchdata.id); }}>+ Arvostele</button>
-                                <button className='add-watchlist-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostelu(searchFindID); }}>+ Arvostelut</button>
-                                
+                            <button className='about-btn-results' onClick={() => handleCardClick(searchdata.id)}>About</button>
+                            <div className="additional-card-container">
+                                <div className="additional-card-1">
+                                    <button className='add-watchlist-btn' onClick={() => { handleAddWatchlist(searchdata.id); }}>+ Watchlist</button>
+                                </div>
+                                <div className="additional-card-2">
+                                    <button className='add-rating-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostele(searchdata.id); }}>+ Arvostele</button>
+                                    <button className='add-rating-btn' onClick={() => { setSearchDBID(searchdata.id); handleArvostelu(searchFindID); }}>+ Arvostelut</button>
+                                </div>                              
                             </div>
                         </div>
                     ))

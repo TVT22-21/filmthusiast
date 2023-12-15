@@ -11,9 +11,23 @@ router.get('/getgroups', async (req, res) => {
       SELECT groupname, grouptitle, groupdescription, groupcreatedate
       FROM grouptable;
     `;
-
     const { rows, fields } = await pgPool.query(query);
     res.status(200).json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/getGroupById', async (req, res) => {
+  try {
+    const { person_idperson } = req.query; 
+    console.log(person_idperson);
+    
+    const response = await getGroupById(person_idperson);
+    console.log(response);
+    
+    res.status(200).json(response); 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -37,9 +51,11 @@ router.post('/join', async (req, res) => {
   const { groupname, username } = req.body;
 
   try {
+
     const groupIdQuery = `
       SELECT idgroup FROM grouptable WHERE groupname = $1;
     `;
+
     const { rows } = await pgPool.query(groupIdQuery, [groupname]);
 
     if (rows.length === 0) {
