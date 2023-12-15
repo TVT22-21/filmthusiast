@@ -6,7 +6,7 @@ import { SearchPage } from '../search/searchPage';
 import { jwtToken, userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
 import { NewRating } from '../rated/rated';
-import { Header } from "../header/Header";
+import { Header } from "../header/header";
 import { Footer } from '../footer/footer';
 
 
@@ -220,15 +220,20 @@ function Content() {
 
   function handleDeleteRating(id){
     setIdRated(id);
-    axios.post("http://localhost:3001/rating/deleteid", {
+    if(userInfo.value?.private === username) {
+      axios.post("http://localhost:3001/rating/deleteid", {
       idrated: id
     })
       .then((resp)=>{
       console.log(resp.data);
+      window.location.reload();
     })
       .catch((error) => {
         console.log(error.response.data);
       });
+    } else {
+      window.alert('You need to login to delete!');
+    }
   }
 
   const handleSubmitRating = async () => {
