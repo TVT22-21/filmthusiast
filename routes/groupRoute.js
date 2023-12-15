@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addGroup, updateGroup, addPersonToGroup, getGroup, showGroupMembers } = require('../postgre/group');
+const { addGroup, updateGroup, addPersonToGroup, getGroup, showGroupMembers, getMembers } = require('../postgre/group');
 const pgPool = require('../postgre/connection');
 const groupController = require('../postgre/group');
 
@@ -8,7 +8,7 @@ const groupController = require('../postgre/group');
 router.get('/getgroups', async (req, res) => {
   try {
     const query = `
-      SELECT groupname, grouptitle, groupdescription, groupcreatedate
+      SELECT idgroup, groupname, grouptitle, groupdescription, groupcreatedate
       FROM grouptable;
     `;
     const { rows, fields } = await pgPool.query(query);
@@ -74,15 +74,12 @@ router.post('/join', async (req, res) => {
 });
 
 router.get('/members', async (req, res) => {
+
   try {
-    const query = `
-      SELECT group_idgroup, person_idperson
-      FROM persongroup;
-    `;
-
-
-    const { rows, fields } = await pgPool.query(query);
-    res.status(200).json(rows);
+    const {group_idgroup} = req.query;
+    const groupData = await getMembers(group_idgroup);
+    console.log(groupData);
+    res.status(200).json(groupData);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -91,13 +88,15 @@ router.get('/members', async (req, res) => {
 
 router.get('/getmembers', async (req, res) => {
   try {
-    const idperson = req.body.person_idperson;
-    if (!req.query.person_idperson) {
 
+    const {group_idgroup} = req.query;
+    if (!req.query) {
+        console.error(error);
     }
    
-    const memberdata = await showGroupMembers(idperson);
-    res.json(memberdata);
+    const memberdata = await showGroupMembers(group_idgroup);
+    console.log(memberdata);
+    res.status(200).json(memberdata);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });

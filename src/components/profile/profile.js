@@ -4,7 +4,7 @@ import './profile.css';
 import { SearchByTitle, MovieCardByTitle, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
 import { userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
-import { Header } from "../header/header";
+import { Header } from "../header/Header";
 import { Footer } from '../footer/footer';
 
 
