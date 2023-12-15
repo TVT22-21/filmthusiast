@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './group.css';
 import {userInfo} from '../register/signals';
-import { Header } from '../header/header';
+import { Header } from '../header/Header';
 import { Footer } from '../footer/footer';
 
 
@@ -147,22 +147,26 @@ function Groups() {
           <p>Group Description: {createdGroup.groupdescription}</p>
         </div>
       )}
+      <div>
 
-<ul>
-  {groups.map((group) => (
-          <li key={group.groupname}>
-          {group.groupname} - {group.grouptitle}
-          <button onClick={() => joinGroup(group.groupname)}>Join Group</button>
-          <button onClick={() => Members(group.idgroup)}>Members</button>
-          <button onClick={showMembers}>Show Members</button>
-      <p>
-      {group.idgroup}
-      </p>
+      <div className='show-groups'>
+        <ul>
+            {groups.map((group) => (
+              <li key={group.groupname}>
+              {group.groupname} - {group.grouptitle}
+              <button className='show-groups-btn' onClick={() => joinGroup(group.groupname)}>Join Group</button>
+              <button className='show-groups-btn' onClick={() => Members(group.idgroup)}>Members</button>
+              <button className='show-groups-btn' onClick={showMembers}>Show Members</button>
+            <p>
+            {group.idgroup}
+            </p>
+            
+          </li>
       
-    </li>
- 
-  ))}
-</ul>
+          ))}
+        </ul>
+      </div> 
+      </div>  
     </div>
   );
 }

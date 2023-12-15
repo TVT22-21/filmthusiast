@@ -4,7 +4,7 @@ import './profile.css';
 import { SearchByTitle, MovieCardByTitle, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
 import { userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
-import { Header } from "../header/header";
+import { Header } from "../header/Header";
 import { Footer } from '../footer/footer';
 
 
@@ -42,9 +42,9 @@ function Information() {
     async function fetchData() {
       try {
         const getProfRes = await axios.get('/profile/getProfile/' + username);
-        console.log('Response data:', getProfRes.data);
+
         setProfile(getProfRes.data);
-        console.log(profile);
+
       } catch (error) {
         setProfile('loading');
         console.error(error);
@@ -69,7 +69,7 @@ function Information() {
   const handleSubmitTitle = async () => {
     try {
       const personId = profile[0].person_idperson;
-      console.log(personId);
+
       await axios.put('/profile/updateTitle', {
         profiletitle: newTitle,
         person_idperson: personId,
@@ -188,6 +188,7 @@ function Content() {
   const [idRated, setIdRated] = useState('');
   const [expandedCard, setExpandedCard] = useState(null);
   const [personId, setPersonId] = useState(0);
+  const [groupIds, setGroupIds] = useState([]);
   const [groupData, setGroupData] = useState([]);
 
   
@@ -295,43 +296,49 @@ function Content() {
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log(personId);
+
         const responseInfo = await axios.get('/groups/getGroupById', {
           params: {
             person_idperson: personId
           },
         });
-        console.log('Response data:', responseInfo.data);
-        setGroupData(responseInfo.data);
+      
+        const responseGroupIds = responseInfo.data.map(item => item.group_idgroup);
+        setGroupIds(responseGroupIds);
       } catch (error) {
-        setGroupData('loading');
+        setGroupIds('loading');
         console.error(error);
       }
     }
     fetchData();
   }, [personId]);
-
-  /*dfdfdfdfdfdfdff*/ 
-
+  
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log(personId);
-        const responseInfo = await axios.get('/groups/getGroupById', {
-          params: {
-            person_idperson: personId
-          },
+
+
+        const groupDataPromises = groupIds.map(async (groupId) => {
+          const responseInfo = await axios.get('/groups/getGroupsByIdGroup', {
+            params: {
+              idgroup: groupId,
+            },
+          });
+
+          return responseInfo.data.rows;
         });
-        console.log('Response data:', responseInfo.data);
-        setGroupData(responseInfo.data);
+
+        const resolvedGroupData = await Promise.all(groupDataPromises);
+
+        setGroupData(resolvedGroupData);
       } catch (error) {
         setGroupData('loading');
         console.error(error);
       }
     }
-    fetchData();
-  }, [groupData]);
-
+  
+      fetchData();
+    }, [groupIds]);
 
   return (
     <div className='content'>
@@ -409,6 +416,18 @@ function Content() {
           <div>
             <h2>Groups</h2>
             <div className='groups-container'>
+              {groupData.map((innerArray, index) => (
+                <div className='group-info-container' key={index}>
+                  {innerArray.map((group) => (
+                    <div key={group.idgroup}>
+                      
+                      <h3 className='group-info-text'>{group.groupname}</h3>
+                      <p className='group-info-text'>{group.grouptitle}</p>
+                      <p className='group-info-text'>{group.groupdescription}</p>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -432,7 +451,7 @@ function Watchlist() {
 
         if (response.data[0]?.watchlist && response.data[0].watchlist.length > 0) {
           setWatchlist(response.data[0].watchlist);
-          console.log(response.data[0].watchlist);
+
         } else {
           // Handle the case when the watchlist is empty
           console.log('Watchlist is empty');

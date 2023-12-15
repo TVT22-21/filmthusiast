@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addGroup, updateGroup, addPersonToGroup, getGroup, showGroupMembers } = require('../postgre/group');
+const { addGroup, updateGroup, addPersonToGroup, getGroup, getGroupById, showGroupMembers, getGroupsByIdGroup } = require('../postgre/group');
 const pgPool = require('../postgre/connection');
 const groupController = require('../postgre/group');
 
@@ -13,21 +13,6 @@ router.get('/getgroups', async (req, res) => {
     `;
     const { rows, fields } = await pgPool.query(query);
     res.status(200).json(rows);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-router.get('/getGroupById', async (req, res) => {
-  try {
-    const { person_idperson } = req.query; 
-    console.log(person_idperson);
-    
-    const response = await getGroupById(person_idperson);
-    console.log(response);
-    
-    res.status(200).json(response); 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -103,6 +88,34 @@ router.get('/getmembers', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
   
+});
+
+
+router.get('/getGroupById', async (req, res) => {
+  try {
+
+    const { person_idperson } = req.query; 
+    console.log(person_idperson);
+    const response = await getGroupById(person_idperson);
+    console.log(response);
+    res.status(200).json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.get('/getGroupsByIdGroup', async (req, res) => {
+  try {
+    const { idgroup } = req.query; 
+    console.log(idgroup);
+    const response = await getGroupsByIdGroup(idgroup);
+    console.log(response);  
+    res.status(200).json(response); 
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 /*
