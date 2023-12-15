@@ -122,11 +122,26 @@ if (!username || !email){
 
 router.get('/getPerson', async (req, res) => {
     const username = req.query.username;
+    console.log(username+ '');
     if (!username) {
         return res.status(400).json({ error: 'Käyttäjänimi tarvitaan.' });
     }else{
         try {
             const personData = await getPerson(username);
+            res.json(personData);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+});
+
+router.get('/getPersonById', async (req, res) => {
+    const idperson = req.query.idperson;
+    if (!idperson) {
+        return res.status(400).json({ error: 'Id tarvitaan.' });
+    }else{
+        try {
+            const personData = await checkUname(idperson);
             res.json(personData);
         } catch (error) {
             res.status(500).json({ error: error.message });

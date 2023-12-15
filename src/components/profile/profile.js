@@ -30,22 +30,18 @@ function Main() {
 
 function Information() {
 
-  const [profile, setProfile] = useState([]);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [isEditingDesc, setIsEditingDesc] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [newDesc, setNewDesc] = useState('');
+  const [profile, setProfile] = useState([]);
   const { username } = useParams();
 
 
   useEffect(() => {
     async function fetchData() {
       try {
-        //const uName = userInfo.value?.private;
-        //console.log(uName);
-
         const getProfRes = await axios.get('/profile/getProfile/' + username);
-
         console.log('Response data:', getProfRes.data);
         setProfile(getProfRes.data);
         console.log(profile);
@@ -55,7 +51,7 @@ function Information() {
       }
     }
     fetchData();
-  }, [profile, username]);
+  }, [username]);
 
   const handleEditTitle = () => {
     console.log(userInfo.value?.private + username)
@@ -191,7 +187,10 @@ function Content() {
   const [rating, setRating] = useState([]);
   const [idRated, setIdRated] = useState('');
   const [expandedCard, setExpandedCard] = useState(null);
+  const [personId, setPersonId] = useState(0);
+  const [groupData, setGroupData] = useState([]);
 
+  
   const handleEditRating = (id) => {
     setIdRated(id);
     setExpandedCard((prevId) => (prevId === id ? null : id));
@@ -277,6 +276,42 @@ function Content() {
     fetchDataRatings();
   }, [username]);
 
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const getProfRes = await axios.get('/profile/getProfile/' + username);
+        console.log('Response data:', getProfRes.data[0].person_idperson);
+        setPersonId(getProfRes.data[0].person_idperson);
+      } catch (error) {
+        setPersonId('loading');
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, [username]);
+
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        console.log(personId);
+        const responseInfo = await axios.get('/groups/getGroupById', {
+          params: {
+            person_idperson: personId
+          },
+        });
+        console.log('Response data:', responseInfo.data);
+        setGroupData(responseInfo.data);
+      } catch (error) {
+        setGroupData('loading');
+        console.error(error);
+      }
+    }
+    fetchData();
+  }, [personId]);
+
+
   return (
     <div className='content'>
       <div className='content-nav'>
@@ -353,9 +388,6 @@ function Content() {
           <div>
             <h2>Groups</h2>
             <div className='groups-container'>
-              <MovieCardByTitle movieData={SearchResultByTitle} />
-              <MovieCardByTitle movieData={SearchResultByTitle} />
-              <MovieCardByTitle movieData={SearchResultByTitle} />
             </div>
           </div>
         )}
