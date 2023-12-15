@@ -44,10 +44,34 @@ function Groups() {
 
   
   const Members = async (id) => {
+    setSelectedPersonId(id);
+  
     try {
-      const response = await axios.get(`http://localhost:3001/groups/members`);
+      console.log(id);
+      console.log(selectedPersonId);
+      const response = await axios.get(`http://localhost:3001/groups/members`, {
+        params: { group_idgroup: id },
+      });
       console.log('Group Members:', response.data);
-      setSelectedPersonId(response.data[0]?.person_idperson); // Store the first person_idperson
+      const groupIds = response.data.map(item => item.group_idgroup);
+      console.log(groupIds);
+  
+      const groupDataPromises = groupIds.map(async (groupId) => {
+        try {
+          const responseInfo = await axios.get(`http://localhost:3001/groups/getmembers`, {
+            params: {
+              group_idgroup: groupId,
+            },
+          });
+          console.log(responseInfo.data);
+          return responseInfo.data.rows;
+        } catch (error) {
+          console.error('Error fetching group data:', error);
+        }
+      });
+  
+      const resolvedGroupData = await Promise.all(groupDataPromises);
+      console.log(resolvedGroupData);
     } catch (error) {
       console.error('Error fetching group members:', error);
     }
@@ -66,7 +90,20 @@ function Groups() {
       console.error('Error fetching group member:', error);
     }
   };
+/*
+  const groupDataPromises = groupIds.map(async (groupId) => {
+  const responseInfo = await axios.get(`http://localhost:3001/groups/getmembers/${selectedPersonId}`),{
+      params: {
+        idgroup: groupId,
+      },
+    });
 
+    return responseInfo.data.rows;
+  });
+
+  const resolvedGroupData = await Promise.all(groupDataPromises);
+
+*/
   /*
   const showGroupMembers = async (id) => {
     try {
