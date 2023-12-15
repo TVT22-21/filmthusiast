@@ -26,13 +26,11 @@ function Groups() {
     }
   };
   
-  const joinGroup = async (id) => {
-    setIdgroup(id);
-    console.log(id);
-    try {    
+  const joinGroup = async (groupname) => {
+    try {
       const userName = userInfo.value?.private; 
       await axios.post('http://localhost:3001/groups/join', { 
-        group_idgroup: 3, 
+        groupname,
         username: userName, 
       });
     } catch (error) {

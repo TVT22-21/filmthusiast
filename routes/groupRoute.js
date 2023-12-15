@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addGroup, updateGroup, addPersonToGroup } = require('../postgre/group');
+const { addGroup, updateGroup, addPersonToGroup, getGroupById } = require('../postgre/group');
 const pgPool = require('../postgre/connection');
 const groupController = require('../postgre/group');
 
@@ -19,14 +19,15 @@ router.get('/getgroups', async (req, res) => {
   }
 });
 
-router.get('/getAllGroups', async (req, res) => {
-  console.log('get all groups dasdasdadad');
+router.get('/getGroupById', async (req, res) => {
   try {
+    const { person_idperson } = req.query; 
+    console.log(person_idperson);
     
-    const response = await getAllGroups();
+    const response = await getGroupById(person_idperson);
     console.log(response);
-    const { rows, fields } = await pgPool.query(query);
-    res.status(200).json(rows);
+    
+    res.status(200).json(response); 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -47,9 +48,21 @@ router.post('/create', async (req, res) => {
 
 
 router.post('/join', async (req, res) => { 
-  const { group_idgroup, username } = req.body;
-  console.log(group_idgroup + username);
+  const { groupname, username } = req.body;
+
   try {
+    const groupIdQuery = 
+      'SELECT idgroup FROM grouptable WHERE groupname = $1';
+    ;
+    const { rows } = await pgPool.query(groupIdQuery, [groupname]);
+
+    if (rows.length === 0) {
+      res.status(404).json({ error: 'Group not found' });
+      return;
+    }
+
+    const group_idgroup = rows[0].idgroup;
+
     await addPersonToGroup(group_idgroup, username);
     res.status(200).json({ message: 'Joined group successfully' });
   } catch (error) {
