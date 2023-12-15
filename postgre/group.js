@@ -8,6 +8,8 @@ const database = {
     GET_GROUP: 'SELECT * FROM grouptable WHERE groupname = $1',
     GET_GROUP_BY_ID: 'SELECT * FROM persongroup WHERE person_idperson = $1',
     GET_GROUP_INFO: 'SELECT * FROM grouptable WHERE idgroup = $1'
+    GET_MEMBERS: `SELECT group_idgroup, person_idperson FROM persongroup WHERE group_idgroup = $1`
+
 };
 
 async function addGroup(groupname, grouptitle, groupdescription) {
@@ -41,6 +43,7 @@ async function showGroupMembers(idperson) {
     return rows;
 }
 
+
 async function getGroupById(person_idperson) {
     const rows = await pgPool.query(database.GET_GROUP_BY_ID, [person_idperson]);
     console.log(rows.rows[0]);
@@ -48,4 +51,14 @@ async function getGroupById(person_idperson) {
 }
 
 module.exports = { addGroup, updateGroup, addPersonToGroup, getGroup, getGroupById, showGroupMembers, getGroupsByIdGroup };
+
+async function getMembers(group_idgroup) {
+    const result = await pgPool.query(database.GET_MEMBERS, [group_idgroup]);
+    console.log(result);
+    const rows = result.rows;
+    return rows;
+}
+
+module.exports = { addGroup, updateGroup, addPersonToGroup, getGroup, showGroupMembers, getMembers};
+
 
