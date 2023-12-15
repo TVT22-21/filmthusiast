@@ -1,17 +1,17 @@
-Filmthusiast
+# Filmthusiast
 Web-ohjelmoinnin sovellusprojekti (Syksy 2023) 
 
-Tekijät
+# Tekijät
 Ville Niemi, Teemu Ritatörmä, Antti Korpua, Miikka Jänesaro. 
 
-Mistä projektissa on kyse?
+# Mistä projektissa on kyse?
 Projekti on Oulun ammattikorkeakoulu tietotekniikka opiskelijoiden koulutyö, jossa luodaan neljän hengen ryhmässä elokuvaharrastajien websovellus. Kaikki ryhmän jäsenet tekevät työtä kaikilla sovelluksen osa-alueilla (Full-Stack).   
 
-Kuvaus
+# Kuvaus
 Websovelluksessa haetaan takaa elokuvaharrastajien sivustoa, johon kuuluu toimintoja, kuten oman käyttäjän luonti, profiilinäkymän muokkaaminen, elokuvien hakeminen, arvostelu ja ryhmien luonti. Etusivulla esitellään kategorioittain eri elokuvia ja TV-sarjoja. Käyttäjä voi esimerkiksi selata parhaiten arvosteltuja elokuvia. 
 Sisään kirjautuessa käyttäjä saa joka kerta uniikin “tokenin”, jonka perusteella hän pääsee käsiksi omaan profiiliin ja voi muun muassa arvostella elokuvia, tai lisätä niitä katselulistalle. Ihmiset voivat myös muodostaa keskenään ryhmiä.
 
-Teknologia
+# Teknologia
 Websovellus luotiin käyttämällä React ja Node arkkitehtuuria. Backendin taustalla toimii Nodejs express-kirjasto, joka käsittelee routtausta eli tiedon lähetystä ja on todella helppokäyttöinen.  Tämä mahdollistaa nopean ja skaalautuvan kehityksen palvelinpään logiikalle. Postgre-tietokanta sisältää kaiken sovelluksessa käytettävän tiedon. Esimerkiksi käyttäjänimet, salasanat jne.
 
 
