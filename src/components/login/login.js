@@ -4,6 +4,7 @@ import {jwtToken, userInfo} from '../register/signals';
 import {useNavigate} from "react-router-dom";
 import './login.css';
 import { Header } from "../header/Header";
+import { Footer } from "../footer/footer";
 
 
 export default function Login(){
@@ -12,6 +13,7 @@ export default function Login(){
       <Header />
       { jwtToken.value.length === 0 ? <LoginForm/> :
         <button onClick={() => jwtToken.value = ''}>Kirjaudu ulos</button>}
+      <Footer/>
     </div>
   )
 }
