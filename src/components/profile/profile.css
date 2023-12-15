@@ -1,6 +1,28 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Asar&family=Castoro+Titling&family=Inter:wght@300&family=Roboto+Mono:wght@200&display=swap');
 
+.add-rating-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 35px;
+    margin-top: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    border: 1px solid black;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: #001b30;
+    color: #b8b7b7;
+}
+.textarea{
+    background-color: #eaeaea;
+    border-radius: 6px;
+    align-items: center;
+    outline: none;
+    text-align: left;
+    }
 
 .profile{
     background-color: #00101b;

@@ -4,7 +4,7 @@ import './profile.css';
 import { SearchByTitle, MovieCardByTitle, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
 import { userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
-import { Header } from "../header/Header";
+import { Header } from "../header/header";
 import { Footer } from '../footer/footer';
 
 
@@ -303,14 +303,17 @@ function Content() {
                       <div>
                         <div className='content'>
                           <input
+                          className='textarea'
                             type='number'
                             value={newRating}
                             onChange={handleRatingChange}
                             placeholder='Enter new rating'
                           />
+                          
                         </div>
                         <div className='content'>
-                          <textarea
+                        <textarea
+                          className='textarea'
                             type='form'
                             rows='10'
                             value={newRatingtext}
@@ -318,8 +321,8 @@ function Content() {
                             placeholder='Enter new rating text'
                           />
                         </div>
-                        <button onClick={handleSubmitRating}>Muokkaa</button>
-                        <button onClick={handlePeruutaRating}>Peruuta</button>
+                        <button class='add-rating-btn' onClick={handleSubmitRating}>Muokkaa</button>
+                        <button class='add-rating-btn' onClick={handlePeruutaRating}>Peruuta</button>
                       </div>
                     ) : (
                       <div className='movie-rating'>
