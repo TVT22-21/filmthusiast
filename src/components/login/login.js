@@ -3,7 +3,8 @@ import axios from "axios";
 import {jwtToken, userInfo} from '../register/signals';
 import {useNavigate} from "react-router-dom";
 import './login.css';
-import { Header } from "../header/header";
+import { Header } from "../header/Header";
+import { Footer } from "../footer/footer";
 
 
 export default function Login(){
@@ -12,6 +13,7 @@ export default function Login(){
       <Header />
       { jwtToken.value.length === 0 ? <LoginForm/> :
         <button onClick={() => jwtToken.value = ''}>Kirjaudu ulos</button>}
+      <Footer/>
     </div>
   )
 }
@@ -26,7 +28,7 @@ function LoginForm() {
     //return username.length > 0 && password.length > 0;
 
     function login() {
-      axios.post("http://localhost:3001/login/login", { username, password })
+      axios.post("/login/login", { username, password })
         .then((resp) => {
           console.log(resp.data);
           jwtToken.value = resp.data.jwtToken;
