@@ -9,7 +9,7 @@ const ChangePassword = ({username=userInfo.value?.private}) => {
   const [error, setError] = useState("");
 
   const handleChangePassword = () => {
-    axios.post("http://localhost:3001/person/updatepassword", { password, username })
+    axios.post("/person/updatepassword", { password, username })
       .then((resp)=>{
         console.log(resp.data);
         console.log('Changing password...');

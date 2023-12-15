@@ -4,7 +4,7 @@ import './profile.css';
 import { SearchByTitle, MovieCardByTitle, SearchByIdWithCardWatchlist, SearchByIdWithCard } from '../search/searchMovie';
 import { userInfo } from '../register/signals';
 import { useParams } from 'react-router-dom';
-import { Header } from "../header/Header";
+import { Header } from "../header/header";
 import { Footer } from '../footer/footer';
 
 
@@ -41,7 +41,7 @@ function Information() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const getProfRes = await axios.get('http://localhost:3001/profile/getProfile/' + username);
+        const getProfRes = await axios.get('/profile/getProfile/' + username);
         console.log('Response data:', getProfRes.data);
         setProfile(getProfRes.data);
         console.log(profile);
@@ -70,7 +70,7 @@ function Information() {
     try {
       const personId = profile[0].person_idperson;
       console.log(personId);
-      await axios.put('http://localhost:3001/profile/updateTitle', {
+      await axios.put('/profile/updateTitle', {
         profiletitle: newTitle,
         person_idperson: personId,
       });
@@ -106,7 +106,7 @@ function Information() {
     try {
       const personId = profile[0].person_idperson;
 
-      await axios.put('http://localhost:3001/profile/updateDescription', {
+      await axios.put('/profile/updateDescription', {
         description: newDesc,
         person_idperson: personId,
       });
@@ -218,7 +218,7 @@ function Content() {
   function handleDeleteRating(id){
     setIdRated(id);
     if(userInfo.value?.private === username) {
-      axios.post("http://localhost:3001/rating/deleteid", {
+      axios.post("/rating/deleteid", {
       idrated: id
     })
       .then((resp)=>{
@@ -236,7 +236,7 @@ function Content() {
   const handleSubmitRating = async () => {
     try {
       console.log('id, rating, ratingtext', idRated, newRating, newRatingtext);
-      await axios.put('http://localhost:3001/rating/update', {
+      await axios.put('/rating/update', {
         rating: newRating,
         ratingtext: newRatingtext,
         idrated: idRated,
@@ -265,7 +265,7 @@ function Content() {
   useEffect(() => {
     async function fetchDataRatings() {
       try {
-        const response = await axios.get(`http://localhost:3001/rating/getrating?username=${username}`);
+        const response = await axios.get(`/rating/getrating?username=${username}`);
         setRatings(response.data);
       } catch (error) {
         setRatings('loading');
@@ -338,14 +338,17 @@ function Content() {
                       <div>
                         <div className='content'>
                           <input
+                          className='textarea'
                             type='number'
                             value={newRating}
                             onChange={handleRatingChange}
                             placeholder='Enter new rating'
                           />
+                          
                         </div>
                         <div className='content'>
-                          <textarea
+                        <textarea
+                          className='textarea'
                             type='form'
                             rows='10'
                             value={newRatingtext}
@@ -353,8 +356,8 @@ function Content() {
                             placeholder='Enter new rating text'
                           />
                         </div>
-                        <button onClick={handleSubmitRating}>Muokkaa</button>
-                        <button onClick={handlePeruutaRating}>Peruuta</button>
+                        <button class='add-rating-btn' onClick={handleSubmitRating}>Muokkaa</button>
+                        <button class='add-rating-btn' onClick={handlePeruutaRating}>Peruuta</button>
                       </div>
                     ) : (
                       <div className='movie-rating'>
@@ -404,7 +407,7 @@ function Watchlist() {
     async function fetchDataRatings() {
       try {
         //const uName = userInfo.value.private;
-        const response = await axios.get(`http://localhost:3001/profile/getWatchlist/` + username);
+        const response = await axios.get(`/profile/getWatchlist/` + username);
 
         if (response.data[0]?.watchlist && response.data[0].watchlist.length > 0) {
           setWatchlist(response.data[0].watchlist);

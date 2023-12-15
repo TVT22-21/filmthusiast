@@ -3,6 +3,7 @@ const multer = require('multer');
 const upload = multer({dest: 'upload/'});
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+//const jwtController = require('../controllers/jwtController');
 
 const {getPerson, checkPerson} = require('../postgre/person')
 

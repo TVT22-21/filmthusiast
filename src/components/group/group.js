@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './group.css';
 import {userInfo} from '../register/signals';
-import { Header } from '../header/Header';
+import { Header } from '../header/header';
 import { Footer } from '../footer/footer';
 
 
@@ -18,7 +18,8 @@ function Groups() {
   const fetchGroups = async () => {
     try {
       console.log('Before fetching groups...');
-      const response = await axios.get('http://localhost:3001/groups/getgroups');
+      const response = await axios.get('/groups/getgroups', );
+
       console.log('Groups fetched successfully:', response.data);
       setGroups(response.data);
       console.log('After setting groups...');
@@ -30,8 +31,8 @@ function Groups() {
   const joinGroup = async (groupname) => {
     try {
       const userName = userInfo.value?.private; 
-      await axios.post('http://localhost:3001/groups/join', { 
-        groupname,
+      await axios.post('/groups/join', { 
+        group_idgroup: 3, 
         username: userName, 
       });
     } catch (error) {
@@ -41,7 +42,7 @@ function Groups() {
 
   const createGroup = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/groups/create', {
+      const response = await axios.post('/groups/create', {
         groupname: newGroupName,
         grouptitle: newGroupTitle,
         groupdescription: newGroupDescription,
