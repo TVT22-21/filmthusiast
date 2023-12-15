@@ -68,7 +68,9 @@ export default function RegisterForm() {
       function navigateToLogin(){
         navigate("/login");
       }
-      
+      function navigateToHome(){
+        navigate("/");
+      }
 
     return (
       <div>
